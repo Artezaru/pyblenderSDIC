@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyblenderSDIC.meshes.trimesh3d &#8212; pyblenderSDIC 1.0.1 documentation</title>
+    <title>pyblenderSDIC.meshes.trimesh3d &#8212; pyblenderSDIC 1.0.2 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=292eb321"></script>
+    <script src="../../../_static/documentation_options.js?v=1ed6394b"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyblenderSDIC/meshes/trimesh3d';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 1.0.1 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 1.0.2 documentation</p>
   
 </a></div>
     
@@ -1270,8 +1270,16 @@
 <span class="sd">        Visualize the mesh using Open3D.</span>
 
 <span class="sd">        This method displays the 3D mesh using Open3D&#39;s interactive viewer.</span>
-<span class="sd">        Optionally, it can highlight specific mesh elements (triangles) in blue, and show 3D</span>
-<span class="sd">        intersection points in red.</span>
+<span class="sd">        Optionally, it can highlight specific mesh elements (triangles) in light blue, and show 3D</span>
+<span class="sd">        intersection points in blue.</span>
+
+<span class="sd">        .. figure:: ../../../../pyblenderSDIC/resources/doc/trimesh3d_visualize.png</span>
+<span class="sd">            :width: 400</span>
+<span class="sd">            :align: center</span>
+
+<span class="sd">            Example of a mesh with highlighted elements and intersection points.</span>
+
+<span class="sd">        To visualize the mesh, you can use the following code where ``element_highlighted`` and ``intersect_points`` are optional:    </span>
 
 <span class="sd">        .. code-block:: python</span>
 
@@ -1285,7 +1293,7 @@
 <span class="sd">        .. note::</span>
 
 <span class="sd">            - Highlighted triangles are shown in ligth blue.</span>
-<span class="sd">            - Intersection points are visualized as **red**.</span>
+<span class="sd">            - Intersection points are visualized as blue.</span>
 
 <span class="sd">        .. seealso::</span>
 
@@ -1295,10 +1303,10 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        element_highlighted : int or sequence of int, optional</span>
-<span class="sd">            Indices of mesh elements (triangles) to color in blue.</span>
+<span class="sd">            Indices of mesh elements (triangles) to color in light blue.</span>
 
 <span class="sd">        intersect_points : IntersectPoints, optional</span>
-<span class="sd">            3D intersection points to show in red. Only valid entries are displayed.</span>
+<span class="sd">            3D intersection points to show in blue. Only valid entries are displayed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Create the geometry</span>
         <span class="n">geometries</span> <span class="o">=</span> <span class="p">[]</span>

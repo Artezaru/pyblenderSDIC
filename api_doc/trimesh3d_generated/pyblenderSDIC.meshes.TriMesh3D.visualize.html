@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyblenderSDIC.meshes.TriMesh3D.visualize &#8212; pyblenderSDIC 1.0.1 documentation</title>
+    <title>pyblenderSDIC.meshes.TriMesh3D.visualize &#8212; pyblenderSDIC 1.0.2 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=292eb321"></script>
+    <script src="../../_static/documentation_options.js?v=1ed6394b"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.visualize';</script>
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 1.0.1 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 1.0.2 documentation</p>
   
 </a></div>
     
@@ -387,8 +387,16 @@
 <span class="sig-prename descclassname"><span class="pre">TriMesh3D.</span></span><span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_highlighted</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Integral</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Integral</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersect_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../intersect_points.html#pyblenderSDIC.meshes.IntersectPoints" title="pyblenderSDIC.meshes.intersect_points.IntersectPoints"><span class="pre">IntersectPoints</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/pyblenderSDIC/meshes/trimesh3d.html#TriMesh3D.visualize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.meshes.TriMesh3D.visualize" title="Link to this definition">#</a></dt>
 <dd><p>Visualize the mesh using Open3D.</p>
 <p>This method displays the 3D mesh using Open3D’s interactive viewer.
-Optionally, it can highlight specific mesh elements (triangles) in blue, and show 3D
-intersection points in red.</p>
+Optionally, it can highlight specific mesh elements (triangles) in light blue, and show 3D
+intersection points in blue.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../../_images/trimesh3d_visualize.png"><img alt="../../_images/trimesh3d_visualize.png" src="../../_images/trimesh3d_visualize.png" style="width: 400px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Example of a mesh with highlighted elements and intersection points.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To visualize the mesh, you can use the following code where <code class="docutils literal notranslate"><span class="pre">element_highlighted</span></code> and <code class="docutils literal notranslate"><span class="pre">intersect_points</span></code> are optional:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show mesh with highlighted elements and intersection points</span>
 <span class="n">trimesh3d</span><span class="o">.</span><span class="n">open3d_show</span><span class="p">(</span>
     <span class="n">frame</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
@@ -401,7 +409,7 @@ intersection points in red.</p>
 <p class="admonition-title">Note</p>
 <ul class="simple">
 <li><p>Highlighted triangles are shown in ligth blue.</p></li>
-<li><p>Intersection points are visualized as <strong>red</strong>.</p></li>
+<li><p>Intersection points are visualized as blue.</p></li>
 </ul>
 </div>
 <div class="admonition seealso">
@@ -414,8 +422,8 @@ intersection points in red.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>element_highlighted</strong> (<em>int</em><em> or </em><em>sequence</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Indices of mesh elements (triangles) to color in blue.</p></li>
-<li><p><strong>intersect_points</strong> (<a class="reference internal" href="../intersect_points.html#pyblenderSDIC.meshes.IntersectPoints" title="pyblenderSDIC.meshes.IntersectPoints"><em>IntersectPoints</em></a><em>, </em><em>optional</em>) – 3D intersection points to show in red. Only valid entries are displayed.</p></li>
+<li><p><strong>element_highlighted</strong> (<em>int</em><em> or </em><em>sequence</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Indices of mesh elements (triangles) to color in light blue.</p></li>
+<li><p><strong>intersect_points</strong> (<a class="reference internal" href="../intersect_points.html#pyblenderSDIC.meshes.IntersectPoints" title="pyblenderSDIC.meshes.IntersectPoints"><em>IntersectPoints</em></a><em>, </em><em>optional</em>) – 3D intersection points to show in blue. Only valid entries are displayed.</p></li>
 </ul>
 </dd>
 </dl>
