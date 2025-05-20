@@ -1,0 +1,1302 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pyblenderSDIC.BlenderExperiment &#8212; pyblenderSDIC 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/blender_experiment';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyblenderSDIC.Camera" href="camera.html" />
+    <link rel="prev" title="API Reference" href="../api.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">pyblenderSDIC 1.0.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../api.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../usage.html">
+    Usage
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../api.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../usage.html">
+    Usage
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">BlenderExperiment Module</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">pyblenderSDIC.BlenderExperiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camera.html">pyblenderSDIC.Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spotlight.html">pyblenderSDIC.SpotLight</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">meshes Module</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="trimesh3d.html">pyblenderSDIC.meshes.TriMesh3D</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.from_meshio.html">pyblenderSDIC.meshes.TriMesh3D.from_meshio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.load_from_vtk.html">pyblenderSDIC.meshes.TriMesh3D.load_from_vtk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.save_to_vtk.html">pyblenderSDIC.meshes.TriMesh3D.save_to_vtk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.load_from_dict.html">pyblenderSDIC.meshes.TriMesh3D.load_from_dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.save_to_dict.html">pyblenderSDIC.meshes.TriMesh3D.save_to_dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.load_from_json.html">pyblenderSDIC.meshes.TriMesh3D.load_from_json</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.save_to_json.html">pyblenderSDIC.meshes.TriMesh3D.save_to_json</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.nodes.html">pyblenderSDIC.meshes.TriMesh3D.nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.elements.html">pyblenderSDIC.meshes.TriMesh3D.elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.uvmap.html">pyblenderSDIC.meshes.TriMesh3D.uvmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.get_nodes.html">pyblenderSDIC.meshes.TriMesh3D.get_nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.set_nodes.html">pyblenderSDIC.meshes.TriMesh3D.set_nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.get_elements.html">pyblenderSDIC.meshes.TriMesh3D.get_elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.set_elements.html">pyblenderSDIC.meshes.TriMesh3D.set_elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.get_uvmap.html">pyblenderSDIC.meshes.TriMesh3D.get_uvmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.set_uvmap.html">pyblenderSDIC.meshes.TriMesh3D.set_uvmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.get_uvmap2D.html">pyblenderSDIC.meshes.TriMesh3D.get_uvmap2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.set_uvmap2D.html">pyblenderSDIC.meshes.TriMesh3D.set_uvmap2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.Nnodes.html">pyblenderSDIC.meshes.TriMesh3D.Nnodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.Nelements.html">pyblenderSDIC.meshes.TriMesh3D.Nelements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.validate.html">pyblenderSDIC.meshes.TriMesh3D.validate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.construct_open3d_mesh.html">pyblenderSDIC.meshes.TriMesh3D.construct_open3d_mesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.visualize.html">pyblenderSDIC.meshes.TriMesh3D.visualize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.open3d_cast_ray.html">pyblenderSDIC.meshes.TriMesh3D.open3d_cast_ray</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.compute_intersect_points.html">pyblenderSDIC.meshes.TriMesh3D.compute_intersect_points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.compute_intersect_points_coordinates.html">pyblenderSDIC.meshes.TriMesh3D.compute_intersect_points_coordinates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.compute_element_normals.html">pyblenderSDIC.meshes.TriMesh3D.compute_element_normals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.compute_element_centroids.html">pyblenderSDIC.meshes.TriMesh3D.compute_element_centroids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.compute_element_areas.html">pyblenderSDIC.meshes.TriMesh3D.compute_element_areas</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="intersect_points.html">pyblenderSDIC.meshes.IntersectPoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_axisymmetric_mesh.html">pyblenderSDIC.meshes.create_axisymmetric_mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_xy_heightmap_mesh.html">pyblenderSDIC.meshes.create_xy_heightmap_mesh</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">materials Module</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="material_bsdf.html">pyblenderSDIC.materials.MaterialBSDF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="default_materials.html">pyblenderSDIC.materials (Default Materials)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">patterns Module</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="create_speckle_BW_image.html">pyblenderSDIC.patterns.create_speckle_BW_image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="default_patterns.html">pyblenderSDIC.patterns (Default Patterns)</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../api.html" class="nav-link">API Reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pyblenderSDIC.BlenderExperiment</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pyblendersdic-blenderexperiment">
+<h1>pyblenderSDIC.BlenderExperiment<a class="headerlink" href="#pyblendersdic-blenderexperiment" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BlenderExperiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Nb_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a Blender experiment with a defined scene and objects.</p>
+<p>The BlenderExperiment class provides methods to add and configure cameras, spot lights, and objects (mesh + material) in a Blender scene.
+The class also allows setting the properties of the scene such as resolution and pixel aspect ratio.
+Then the class provides methods to render the scene and save the rendered images.</p>
+<p>The number of frames in the experiment can be set using the <cite>end_frame</cite> parameter.
+This parameters can not be updated after the experiment is created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Nb_frames</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of frames for the experiment (default is 1).</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment._reset_blender">
+<span class="sig-name descname"><span class="pre">_reset_blender</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment._reset_blender"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment._reset_blender" title="Link to this definition">#</a></dt>
+<dd><p>Resets the Blender environment.</p>
+<ul class="simple">
+<li><p>Removes all objects in the active scene.</p></li>
+<li><p>Deletes all meshes, materials, textures, armatures, cameras, lights, and collections.</p></li>
+<li><p>Initializes a new scene for the experiment.</p></li>
+<li><p>Resets the 3D cursor to the origin.</p></li>
+<li><p>Sets the start and end frames to 1.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.add_camera">
+<span class="sig-name descname"><span class="pre">add_camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="camera.html#pyblenderSDIC.Camera" title="pyblenderSDIC.camera.Camera"><span class="pre">Camera</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.add_camera"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.add_camera" title="Link to this definition">#</a></dt>
+<dd><p>Add a camera to the experiment.</p>
+<p>The frames parameter indicates which frames the camera will be active.
+If None, the camera will be active for all frames.
+Else a list of booleans must be provided, where each boolean indicates if the camera is active for that frame.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">(</span><span class="n">Nb_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">camera</span> <span class="o">=</span> <span class="n">Camera</span><span class="p">()</span>
+<span class="c1"># Define the camera properties here</span>
+<span class="c1"># ...</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">add_camera</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Camera1&quot;</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="n">camera</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="camera.html#pyblenderSDIC.Camera" title="pyblenderSDIC.Camera"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyblenderSDIC.Camera</span></code></a> for more information on how to define a camera.</p></li>
+<li><p><a class="reference internal" href="#pyblenderSDIC.BlenderExperiment.update_camera" title="pyblenderSDIC.BlenderExperiment.update_camera"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.BlenderExperiment.update_camera()</span></code></a> to update the camera properties in the Blender scene.</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the camera.</p></li>
+<li><p><strong>camera</strong> (<a class="reference internal" href="camera.html#pyblenderSDIC.Camera" title="pyblenderSDIC.Camera"><em>Camera</em></a>) – The camera object to be added.</p></li>
+<li><p><strong>frames</strong> (<em>List</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – A list of booleans indicating which frames the camera will be active.
+If None, the camera will be active for all frames (default is None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string or camera is not an instance of Camera.</p></li>
+<li><p><strong>ValueError</strong> – If a camera with the same name already exists in the experiment or in Blender data.
+    If the length of frames is not equal to the number of frames in the experiment (end_frame).
+    If the camera is not completely defined.</p></li>
+<li><p><strong>Blender Details</strong> – </p></li>
+<li><p><strong>---------------</strong> – </p></li>
+<li><p><strong>The camera is created in the Blender scene and linked to the experiment scene.</strong> – </p></li>
+<li><p><strong>The camera name is set to the provided name.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.add_mesh">
+<span class="sig-name descname"><span class="pre">add_mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.add_mesh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.add_mesh" title="Link to this definition">#</a></dt>
+<dd><p>Add a mesh to the experiment.</p>
+<p>The mesh must be an instance of meshio.Mesh with the following structure:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">points</span></code>: A NumPy array of shape (N, 3) representing the coordinates of N mesh nodes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cells_dict{&quot;triangle&quot;}.data</span></code>: A NumPy array of shape (M, 3) representing M triangular elements defined by node indices.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">point_data</span></code>: A dictionary storing data associated with each point, such as “uvmap” a (N, 3) array of texture coordinates (only the first two columns are used).</p></li>
+</ul>
+<p>The frames parameter indicates which frames the mesh will be active.
+If None, the mesh will be active for all frames.
+Else a list of booleans must be provided, where each boolean indicates if the mesh is active for that frame.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">(</span><span class="n">Nb_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># Define the mesh properties here</span>
+<span class="c1"># ...</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">meshio</span><span class="o">.</span><span class="n">Mesh</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">cells_dict</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;triangle&quot;</span><span class="p">:</span> <span class="n">elements</span><span class="p">},</span> <span class="n">point_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;uvmap&quot;</span><span class="p">:</span> <span class="n">texture_coordinates</span><span class="p">})</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Mesh1&quot;</span><span class="p">,</span> <span class="n">mesh</span><span class="o">=</span><span class="n">mesh</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyblenderSDIC.meshio.Mesh</span></code> for more information on how to define a mesh.</p></li>
+<li><p><a class="reference internal" href="#pyblenderSDIC.BlenderExperiment.update_mesh" title="pyblenderSDIC.BlenderExperiment.update_mesh"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.BlenderExperiment.update_mesh()</span></code></a> to update the mesh properties in the Blender scene.</p></li>
+<li><p><a class="reference internal" href="#pyblenderSDIC.BlenderExperiment.add_mesh_material" title="pyblenderSDIC.BlenderExperiment.add_mesh_material"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.BlenderExperiment.add_mesh_material()</span></code></a> to set the material of the mesh.</p></li>
+<li><p><a class="reference internal" href="#pyblenderSDIC.BlenderExperiment.add_mesh_pattern" title="pyblenderSDIC.BlenderExperiment.add_mesh_pattern"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.BlenderExperiment.add_mesh_pattern()</span></code></a> to set the pattern image of the mesh.</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the mesh.</p></li>
+<li><p><strong>mesh</strong> (<em>meshio.Mesh</em>) – The mesh object to be added.</p></li>
+<li><p><strong>frames</strong> (<em>List</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – A list of booleans indicating which frames the mesh will be active.
+If None, the mesh will be active for all frames (default is None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string or mesh is not an instance of meshio.Mesh.</p></li>
+<li><p><strong>ValueError</strong> – If a mesh with the same name already exists in the experiment or in Blender data.
+    If the length of frames is not equal to the number of frames in the experiment (end_frame).
+    If the mesh is not completely defined.</p></li>
+<li><p><strong>Blender Details</strong> – </p></li>
+<li><p><strong>---------------</strong> – </p></li>
+<li><p><strong>The mesh is created in the Blender scene and linked to the experiment scene.</strong> – </p></li>
+<li><p><strong>The mesh name is set to the provided name.</strong> – </p></li>
+<li><p><strong>A material is created for the mesh with the name __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_material.</strong> – </p></li>
+<li><p><strong>The material uses a Principled BSDF shader and is set to use_nodes = True.</strong> – </p></li>
+<li><p><strong>The material is located at the first index</strong><strong> of </strong><strong>the mesh data materials.</strong> – </p></li>
+<li><p><strong>A MixRGB node is created at the input</strong><strong> of </strong><strong>the Principled BSDF Base Color node.</strong> – </p></li>
+<li><p><strong>The MixRGB node name is set to __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_mix_basecolor_pattern.</strong> – </p></li>
+<li><p><strong>The first input</strong><strong> of </strong><strong>the MixRGB node is the default base color</strong><strong> of </strong><strong>the material</strong><strong> (</strong><strong>white</strong><strong>)</strong><strong>.</strong> – </p></li>
+<li><p><strong>It can be setted to any color using the add_mesh_material method.</strong> – </p></li>
+<li><p><strong>The second input</strong><strong> of </strong><strong>the MixRGB node is the default pattern</strong><strong> of </strong><strong>the material</strong><strong> (</strong><strong>white</strong><strong>)</strong><strong>.</strong> – </p></li>
+<li><p><strong>It can be setted to any pattern using the add_mesh_pattern method.</strong> – </p></li>
+<li><p><strong>The output</strong><strong> of </strong><strong>the MixRGB node is connected to the Base Color input</strong><strong> of </strong><strong>the Principled BSDF node.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.add_mesh_material">
+<span class="sig-name descname"><span class="pre">add_mesh_material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="material_bsdf.html#pyblenderSDIC.materials.MaterialBSDF" title="pyblenderSDIC.materials.material_bsdf.MaterialBSDF"><span class="pre">MaterialBSDF</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.add_mesh_material"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.add_mesh_material" title="Link to this definition">#</a></dt>
+<dd><p>Add a material to the mesh.</p>
+<p>The material must be an instance of MaterialBSDF.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">(</span><span class="n">Nb_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># Define the mesh properties here</span>
+<span class="c1"># ...</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">meshio</span><span class="o">.</span><span class="n">Mesh</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">cells_dict</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;triangle&quot;</span><span class="p">:</span> <span class="n">elements</span><span class="p">},</span> <span class="n">point_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;uvmap&quot;</span><span class="p">:</span> <span class="n">texture_coordinates</span><span class="p">})</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">set_mesh</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Mesh1&quot;</span><span class="p">,</span> <span class="n">mesh</span><span class="o">=</span><span class="n">mesh</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">MaterialBSDF</span><span class="p">()</span>
+<span class="c1"># Define the material properties here</span>
+<span class="c1"># ...</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">add_mesh_material</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Mesh1&quot;</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="material_bsdf.html#pyblenderSDIC.materials.MaterialBSDF" title="pyblenderSDIC.materials.MaterialBSDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyblenderSDIC.materials.MaterialBSDF</span></code></a> for more information on how to define a material.</p></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The material is not updated when the mesh is updated.
+To update the material, you must call this method again with the new material.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the mesh.</p></li>
+<li><p><strong>material</strong> (<a class="reference internal" href="material_bsdf.html#pyblenderSDIC.materials.MaterialBSDF" title="pyblenderSDIC.materials.MaterialBSDF"><em>MaterialBSDF</em></a>) – The material object to be added.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string or material is not an instance of MaterialBSDF.</p></li>
+<li><p><strong>ValueError</strong> – If a mesh with the same name does not exist in the experiment or in Blender data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.add_mesh_pattern">
+<span class="sig-name descname"><span class="pre">add_mesh_pattern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.add_mesh_pattern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.add_mesh_pattern" title="Link to this definition">#</a></dt>
+<dd><p>Add a pattern to the mesh material.</p>
+<p>The pattern must be a valid image file path (e.g., PNG, JPEG).
+The pattern will be applied to the mesh material as a texture.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">(</span><span class="n">Nb_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># Define the mesh properties here</span>
+<span class="c1"># ...</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">meshio</span><span class="o">.</span><span class="n">Mesh</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">cells_dict</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;triangle&quot;</span><span class="p">:</span> <span class="n">elements</span><span class="p">},</span> <span class="n">point_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;uvmap&quot;</span><span class="p">:</span> <span class="n">texture_coordinates</span><span class="p">})</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Mesh1&quot;</span><span class="p">,</span> <span class="n">mesh</span><span class="o">=</span><span class="n">mesh</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">add_mesh_pattern</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Mesh1&quot;</span><span class="p">,</span> <span class="n">pattern_path</span><span class="o">=</span><span class="s2">&quot;path/to/pattern.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The UV coordinates of the mesh must be defined in the meshio.Mesh object.
+as “uvmap” in the point_data dictionary.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="trimesh3d.html#pyblenderSDIC.meshes.TriMesh3D" title="pyblenderSDIC.meshes.TriMesh3D"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyblenderSDIC.meshes.TriMesh3D</span></code></a> for more information on how to define a mesh.</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the mesh.</p></li>
+<li><p><strong>pattern_path</strong> (<em>str</em>) – The path to the pattern image file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string or pattern_path is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If a mesh with the same name does not exist in the experiment or in Blender data.
+    If the pattern path is not valid or the image format is not supported.
+    If the mesh does not have a UVMAP defined.</p></li>
+<li><p><strong>Blender Details</strong> – </p></li>
+<li><p><strong>---------------</strong> – </p></li>
+<li><p><strong>A uv_layer is created for the mesh and the UVMAP is set to the texture coordinates defined in the mesh.</strong> – </p></li>
+<li><p><strong>The uv_layer is named __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_uvmap.</strong> – </p></li>
+<li><p><strong>A node is created in the material node tree to load the image texture.</strong> – </p></li>
+<li><p><strong>The node is named __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_image_texture.</strong> – </p></li>
+<li><p><strong>This node is in CLIP mode to avoid stretching the image.</strong> – </p></li>
+<li><p><strong>The color output</strong><strong> of </strong><strong>the image texture node is connected to the second input</strong><strong> of </strong><strong>the MixRGB node.</strong> – </p></li>
+<li><p><strong>The MixRGB node is connected to the Base Color input</strong><strong> of </strong><strong>the Principled BSDF node in multiply mode.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.add_spotlight">
+<span class="sig-name descname"><span class="pre">add_spotlight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spotlight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="spotlight.html#pyblenderSDIC.SpotLight" title="pyblenderSDIC.spotlight.SpotLight"><span class="pre">SpotLight</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.add_spotlight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.add_spotlight" title="Link to this definition">#</a></dt>
+<dd><p>Add a spotlight to the experiment.</p>
+<p>The spotlight must be an instance of SpotLight.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">(</span><span class="n">Nb_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">spotlight</span> <span class="o">=</span> <span class="n">SpotLight</span><span class="p">()</span>
+<span class="c1"># Define the SpotLight properties here</span>
+<span class="c1"># ...</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">add_spotlight</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Spotlight1&quot;</span><span class="p">,</span> <span class="n">spotlight</span><span class="o">=</span><span class="n">SpotLight</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="spotlight.html#pyblenderSDIC.SpotLight" title="pyblenderSDIC.SpotLight"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyblenderSDIC.SpotLight</span></code></a> for more information on how to define a spotlight.</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the spotlight.</p></li>
+<li><p><strong>spotlight</strong> (<a class="reference internal" href="spotlight.html#pyblenderSDIC.SpotLight" title="pyblenderSDIC.SpotLight"><em>SpotLight</em></a>) – The spotlight object to be added.</p></li>
+<li><p><strong>frames</strong> (<em>List</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – A list of booleans indicating which frames the spotlight will be active.
+If None, the spotlight will be active for all frames (default is None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string or spotlight is not an instance of SpotLight.</p></li>
+<li><p><strong>ValueError</strong> – If a spotlight with the same name already exists in the experiment or in Blender data.
+    If the length of frames is not equal to the number of frames in the experiment (end_frame).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.change_mesh_pattern">
+<span class="sig-name descname"><span class="pre">change_mesh_pattern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.change_mesh_pattern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.change_mesh_pattern" title="Link to this definition">#</a></dt>
+<dd><p>Change the pattern of the mesh material.</p>
+<p>The pattern must be a valid image file path (e.g., PNG, JPEG).
+The pattern will be applied to the mesh material as a texture.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">(</span><span class="n">Nb_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># Define the mesh properties here</span>
+<span class="c1"># ...</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">meshio</span><span class="o">.</span><span class="n">Mesh</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">cells_dict</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;triangle&quot;</span><span class="p">:</span> <span class="n">elements</span><span class="p">},</span> <span class="n">point_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;uvmap&quot;</span><span class="p">:</span> <span class="n">texture_coordinates</span><span class="p">})</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Mesh1&quot;</span><span class="p">,</span> <span class="n">mesh</span><span class="o">=</span><span class="n">mesh</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">add_mesh_pattern</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Mesh1&quot;</span><span class="p">,</span> <span class="n">pattern_path</span><span class="o">=</span><span class="s2">&quot;path/to/pattern.png&quot;</span><span class="p">)</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">change_mesh_pattern</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Mesh1&quot;</span><span class="p">,</span> <span class="n">pattern_path</span><span class="o">=</span><span class="s2">&quot;path/to/new_pattern.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#pyblenderSDIC.BlenderExperiment.add_mesh_pattern" title="pyblenderSDIC.BlenderExperiment.add_mesh_pattern"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyblenderSDIC.BlenderExperiment.add_mesh_pattern</span></code></a> for more information on how to add a pattern.</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the mesh.</p></li>
+<li><p><strong>pattern_path</strong> (<em>str</em>) – The path to the new pattern image file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string or pattern_path is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If a mesh with the same name does not exist in the experiment or in Blender data.
+    If the pattern path is not valid or the image format is not supported.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.get_active_camera">
+<span class="sig-name descname"><span class="pre">get_active_camera</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.get_active_camera"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.get_active_camera" title="Link to this definition">#</a></dt>
+<dd><p>Get the name of the active camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The name of the active camera.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If no active camera is set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.get_camera">
+<span class="sig-name descname"><span class="pre">get_camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="camera.html#pyblenderSDIC.Camera" title="pyblenderSDIC.camera.Camera"><span class="pre">Camera</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.get_camera"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.get_camera" title="Link to this definition">#</a></dt>
+<dd><p>Get the camera object and its Blender object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the camera to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the Camera object and its corresponding Blender object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[<a class="reference internal" href="camera.html#pyblenderSDIC.Camera" title="pyblenderSDIC.Camera">Camera</a>, Object]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.get_camera_frames">
+<span class="sig-name descname"><span class="pre">get_camera_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.get_camera_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.get_camera_frames" title="Link to this definition">#</a></dt>
+<dd><p>Get the frames for which the camera is active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the camera.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of booleans indicating which frames the camera is active.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[bool]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If a camera with the same name does not exist in the experiment or in Blender data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.get_camera_names">
+<span class="sig-name descname"><span class="pre">get_camera_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.get_camera_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.get_camera_names" title="Link to this definition">#</a></dt>
+<dd><p>Get the names of all cameras in the experiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of camera names.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.get_mesh">
+<span class="sig-name descname"><span class="pre">get_mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Mesh</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.get_mesh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.get_mesh" title="Link to this definition">#</a></dt>
+<dd><p>Get the mesh object and its Blender object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the mesh to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the meshio.Mesh object and its corresponding Blender object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[meshio.Mesh, Object]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.get_mesh_frames">
+<span class="sig-name descname"><span class="pre">get_mesh_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.get_mesh_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.get_mesh_frames" title="Link to this definition">#</a></dt>
+<dd><p>Get the frames for which the mesh is active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the mesh.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of booleans indicating which frames the mesh is active.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[bool]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If a mesh with the same name does not exist in the experiment or in Blender data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.get_mesh_names">
+<span class="sig-name descname"><span class="pre">get_mesh_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.get_mesh_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.get_mesh_names" title="Link to this definition">#</a></dt>
+<dd><p>Get the names of all meshes in the experiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of mesh names.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.get_spotlight">
+<span class="sig-name descname"><span class="pre">get_spotlight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="spotlight.html#pyblenderSDIC.SpotLight" title="pyblenderSDIC.spotlight.SpotLight"><span class="pre">SpotLight</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.get_spotlight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.get_spotlight" title="Link to this definition">#</a></dt>
+<dd><p>Get the spotlight object and its Blender object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the spotlight to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the SpotLight object and its corresponding Blender object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[<a class="reference internal" href="spotlight.html#pyblenderSDIC.SpotLight" title="pyblenderSDIC.SpotLight">SpotLight</a>, Object]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.get_spotlight_frames">
+<span class="sig-name descname"><span class="pre">get_spotlight_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.get_spotlight_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.get_spotlight_frames" title="Link to this definition">#</a></dt>
+<dd><p>Get the frames for which the spotlight is active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the spotlight.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of booleans indicating which frames the spotlight is active.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[bool]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If a spotlight with the same name does not exist in the experiment or in Blender data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.remove_camera">
+<span class="sig-name descname"><span class="pre">remove_camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.remove_camera"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.remove_camera" title="Link to this definition">#</a></dt>
+<dd><p>Remove a camera from the experiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the camera to remove.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If a camera with the same name does not exist in the experiment or in Blender data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.remove_mesh">
+<span class="sig-name descname"><span class="pre">remove_mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.remove_mesh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.remove_mesh" title="Link to this definition">#</a></dt>
+<dd><p>Remove a mesh from the experiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the mesh to remove.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If a mesh with the same name does not exist in the experiment or in Blender data.</p></li>
+<li><p><strong>Blender Details</strong> – </p></li>
+<li><p><strong>---------------</strong> – </p></li>
+<li><p><strong>When removing a mesh</strong><strong>, </strong><strong>the following actions are performed:</strong> – </p></li>
+<li><p><strong>- The mesh {name} is removed from the Blender scene.</strong> – </p></li>
+<li><p><strong>- The material __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_material is removed from the Blender data.</strong> – </p></li>
+<li><p><strong>- The MixRGB node __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_mix_basecolor_pattern is removed from the material node tree.</strong> – </p></li>
+<li><p><strong>- The uv_layer __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_uvmap is removed from the mesh data.</strong> – </p></li>
+<li><p><strong>- The node texture __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_image_texture is removed from the material node tree.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.remove_spotlight">
+<span class="sig-name descname"><span class="pre">remove_spotlight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.remove_spotlight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.remove_spotlight" title="Link to this definition">#</a></dt>
+<dd><p>Remove a spotlight from the experiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the spotlight to remove.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If a spotlight with the same name does not exist in the experiment or in Blender data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'TIFF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'BW'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.render" title="Link to this definition">#</a></dt>
+<dd><p>Render the experiment scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_path</strong> (<em>str</em>) – The path to save the rendered image.</p></li>
+<li><p><strong>output_format</strong> (<em>str</em><em>, </em><em>optional</em>) – The output format of the rendered image (default is “TIFF”).</p></li>
+<li><p><strong>color_mode</strong> (<em>str</em><em>, </em><em>optional</em>) – The color mode of the rendered image (default is “BW”).</p></li>
+<li><p><strong>color_depth</strong> (<em>str</em><em>, </em><em>optional</em>) – The color depth of the rendered image (default is “8”).</p></li>
+<li><p><strong>N_samples</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of samples for rendering (default is 200).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name or output_path is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If the output format is not supported.
+    If the frame or the camera is not set.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.set_active_camera">
+<span class="sig-name descname"><span class="pre">set_active_camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.set_active_camera"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.set_active_camera" title="Link to this definition">#</a></dt>
+<dd><p>Set the active camera for the experiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the camera to set as active.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If a camera with the same name does not exist in the experiment or in Blender data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.set_active_frame">
+<span class="sig-name descname"><span class="pre">set_active_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.set_active_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.set_active_frame" title="Link to this definition">#</a></dt>
+<dd><p>Set the current frame of the Blender scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>frame</strong> (<em>int</em>) – The frame number to set.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If frame is not an integer.</p></li>
+<li><p><strong>ValueError</strong> – If frame is out of range.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.set_camera_frames">
+<span class="sig-name descname"><span class="pre">set_camera_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.set_camera_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.set_camera_frames" title="Link to this definition">#</a></dt>
+<dd><p>Set the frames for which the camera will be active.
+If None, the camera will be active for all frames.
+Else a list of booleans must be provided, where each boolean indicates if the camera is active for that frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the camera.</p></li>
+<li><p><strong>frames</strong> (<em>List</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – A list of booleans indicating which frames the camera will be active.
+If None, the camera will be active for all frames (default is None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string or frames is not a list of booleans.</p></li>
+<li><p><strong>ValueError</strong> – If a camera with the same name does not exist in the experiment or in Blender data.
+    If the length of frames is not equal to the number of frames in the experiment (end_frame).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.set_default_background">
+<span class="sig-name descname"><span class="pre">set_default_background</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.set_default_background"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.set_default_background" title="Link to this definition">#</a></dt>
+<dd><p>Set the default background for the experiment scene.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.set_mesh_frames">
+<span class="sig-name descname"><span class="pre">set_mesh_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.set_mesh_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.set_mesh_frames" title="Link to this definition">#</a></dt>
+<dd><p>Set the frames for which the mesh will be active.
+If None, the mesh will be active for all frames.
+Else a list of booleans must be provided, where each boolean indicates if the mesh is active for that frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the mesh.</p></li>
+<li><p><strong>frames</strong> (<em>List</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – A list of booleans indicating which frames the mesh will be active.
+If None, the mesh will be active for all frames (default is None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string or frames is not a list of booleans.</p></li>
+<li><p><strong>ValueError</strong> – If a mesh with the same name does not exist in the experiment or in Blender data.
+    If the length of frames is not equal to the number of frames in the experiment (end_frame).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.set_spotlight_frames">
+<span class="sig-name descname"><span class="pre">set_spotlight_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.set_spotlight_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.set_spotlight_frames" title="Link to this definition">#</a></dt>
+<dd><p>Set the frames for which the spotlight will be active.
+If None, the spotlight will be active for all frames.
+Else a list of booleans must be provided, where each boolean indicates if the spotlight is active for that frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the spotlight.</p></li>
+<li><p><strong>frames</strong> (<em>List</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – A list of booleans indicating which frames the spotlight will be active.
+If None, the spotlight will be active for all frames (default is None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string or frames is not a list of booleans.</p></li>
+<li><p><strong>ValueError</strong> – If a spotlight with the same name does not exist in the experiment or in Blender data.
+    If the length of frames is not equal to the number of frames in the experiment (end_frame).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.update_camera">
+<span class="sig-name descname"><span class="pre">update_camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.update_camera"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.update_camera" title="Link to this definition">#</a></dt>
+<dd><p>Update the camera properties in the Blender scene.
+This method must be called after updating the camera properties in the Camera object.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">(</span><span class="n">Nb_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">camera</span> <span class="o">=</span> <span class="n">Camera</span><span class="p">()</span>
+<span class="c1"># Define the camera properties here</span>
+<span class="c1"># ...</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">add_camera</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Camera1&quot;</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="n">camera</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+<span class="c1"># Update some properties of the camera here</span>
+<span class="c1"># ...</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">update_camera</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Camera1&quot;</span><span class="p">)</span> <span class="c1"># To set active the modifications in the Blender scene</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the camera to update.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.update_mesh">
+<span class="sig-name descname"><span class="pre">update_mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.update_mesh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.update_mesh" title="Link to this definition">#</a></dt>
+<dd><p>Update the mesh properties in the Blender scene.
+This method must be called after updating the mesh properties in the meshio.Mesh object.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">(</span><span class="n">Nb_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># Define the mesh properties here</span>
+<span class="c1"># ...</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">meshio</span><span class="o">.</span><span class="n">Mesh</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">cells_dict</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;triangle&quot;</span><span class="p">:</span> <span class="n">elements</span><span class="p">},</span> <span class="n">point_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;uvmap&quot;</span><span class="p">:</span> <span class="n">texture_coordinates</span><span class="p">})</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Mesh1&quot;</span><span class="p">,</span> <span class="n">mesh</span><span class="o">=</span><span class="n">mesh</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+<span class="c1"># Update some nodes of the mesh here</span>
+<span class="c1"># ...</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">update_mesh</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Mesh1&quot;</span><span class="p">)</span> <span class="c1"># To set active the modifications in the Blender scene</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a pattern is setted to the mesh, the uvmap are also updated.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The number of nodes must be unchanged !!!</p>
+<p>Furthermore, this method does not update the material properties of the mesh and the pattern image:</p>
+<ul class="simple">
+<li><p>To update the material properties, use the <a class="reference internal" href="#pyblenderSDIC.BlenderExperiment.add_mesh_material" title="pyblenderSDIC.BlenderExperiment.add_mesh_material"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.BlenderExperiment.add_mesh_material()</span></code></a> method again.</p></li>
+<li><p>To change the pattern image, use the <a class="reference internal" href="#pyblenderSDIC.BlenderExperiment.change_mesh_pattern" title="pyblenderSDIC.BlenderExperiment.change_mesh_pattern"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.BlenderExperiment.change_mesh_pattern()</span></code></a> method.</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the mesh to update.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.update_scene">
+<span class="sig-name descname"><span class="pre">update_scene</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.update_scene"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.update_scene" title="Link to this definition">#</a></dt>
+<dd><p>Update the Blender scene.
+This method must be called after adding or modifying any objects in the scene.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.update_spotlight">
+<span class="sig-name descname"><span class="pre">update_spotlight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.update_spotlight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.update_spotlight" title="Link to this definition">#</a></dt>
+<dd><p>Update the spotlight properties in the Blender scene.
+This method must be called after updating the spotlight properties in the SpotLight object.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">(</span><span class="n">Nb_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">spotlight</span> <span class="o">=</span> <span class="n">SpotLight</span><span class="p">()</span>
+<span class="c1"># Define the SpotLight properties here</span>
+<span class="c1"># ...</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">add_spotlight</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Spotlight1&quot;</span><span class="p">,</span> <span class="n">spotlight</span><span class="o">=</span><span class="n">spotlight</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+<span class="c1"># Update some nodes of the spotlight here</span>
+<span class="c1"># ...</span>
+<span class="n">experiment</span><span class="o">.</span><span class="n">update_spotlight</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Spotlight1&quot;</span><span class="p">)</span> <span class="c1"># To set active the modifications in the Blender scene</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method does not update the material properties of the spotlight.
+Only the position and rotation are updated.
+The number of nodes mustnot be changed.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the spotlight to update.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../api.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">API Reference</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="camera.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">pyblenderSDIC.Camera</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment._reset_blender"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment._reset_blender()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.add_camera"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.add_camera()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.add_mesh"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.add_mesh()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.add_mesh_material"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.add_mesh_material()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.add_mesh_pattern"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.add_mesh_pattern()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.add_spotlight"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.add_spotlight()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.change_mesh_pattern"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.change_mesh_pattern()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_active_camera"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_active_camera()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_camera"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_camera()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_camera_frames"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_camera_frames()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_camera_names"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_camera_names()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_mesh"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_mesh()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_mesh_frames"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_mesh_frames()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_mesh_names"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_mesh_names()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_spotlight"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_spotlight()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_spotlight_frames"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_spotlight_frames()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.remove_camera"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.remove_camera()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.remove_mesh"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.remove_mesh()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.remove_spotlight"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.remove_spotlight()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.render"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.render()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.set_active_camera"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.set_active_camera()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.set_active_frame"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.set_active_frame()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.set_camera_frames"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.set_camera_frames()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.set_default_background"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.set_default_background()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.set_mesh_frames"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.set_mesh_frames()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.set_spotlight_frames"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.set_spotlight_frames()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.update_camera"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.update_camera()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.update_mesh"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.update_mesh()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.update_scene"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.update_scene()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.update_spotlight"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.update_spotlight()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api_doc/blender_experiment.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025-%Y, Artezaru.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

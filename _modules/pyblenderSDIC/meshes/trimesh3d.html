@@ -1,0 +1,1754 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyblenderSDIC.meshes.trimesh3d &#8212; pyblenderSDIC 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyblenderSDIC/meshes/trimesh3d';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">pyblenderSDIC 1.0.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../usage.html">
+    Usage
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../usage.html">
+    Usage
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pyblenderSDIC.meshes.trimesh3d</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pyblenderSDIC.meshes.trimesh3d</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">meshio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">open3d</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.intersect_points</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntersectPoints</span>
+
+
+<div class="viewcode-block" id="TriMesh3D">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d.html#pyblenderSDIC.meshes.TriMesh3D">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TriMesh3D</span><span class="p">(</span><span class="n">meshio</span><span class="o">.</span><span class="n">Mesh</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a triangular 3D mesh with support for UV mapping and compatibility with the VTK format via `meshio`.</span>
+
+<span class="sd">    This class is a subclass of `meshio.Mesh` and is designed to handle triangular surface meshes</span>
+<span class="sd">    in 3D space. It includes support for texture mapping (UV coordinates) and visualization tools.</span>
+
+<span class="sd">    - Only triangular meshes are supported.</span>
+<span class="sd">    - UV coordinates should lie between 0 and 1.</span>
+
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        The number of nodes and elements are not designed to change after the mesh is created !</span>
+
+<span class="sd">    Mesh Structure</span>
+<span class="sd">    --------------</span>
+
+<span class="sd">    - ``points`` (alias ``nodes``): A NumPy array of shape (N, 3) representing the coordinates of N mesh nodes.</span>
+<span class="sd">    - ``cells_dict{&quot;triangle&quot;}`` (alias ``elements``): A NumPy array of shape (M, 3) representing M triangular elements defined by node indices.</span>
+<span class="sd">    - ``point_data``: A dictionary storing data associated with each point, such as UV coordinates.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        mesh.nodes         # numpy.ndarray of shape (N, 3)</span>
+<span class="sd">        mesh.elements      # numpy.ndarray of shape (M, 3)</span>
+<span class="sd">    </span>
+<span class="sd">    .. figure:: ../../../pyblenderSDIC/resources/doc/demi_cylinder_mesh.png</span>
+<span class="sd">        :width: 400</span>
+<span class="sd">        :align: center</span>
+
+<span class="sd">        Nodes and elements of a triangular mesh.</span>
+
+<span class="sd">    UV Mapping</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    UV coordinates can be used to apply textures on the mesh surface. They are stored in the point data </span>
+<span class="sd">    under the key ``uvmap``, with shape (N, 3). Only the first two dimensions are used (U, V). The third </span>
+<span class="sd">    dimension (Z) is filled with default values for VTK compatibility.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        mesh.uvmap         # numpy.ndarray of shape (N, 3)</span>
+<span class="sd">        mesh.get_uvmap2D() # numpy.ndarray of shape (N, 2) removing the Z dimension</span>
+<span class="sd">        mesh.set_uvmap2D(uvmap2d)  # Set UV 2D map</span>
+
+<span class="sd">    The UV coordinates represents the position of each node in the normalized texture space, where (0, 0) is the bottom-left corner and (1, 1) is the top-right corner.</span>
+<span class="sd">    By default, UV coordinates follow the **OpenGL convention**, which is also used by Blender and most 3D engines.</span>
+
+<span class="sd">    In this convention:</span>
+
+<span class="sd">    - :math:`uv = (0, 0)` corresponds to the bottom-left corner of the texture.</span>
+<span class="sd">    - :math:`uv = (1, 0)` corresponds to the bottom-right corner of the texture.</span>
+<span class="sd">    - :math:`uv = (0, 1)` corresponds to the top-left corner of the texture.</span>
+<span class="sd">    - :math:`uv = (1, 1)` corresponds to the top-right corner of the texture.</span>
+
+<span class="sd">    Instantiation</span>
+<span class="sd">    -------------</span>
+
+<span class="sd">    It is recommended to define only the ``points`` and ``cells`` when creating the mesh. You can later assign UV coordinates.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    points : array_like</span>
+<span class="sd">        Node coordinates of the mesh, shape (N, 3).</span>
+<span class="sd">    </span>
+<span class="sd">    cells : array_like</span>
+<span class="sd">        Triangle definitions, shape (M, 3), using zero-based node indices.</span>
+<span class="sd">    </span>
+<span class="sd">    point_data : dict, optional</span>
+<span class="sd">        Point data dictionary (e.g. UV maps, ...).</span>
+
+<span class="sd">    cell_data : dict, optional</span>
+<span class="sd">        Optional cell data dictionary.</span>
+
+<span class="sd">    field_data : dict, optional</span>
+<span class="sd">        Optional field data dictionary.</span>
+
+<span class="sd">    **kwargs</span>
+<span class="sd">        Additional keyword arguments passed to `meshio.Mesh`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    Create a triangular mesh with UV coordinates:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from pyblenderSDIC.meshes import TriMesh3D</span>
+
+<span class="sd">        nodes = numpy.array([</span>
+<span class="sd">            [0.0, 0.0, 0.0],</span>
+<span class="sd">            [1.0, 0.0, 0.0],</span>
+<span class="sd">            [0.0, 1.0, 0.0],</span>
+<span class="sd">            [0.0, 0.0, 1.0],</span>
+<span class="sd">            [1.0, 1.0, 1.0]</span>
+<span class="sd">        ])</span>
+
+<span class="sd">        elements = numpy.array([</span>
+<span class="sd">            [0, 2, 1],</span>
+<span class="sd">            [0, 3, 2],</span>
+<span class="sd">            [0, 1, 3],</span>
+<span class="sd">            [1, 4, 3],</span>
+<span class="sd">            [2, 3, 4],</span>
+<span class="sd">            [2, 4, 1]</span>
+<span class="sd">        ])</span>
+
+<span class="sd">        uvmap = numpy.array([</span>
+<span class="sd">            [0.0, 0.0],</span>
+<span class="sd">            [1.0, 0.0],</span>
+<span class="sd">            [0.0, 1.0],</span>
+<span class="sd">            [1.0, 1.0],</span>
+<span class="sd">            [0.5, 0.5]</span>
+<span class="sd">        ])</span>
+
+<span class="sd">        cells = {&quot;triangle&quot;: elements}</span>
+<span class="sd">        mesh = TriMesh3D(points=nodes, cells=cells)</span>
+<span class="sd">        mesh.uvmap = uvmap  # Automatically converts to (N, 3) with zero-padded Z</span>
+
+<span class="sd">    Save the mesh to a VTK file:</span>
+
+<span class="sd">    &gt;&gt;&gt; mesh.save_to_vtk(&quot;test_mesh.vtk&quot;)</span>
+
+<span class="sd">    Visualize the mesh using Open3D:</span>
+
+<span class="sd">    &gt;&gt;&gt; mesh.visualize()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">cells</span><span class="p">,</span> <span class="n">point_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cell_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">field_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">cells</span><span class="p">,</span> <span class="n">point_data</span><span class="p">,</span> <span class="n">cell_data</span><span class="p">,</span> <span class="n">field_data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;triangle&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cells_dict</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only triangular meshes are supported. Please provide a mesh with &#39;triangle&#39; elements.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;triangle&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The first cell type must be &#39;triangle&#39; because the class use self.cells[0] to access the elements.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ===========================================================</span>
+    <span class="c1"># I/O methods</span>
+    <span class="c1"># ===========================================================</span>
+<div class="viewcode-block" id="TriMesh3D.from_meshio">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.from_meshio.html#pyblenderSDIC.meshes.TriMesh3D.from_meshio">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_meshio</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">mesh</span><span class="p">:</span> <span class="n">meshio</span><span class="o">.</span><span class="n">Mesh</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TriMesh3D</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a TriMesh3D instance from a meshio.Mesh object.</span>
+
+<span class="sd">        The following fields are extracted:</span>
+
+<span class="sd">        - mesh.points → points</span>
+<span class="sd">        - mesh.cells → cells</span>
+<span class="sd">        - mesh.point_data → point_data</span>
+<span class="sd">        - mesh.cell_data → cell_data</span>
+<span class="sd">        - mesh.field_data → field_data</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            import meshio</span>
+<span class="sd">            from pyblenderSDIC.mesh import TriMesh3D</span>
+
+<span class="sd">            # Read the mesh from a file</span>
+<span class="sd">            mesh = meshio.read(&quot;path/to/mesh.vtk&quot;)</span>
+<span class="sd">            # Create a TriMesh3D instance from the meshio object</span>
+<span class="sd">            trimesh3d = TriMesh3D.from_meshio(mesh)</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            If a UV mapping is expected, it must be stored in `mesh.point_data[&quot;uvmap&quot;]` with shape (N, 3)</span>
+<span class="sd">            and values between 0 and 1. No automatic normalization is performed.</span>
+
+<span class="sd">        To ensure the mesh is well formatted, run the method :meth:`pyblenderSDIC.meshes.TriMesh3D.validate` after loading.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mesh : meshio.Mesh</span>
+<span class="sd">            The meshio.Mesh object to convert.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        TriMesh3D</span>
+<span class="sd">            The created TriMesh3D instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="n">mesh</span><span class="o">.</span><span class="n">points</span><span class="p">,</span> <span class="n">cells</span><span class="o">=</span><span class="n">mesh</span><span class="o">.</span><span class="n">cells</span><span class="p">,</span> <span class="n">point_data</span><span class="o">=</span><span class="n">mesh</span><span class="o">.</span><span class="n">point_data</span><span class="p">,</span> <span class="n">cell_data</span><span class="o">=</span><span class="n">mesh</span><span class="o">.</span><span class="n">cell_data</span><span class="p">,</span> <span class="n">field_data</span><span class="o">=</span><span class="n">mesh</span><span class="o">.</span><span class="n">field_data</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TriMesh3D.load_from_vtk">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.load_from_vtk.html#pyblenderSDIC.meshes.TriMesh3D.load_from_vtk">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_from_vtk</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TriMesh3D</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a mesh from a VTK file.</span>
+
+<span class="sd">        The VTK file must contain nodes, elements, and optionally UV mapping coordinates.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from pyblenderSDIC.meshes import TriMesh3D</span>
+<span class="sd">            # Load the mesh from a VTK file</span>
+<span class="sd">            trimesh3d = TriMesh3D.load_from_vtk(&quot;path/to/mesh.vtk&quot;)</span>
+
+<span class="sd">        To ensure the mesh is well formatted, run the method :meth:`pyblenderSDIC.meshes.TriMesh3D.validate` after loading.</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.save_to_vtk` for saving the mesh to a VTK file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filepath : str</span>
+<span class="sd">            Path to the VTK file to be loaded.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        TriMesh3D</span>
+<span class="sd">            The loaded mesh object.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the filepath is not a string.</span>
+<span class="sd">        FileNotFoundError</span>
+<span class="sd">            If the file does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The filepath must be a string.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Read the mesh from the VTK file using meshio</span>
+        <span class="n">mesh</span> <span class="o">=</span> <span class="n">meshio</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_meshio</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span></div>
+
+    
+
+<div class="viewcode-block" id="TriMesh3D.load_from_dict">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.load_from_dict.html#pyblenderSDIC.meshes.TriMesh3D.load_from_dict">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TriMesh3D</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a TriMesh3D instance from a dictionary.</span>
+
+<span class="sd">        The structure of the dictionary should be as provided by the :meth:`pyblenderSDIC.meshes.TriMesh3D.save_to_dict` method.</span>
+<span class="sd">        The other fields of the dictionary are ignored.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from pyblenderSDIC.meshes import TriMesh3D</span>
+
+<span class="sd">            mesh_dict = {</span>
+<span class="sd">                &quot;type&quot;: &quot;TriMesh3D [pyblenderSDIC]&quot;,</span>
+<span class="sd">                &quot;description&quot;: &quot;Description of the mesh&quot;,</span>
+<span class="sd">                &quot;nodes&quot;: [[0.1, 0.2, 0.1], [0.5, 0.6, 0.4], [0.1, 0.6, 0.2]],</span>
+<span class="sd">                &quot;elements&quot;: [[1], [2], [3]],</span>
+<span class="sd">                &quot;uvmap&quot;: [[0.1, 0.2], [0.5, 0.6], [0.1, 0.6]],</span>
+<span class="sd">            }</span>
+
+<span class="sd">            # Create a TriMesh3D instance from the dictionary</span>
+<span class="sd">            trimesh3d = TriMesh3D.load_from_dict(mesh_dict)</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.save_to_dict` for saving the mesh to a dictionary.</span>
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.load_from_json` for loading from a JSON file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : dict</span>
+<span class="sd">            A dictionary containing the mesh&#39;s data.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        TriMesh3D</span>
+<span class="sd">            The TriMesh3D instance.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the data is not a dictionary.</span>
+<span class="sd">        KeyError</span>
+<span class="sd">            If required keys are missing from the dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check for the input type</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data must be a dictionary.&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Extract the nodes, elements, and uvmap (if available)</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">])</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;elements&quot;</span><span class="p">])</span>
+        <span class="n">cells</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;triangle&quot;</span><span class="p">:</span> <span class="n">elements</span><span class="p">}</span>
+
+        <span class="c1"># Create the TriMesh3D instance</span>
+        <span class="n">mesh</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="n">nodes</span><span class="p">,</span> <span class="n">cells</span><span class="o">=</span><span class="n">cells</span><span class="p">)</span>
+
+        <span class="c1"># Check for the uvmap and set it if available</span>
+        <span class="n">uvmap</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uvmap&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">mesh</span><span class="o">.</span><span class="n">uvmap</span> <span class="o">=</span> <span class="n">uvmap</span>
+
+        <span class="k">return</span> <span class="n">mesh</span></div>
+
+    
+
+<div class="viewcode-block" id="TriMesh3D.load_from_json">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.load_from_json.html#pyblenderSDIC.meshes.TriMesh3D.load_from_json">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TriMesh3D</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a TriMesh3D instance from a JSON file.</span>
+
+<span class="sd">        The structure of the JSON file follows the :meth:`pyblenderSDIC.meshes.TriMesh3D.save_to_dict` method.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from pyblenderSDIC.meshes import TriMesh3D</span>
+
+<span class="sd">            # Load the mesh from a JSON file</span>
+<span class="sd">            trimesh3d = TriMesh3D.load_from_json(&quot;path/to/mesh.json&quot;)</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.save_to_json` for saving the mesh to a JSON file.</span>
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.load_from_dict` for loading from a dictionary.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filepath : str</span>
+<span class="sd">            The path to the JSON file.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        TriMesh3D</span>
+<span class="sd">            A TriMesh3D instance.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileNotFoundError</span>
+<span class="sd">            If the filepath is not a valid path.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Load the dictionary from the JSON file</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        
+        <span class="c1"># Create the Frame instance</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">load_from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+    
+
+
+    <span class="c1"># ============================================================</span>
+    <span class="c1"># Save methods</span>
+    <span class="c1"># ============================================================</span>
+<div class="viewcode-block" id="TriMesh3D.save_to_vtk">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.save_to_vtk.html#pyblenderSDIC.meshes.TriMesh3D.save_to_vtk">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_to_vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Export the mesh data to a VTK file.</span>
+
+<span class="sd">        The VTK file will include:</span>
+
+<span class="sd">        - Nodes and elements of the mesh.</span>
+<span class="sd">        - UV mapping coordinates, if present, as point data. The UV mapping will be stored in 3D space with a third dimension of zeros</span>
+<span class="sd">          to ensure compatibility with the VTK format.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            If the filepath does not end with &quot;.vtk&quot;, the extension will be added automatically.</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.load_from_vtk` for loading a mesh from a VTK file.    </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filepath : str</span>
+<span class="sd">            Path to the VTK file where the mesh will be saved.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the filepath is not a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The filepath must be a string.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Ensure the filepath ends with &quot;.vtk&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filepath</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.vtk&quot;</span><span class="p">):</span>
+            <span class="n">filepath</span> <span class="o">+=</span> <span class="s2">&quot;.vtk&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s2">&quot;vtk&quot;</span><span class="p">)</span></div>
+
+
+    
+<div class="viewcode-block" id="TriMesh3D.save_to_dict">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.save_to_dict.html#pyblenderSDIC.meshes.TriMesh3D.save_to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Export the TriMesh3D&#39;s data to a dictionary.</span>
+
+<span class="sd">        The structure of the dictionary is as follows:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;type&quot;: &quot;TriMesh3D [pyblenderSDIC]&quot;,</span>
+<span class="sd">                &quot;description&quot;: &quot;Description of the mesh&quot;,</span>
+<span class="sd">                &quot;nodes&quot;: [[0.1, 0.2, 0.1], [0.5, 0.6, 0.4], [0.1, 0.6, 0.2]],</span>
+<span class="sd">                &quot;elements&quot;: [[1], [2], [3]],</span>
+<span class="sd">                &quot;uvmap&quot;: [[0.1, 0.2], [0.5, 0.6], [0.1, 0.6]],</span>
+<span class="sd">            }</span>
+
+<span class="sd">        The other attributes of the mesh in ``point_data`` or ``cell_data`` are ignored.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        description : str, optional</span>
+<span class="sd">            A description of the mesh, by default &quot;&quot;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing the mesh&#39;s data.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the description is not a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check the description</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;description must be a string.&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Create the dictionary</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TriMesh3D [pyblenderSDIC]&quot;</span><span class="p">,}</span>
+
+        <span class="c1"># Add the description if it&#39;s not empty</span>
+        <span class="k">if</span> <span class="n">description</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">description</span>
+        
+        <span class="c1"># Add the nodes and elements</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;elements&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="c1"># Add the UV mapping if it exists</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">uvmap</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uvmap</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+
+<div class="viewcode-block" id="TriMesh3D.save_to_json">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.save_to_json.html#pyblenderSDIC.meshes.TriMesh3D.save_to_json">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Export the TriMesh3D&#39;s data to a JSON file.</span>
+
+<span class="sd">        The structure of the JSON file follows the :meth:`pyblenderSDIC.meshes.TriMesh3D.save_to_dict` method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filepath : str</span>
+<span class="sd">            The path to the JSON file.</span>
+<span class="sd">        </span>
+<span class="sd">        description : str, optional</span>
+<span class="sd">            A description of the mesh, by default &quot;&quot;.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileNotFoundError</span>
+<span class="sd">            If the filepath is not a valid path.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create the dictionary</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_to_dict</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
+
+        <span class="c1"># Save the dictionary to a JSON file</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+
+
+    
+    <span class="c1"># ===========================================================</span>
+    <span class="c1"># Properties and setters</span>
+    <span class="c1"># ===========================================================</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set the positions of the mesh nodes.</span>
+
+<span class="sd">        The node coordinates are stored in the ``points`` attribute of the mesh</span>
+<span class="sd">        and have shape (N, 3), where N is the number of nodes.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # Get the nodes coordinates</span>
+<span class="sd">            nodes = trimesh3d.nodes  # shape (N, 3)</span>
+
+<span class="sd">            # Set the nodes coordinates</span>
+<span class="sd">            trimesh3d.nodes = new_nodes</span>
+<span class="sd">            trimesh3d.nodes[5, 0] = 42  # The 6-th node&#39;s x-coordinate is set to 42</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This property uses ``numpy.asarray`` on the internal ``points`` array.</span>
+<span class="sd">            As a result, any modification to the returned or setted array directly affects the mesh data.</span>
+<span class="sd">            To avoid unintentional updates, assign a copy instead or use :</span>
+
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.get_nodes` to get a copy of the nodes.</span>
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.set_nodes` to set a copy of the nodes.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            The node coordinates as a (N, 3) array of float64.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">nodes</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INTERNAL CLASS ERROR] Nodes are not well formatted. Expected shape (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="si">}</span><span class="s2">, 3).&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">nodes</span>
+
+    <span class="nd">@nodes</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">nodes</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nodes must have shape (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="si">}</span><span class="s2">, 3).&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">nodes</span>
+
+<div class="viewcode-block" id="TriMesh3D.get_nodes">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.get_nodes.html#pyblenderSDIC.meshes.TriMesh3D.get_nodes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the nodes of the mesh as a copy.</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :attr:`pyblenderSDIC.meshes.TriMesh3D.nodes` for the original nodes array.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            The nodes of the mesh as a (N, 3) array of float64.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="TriMesh3D.set_nodes">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.set_nodes.html#pyblenderSDIC.meshes.TriMesh3D.set_nodes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the nodes of the mesh as a copy.</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :attr:`pyblenderSDIC.meshes.TriMesh3D.nodes` for the original nodes array.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nodes : numpy.ndarray</span>
+<span class="sd">            The new nodes to set, as a (N, 3) array of float64.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># First use the setter to check the input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span> <span class="o">=</span> <span class="n">nodes</span>
+        <span class="c1"># Then copy the data to avoid unintentional updates if the input was a view</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">elements</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set the mesh elements (triangles).</span>
+
+<span class="sd">        The elements are stored in the ``cells_dict[&#39;triangle&#39;]`` of the mesh and represent the connectivity </span>
+<span class="sd">        between nodes in the mesh. They are expected to be triangles, represented as </span>
+<span class="sd">        indices into the node array. The array has shape (M, 3), where M is the number of elements.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # Get the elements (triangle connectivity)</span>
+<span class="sd">            elements = trimesh3d.elements  # shape (M, 3)</span>
+
+<span class="sd">            # Set the elements (as integer indices)</span>
+<span class="sd">            trimesh3d.elements = new_elements</span>
+<span class="sd">            trimesh3d.elements[0, 1] = 42  # The second node of the first element is set to the node with index 42</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This property uses ``numpy.asarray`` on the ``cells[0].data`` attribute.</span>
+<span class="sd">            Any modification to the returned array will directly affect the mesh data.</span>
+<span class="sd">            To avoid unintentional updates, assign a copy instead or use :</span>
+
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.get_elements` to get a copy of the elements.</span>
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.set_elements` to set a copy of the elements.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            The connectivity array of elements as integers of shape (M, 3).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">elements</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nelements</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INTERNAL CLASS ERROR] Elements are not well formatted. Expected shape (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Nelements</span><span class="si">}</span><span class="s2">, 3).&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">elements</span>
+
+    <span class="nd">@elements</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">elements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elements</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">elements</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nelements</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elements must have shape (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Nelements</span><span class="si">}</span><span class="s2">, 3).&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">elements</span>
+
+<div class="viewcode-block" id="TriMesh3D.get_elements">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.get_elements.html#pyblenderSDIC.meshes.TriMesh3D.get_elements">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_elements</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the elements of the mesh as a copy.</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :attr:`pyblenderSDIC.meshes.TriMesh3D.elements` for the original elements array.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            The elements of the mesh as a (M, 3) array of integers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="TriMesh3D.set_elements">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.set_elements.html#pyblenderSDIC.meshes.TriMesh3D.set_elements">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_elements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elements</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the elements of the mesh as a copy.</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :attr:`pyblenderSDIC.meshes.TriMesh3D.elements` for the original elements array.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        elements : numpy.ndarray</span>
+<span class="sd">            The new elements to set, as a (M, 3) array of integers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># First use the setter to check the input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="o">=</span> <span class="n">elements</span>
+        <span class="c1"># Then copy the data to avoid unintentional updates if the input was a view</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">uvmap</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set the UV mapping coordinates of the mesh.</span>
+
+<span class="sd">        The UV coordinates are stored in the ``point_data`` dictionary under the key &quot;uvmap&quot;.</span>
+<span class="sd">        They must lie within the range [0, 1] and have shape (N, 3), where N is the number of nodes.</span>
+<span class="sd">        The third column is typically filled with zeros for VTK compatibility.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # Get the UV mapping coordinates</span>
+<span class="sd">            uvmap = trimesh3d.uvmap  # shape (N, 3)</span>
+
+<span class="sd">            # Set the UV mapping coordinates</span>
+<span class="sd">            trimesh3d.uvmap = new_uvmap</span>
+<span class="sd">            trimesh3d.uvmap[5, 0] = 0.5  # The 6-th node&#39;s U-coordinate is set to 0.5</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This property uses ``numpy.asarray`` on the ``point_data[&quot;uvmap&quot;]`` attribute.</span>
+<span class="sd">            Any modification to the returned array directly affects the mesh data.</span>
+<span class="sd">            To avoid unintentional updates, assign a copy instead or use :</span>
+
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.get_uvmap2D` to get a copy of the UV mapping.</span>
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.set_uvmap2D` to set a copy of the UV mapping.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Optional[numpy.ndarray]</span>
+<span class="sd">            The UV mapping coordinates as a (N, 3) array of float64.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="s2">&quot;uvmap&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">uvmap</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uvmap</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INTERNAL CLASS ERROR] UV mapping coordinates are not well formatted. Expected shape (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="si">}</span><span class="s2">, 3).&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">uvmap</span>
+
+    <span class="nd">@uvmap</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">uvmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uvmap</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">uvmap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;uvmap&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">]</span>
+            <span class="k">return</span>
+
+        <span class="n">uvmap</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">uvmap</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">((</span><span class="n">uvmap</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">uvmap</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;UV mapping coordinates must be between 0 and 1.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uvmap</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;UV mapping coordinates must have shape (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="si">}</span><span class="s2">, 3).&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uvmap</span>
+
+<div class="viewcode-block" id="TriMesh3D.get_uvmap">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.get_uvmap.html#pyblenderSDIC.meshes.TriMesh3D.get_uvmap">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_uvmap</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the UV mapping coordinates of the mesh as a copy.</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :attr:`pyblenderSDIC.meshes.TriMesh3D.uvmap` for the original UV mapping coordinates.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            The UV mapping coordinates as a (N, 3) array of float64.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uvmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uvmap</span>
+        <span class="k">if</span> <span class="n">uvmap</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">uvmap</span> <span class="o">=</span> <span class="n">uvmap</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">uvmap</span></div>
+
+    
+<div class="viewcode-block" id="TriMesh3D.set_uvmap">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.set_uvmap.html#pyblenderSDIC.meshes.TriMesh3D.set_uvmap">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_uvmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uvmap</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the UV mapping coordinates of the mesh as a copy.</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :attr:`pyblenderSDIC.meshes.TriMesh3D.uvmap` for the original UV mapping coordinates.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        uvmap : numpy.ndarray</span>
+<span class="sd">            The new UV mapping coordinates to set, as a (N, 3) array of float64.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># First use the setter to check the input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uvmap</span> <span class="o">=</span> <span class="n">uvmap</span>
+        <span class="c1"># Then copy the data to avoid unintentional updates if the input was a view</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">uvmap</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Nnodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the number of nodes in the mesh.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            The number of nodes in the mesh.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Nelements</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the number of elements in the mesh.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            The number of elements in the mesh.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+    <span class="c1"># ============================================================</span>
+    <span class="c1"># Special get and set methods</span>
+    <span class="c1"># ============================================================</span>
+<div class="viewcode-block" id="TriMesh3D.get_uvmap2D">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.get_uvmap2D.html#pyblenderSDIC.meshes.TriMesh3D.get_uvmap2D">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_uvmap2D</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the 2D UV mapping coordinates of the mesh.</span>
+
+<span class="sd">        This returns a copy of the first two columns of the full 3D UV map.</span>
+<span class="sd">        The values must lie within the range [0, 1], and the shape is (N, 2),</span>
+<span class="sd">        where N is the number of nodes.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # Get the 2D UV mapping coordinates</span>
+<span class="sd">            uvmap2D = trimesh3d.get_uvmap2D()  # shape (N, 2)</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This method returns a **copy** of the internal UV data.</span>
+<span class="sd">            Any modification to the returned array will **not** affect the mesh.</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :meth:`set_uvmap2D` to set the 2D UV mapping coordinates.</span>
+<span class="sd">            - :attr:`uvmap` to access the full 3D UV mapping coordinates.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Optional[numpy.ndarray]</span>
+<span class="sd">            A copy of the 2D UV coordinates as a (N, 2) array of float64.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">uvmap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">uvmap</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+
+<div class="viewcode-block" id="TriMesh3D.set_uvmap2D">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.set_uvmap2D.html#pyblenderSDIC.meshes.TriMesh3D.set_uvmap2D">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_uvmap2D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uvmap2D</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the 2D UV mapping coordinates of the mesh.</span>
+
+<span class="sd">        The input array must have shape (N, 2), where N is the number of nodes,</span>
+<span class="sd">        and values should lie within the range [0, 1].</span>
+
+<span class="sd">        Internally, this method builds a 3D UV array with a third column of zeros</span>
+<span class="sd">        for compatibility with the full UV map format used in VTK.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # Set the 2D UV mapping coordinates</span>
+<span class="sd">            trimesh3d.set_uvmap2D(new_uvmap2D)</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            A **copy** of the input array is made during the assignment.</span>
+<span class="sd">            Therefore, any modification of the original array after setting</span>
+<span class="sd">            will **not** affect the mesh.</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :meth:`get_uvmap2D` to retrieve the 2D UV mapping coordinates.</span>
+<span class="sd">            - :attr:`uvmap` to access the full 3D UV mapping coordinates.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_uvmap2D : numpy.ndarray</span>
+<span class="sd">            A (N, 2) array of float64 representing UV mapping coordinates in [0, 1].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">uvmap2D</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">uvmap</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span>
+
+        <span class="n">uvmap2D</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">uvmap2D</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">((</span><span class="n">uvmap2D</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">uvmap2D</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;UV mapping coordinates must be between 0 and 1.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uvmap2D</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;UV mapping coordinates 2D must have shape (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="si">}</span><span class="s2">, 2).&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Add a third component of zeros for compatibility with VTK</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uvmap</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">uvmap2D</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">uvmap2D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)))</span></div>
+
+
+    <span class="c1"># ============================================================</span>
+    <span class="c1"># Validation methods</span>
+    <span class="c1"># ============================================================</span>
+<div class="viewcode-block" id="TriMesh3D.validate">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.validate.html#pyblenderSDIC.meshes.TriMesh3D.validate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate the mesh.</span>
+
+<span class="sd">        The method checks if the nodes, elements, UV mapping coordinates are correct shapes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Shape validation for nodes</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Nodes must have shape (N, 3).&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Shape validation for elements</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nelements</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Elements must have shape (M, 3).&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Checking UV mapping if it exists</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;uvmap&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;UV mapping coordinates must have shape (N, 3).&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">])):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;UV mapping coordinates must be finite.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;UV mapping coordinates must be between 0 and 1.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Checking if the nodes are finite</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Nodes must be finite.&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Checking if the elements are positive integers from 0 to Nnodes - 1</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nnodes</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Elements must be positive integers from 0 to Nnodes - 1.&quot;</span><span class="p">)</span></div>
+
+    
+    <span class="c1"># ============================================================</span>
+    <span class="c1"># Extracting sub meshes at a specified frame and visualization</span>
+    <span class="c1"># ============================================================</span>
+<div class="viewcode-block" id="TriMesh3D.construct_open3d_mesh">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.construct_open3d_mesh.html#pyblenderSDIC.meshes.TriMesh3D.construct_open3d_mesh">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">construct_open3d_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">open3d</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">TriangleMesh</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct an Open3D mesh from the TriMesh3D object.</span>
+
+<span class="sd">        This method creates an Open3D mesh object using the nodes and elements</span>
+<span class="sd">        of the TriMesh3D object. </span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            The open3d mesh is independent of the TriMesh3D object.</span>
+<span class="sd">            Modifications to the Open3D mesh will not affect the TriMesh3D object and vice versa.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        open3d.t.geometry.TriangleMesh</span>
+<span class="sd">            An Open3D triangle mesh object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the nodes </span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nodes</span><span class="p">()</span>
+
+        <span class="c1"># Create Open3D mesh</span>
+        <span class="n">o3d_mesh</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">TriangleMesh</span><span class="p">()</span>
+        <span class="n">o3d_mesh</span><span class="o">.</span><span class="n">vertex</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">o3d_mesh</span><span class="o">.</span><span class="n">triangle</span><span class="o">.</span><span class="n">indices</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">o3d_mesh</span></div>
+
+    
+
+<div class="viewcode-block" id="TriMesh3D.visualize">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.visualize.html#pyblenderSDIC.meshes.TriMesh3D.visualize">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visualize</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">element_highlighted</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">intersect_points</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">IntersectPoints</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Visualize the mesh using Open3D.</span>
+
+<span class="sd">        This method displays the 3D mesh using Open3D&#39;s interactive viewer.</span>
+<span class="sd">        Optionally, it can highlight specific mesh elements (triangles) in blue, and show 3D</span>
+<span class="sd">        intersection points in red.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # Show mesh with highlighted elements and intersection points</span>
+<span class="sd">            trimesh3d.open3d_show(</span>
+<span class="sd">                frame=0,</span>
+<span class="sd">                element_highlighted=[42, 77],</span>
+<span class="sd">                intersect_points=intersect</span>
+<span class="sd">            )</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            - Highlighted triangles are shown in ligth blue.</span>
+<span class="sd">            - Intersection points are visualized as **red**.</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.TriMesh3D.compute_intersect_points` to compute the intersection points.</span>
+<span class="sd">            - :meth:`pyblenderSDIC.meshes.IntersectPoints` for the IntersectPoints class.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        element_highlighted : int or sequence of int, optional</span>
+<span class="sd">            Indices of mesh elements (triangles) to color in blue.</span>
+
+<span class="sd">        intersect_points : IntersectPoints, optional</span>
+<span class="sd">            3D intersection points to show in red. Only valid entries are displayed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create the geometry</span>
+        <span class="n">geometries</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Extracted the Open3D mesh</span>
+        <span class="n">mesh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_open3d_mesh</span><span class="p">()</span>
+
+        <span class="c1"># Extracted the elements to be colored</span>
+        <span class="k">if</span> <span class="n">element_highlighted</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">element_highlighted</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element_highlighted</span><span class="p">,</span> <span class="n">Integral</span><span class="p">):</span>
+            <span class="n">element_highlighted</span> <span class="o">=</span> <span class="p">[</span><span class="n">element_highlighted</span><span class="p">]</span>
+        <span class="n">element_highlighted</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">element_highlighted</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">element_highlighted</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">element_highlighted</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">element_highlighted</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span><span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">element_highlighted</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nelements</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;element_highlighted must be valid element indices.&quot;</span><span class="p">)</span>
+        
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nelements</span><span class="p">)</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">Nelements</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span> <span class="c1"># Default color for elements (gray)</span>
+        <span class="n">colors</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">element_highlighted</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>  <span class="c1"># Light blue for highlighted elements</span>
+        <span class="n">mesh</span><span class="o">.</span><span class="n">triangle</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+        <span class="c1"># Add the mesh to the geometries</span>
+        <span class="n">geometries</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="n">mesh</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Colored Elements&quot;</span>
+        <span class="p">})</span>
+
+        <span class="c1"># Extract the edges of the mesh</span>
+        <span class="n">triangles</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">triangle</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">Nelements</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">triangles</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">triangles</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">triangles</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">triangles</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">triangles</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">triangles</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Create Open3D LineSet for edges</span>
+        <span class="n">lineset</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">LineSet</span><span class="p">()</span>
+        <span class="n">lineset</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">indices</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">lineset</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">vertex</span><span class="o">.</span><span class="n">positions</span>
+        <span class="n">lineset</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+        <span class="c1"># Add the lineset to the geometries</span>
+        <span class="n">geometries</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="n">lineset</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Mesh Edges&quot;</span>
+        <span class="p">})</span>
+
+        <span class="c1"># Create PointCloud for intersection points</span>
+        <span class="k">if</span> <span class="n">intersect_points</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_intersect_points_coordinates</span><span class="p">(</span><span class="n">intersect_points</span><span class="p">)</span>
+            <span class="n">point_cloud</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">PointCloud</span><span class="p">()</span>
+            <span class="n">point_cloud</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Dtype</span><span class="o">.</span><span class="n">Float32</span><span class="p">)</span>
+            <span class="n">point_cloud</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">tile</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">(</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Dtype</span><span class="o">.</span><span class="n">Float32</span><span class="p">)</span>  <span class="c1"># Blue color for points</span>
+            
+            <span class="c1"># Add the point cloud to the geometries</span>
+            <span class="n">geometries</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="n">point_cloud</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Intersection Points&quot;</span>
+            <span class="p">})</span>
+            
+        <span class="c1"># Launch Open3D viewer</span>
+        <span class="n">open3d</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">geometries</span><span class="p">,</span> <span class="n">point_size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span></div>
+
+        
+    <span class="c1"># ============================================================</span>
+    <span class="c1"># Rays and intersections</span>
+    <span class="c1"># ============================================================</span>
+<div class="viewcode-block" id="TriMesh3D.open3d_cast_ray">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.open3d_cast_ray.html#pyblenderSDIC.meshes.TriMesh3D.open3d_cast_ray">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">open3d_cast_ray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rays</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the intersection of rays with a given mesh using Open3D.</span>
+
+<span class="sd">        This method uses Open3D&#39;s raycasting capabilities to find the intersection points</span>
+<span class="sd">        of rays with the mesh.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # Define ray origins and directions</span>
+<span class="sd">            rays_origins = numpy.array([[0, 0, 0], [1, 1, 1]]) # shape (L, 3)</span>
+<span class="sd">            rays_directions = numpy.array([[0, 0, 1], [1, 1, 0]]) # shape (L, 3)</span>
+<span class="sd">            rays = numpy.hstack((rays_origins, rays_directions)) # shape (L, 6)</span>
+
+<span class="sd">            # Perform ray-mesh intersection</span>
+<span class="sd">            ray_intersect = trimesh3d.open3d_cast_ray(rays)</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            Documentation of Open3D&#39;s raycasting : </span>
+<span class="sd">            https://www.open3d.org/html/python_api/open3d.t.geometry.RaycastingScene.html#open3d.t.geometry.RaycastingScene.cast_rays</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        rays: numpy.ndarray</span>
+<span class="sd">            A (..., 6) array of float32. Each component contains the position and the direction of a ray in the format [x0, y0, z0, dx, dy, dz].</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ray_intersect : Dict</span>
+<span class="sd">            The output of the raycasting operation by Open3D. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Extract the Open3D mesh for the specified frame</span>
+        <span class="n">o3d_mesh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_open3d_mesh</span><span class="p">()</span>
+
+        <span class="c1"># Convert rays_origins and rays_directions to numpy arrays</span>
+        <span class="n">rays</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rays</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rays</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Rays must have shape (..., 6).&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Convert numpy arrays to Open3D point clouds (ray origins and directions)</span>
+        <span class="n">rays_o3d</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">rays</span><span class="p">,</span> <span class="n">open3d</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># Shape: (..., 6)</span>
+
+        <span class="c1"># Create the scene and add the mesh</span>
+        <span class="n">raycaster</span> <span class="o">=</span> <span class="n">open3d</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">RaycastingScene</span><span class="p">()</span>
+        <span class="n">raycaster</span><span class="o">.</span><span class="n">add_triangles</span><span class="p">(</span><span class="n">o3d_mesh</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">raycaster</span><span class="o">.</span><span class="n">cast_rays</span><span class="p">(</span><span class="n">rays_o3d</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TriMesh3D.compute_intersect_points">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.compute_intersect_points.html#pyblenderSDIC.meshes.TriMesh3D.compute_intersect_points">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_intersect_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rays</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IntersectPoints</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the intersection of rays with the mesh.</span>
+
+<span class="sd">        This method uses Open3D to perform ray-mesh intersection and returns the intersection points</span>
+<span class="sd">        and the corresponding triangle indices as an `IntersectPoints` object.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # Define ray origins and directions</span>
+<span class="sd">            rays_origins = numpy.array([[0, 0, 0], [1, 1, 1]]) # shape (L, 3)</span>
+<span class="sd">            rays_directions = numpy.array([[0, 0, 1], [1, 1, 0]]) # shape (L, 3)</span>
+<span class="sd">            rays = numpy.hstack((rays_origins, rays_directions)) # shape (L, 6)</span>
+
+<span class="sd">            # Perform ray-mesh intersection</span>
+<span class="sd">            intersect_points = trimesh3d.compute_intersect_points(rays)</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            The returned :class:`IntersectPoints` contains:</span>
+
+<span class="sd">            - ``uv``: A (..., 2) array of barycentric coordinates (u, v). If a ray misses the mesh, the entry is [nan, nan].</span>
+<span class="sd">            - ``id``: A (...) array of triangle indices hit by each ray. If a ray misses, the index is set to -1.</span>
+
+<span class="sd">            The barycentric coordinates are such that:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                A = nodes[element[0], :]</span>
+<span class="sd">                B = nodes[element[1], :]</span>
+<span class="sd">                C = nodes[element[2], :]</span>
+
+<span class="sd">                coordinates = (1 - u - v) * A + u * B + v * C</span>
+
+<span class="sd">        .. seealso::</span>
+
+<span class="sd">            - :meth:`open3d_cast_ray` for the underlying Open3D implementation.</span>
+<span class="sd">            - :class:`IntersectPoints` for the output type.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        rays : numpy.ndarray</span>
+<span class="sd">            An array of shape (..., 6) containing the ray origins and directions, in the form</span>
+<span class="sd">            [x0, y0, z0, dx, dy, dz].</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        IntersectPoints</span>
+<span class="sd">            An object containing barycentric coordinates and triangle indices of the intersections.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Perform ray-mesh intersection using Open3D</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">open3d_cast_ray</span><span class="p">(</span><span class="n">rays</span><span class="p">)</span>
+
+        <span class="c1"># Initialize the output arrays</span>
+        <span class="n">rays</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rays</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">barycentric_coords</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="o">*</span><span class="n">rays</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">element_indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="o">*</span><span class="n">rays</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="c1"># Extract the intersection points</span>
+        <span class="n">intersect_true</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;t_hit&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isfinite</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">barycentric_coords</span><span class="p">[</span><span class="n">intersect_true</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;primitive_uvs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)[</span><span class="n">intersect_true</span><span class="p">]</span>
+        <span class="n">element_indices</span><span class="p">[</span><span class="n">intersect_true</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;primitive_ids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)[</span><span class="n">intersect_true</span><span class="p">]</span>
+
+        <span class="c1"># Construct the output</span>
+        <span class="n">intersect_points</span> <span class="o">=</span> <span class="n">IntersectPoints</span><span class="p">(</span><span class="n">barycentric_coords</span><span class="p">,</span> <span class="n">element_indices</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">intersect_points</span></div>
+
+    
+
+<div class="viewcode-block" id="TriMesh3D.compute_intersect_points_coordinates">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.compute_intersect_points_coordinates.html#pyblenderSDIC.meshes.TriMesh3D.compute_intersect_points_coordinates">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_intersect_points_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intersect_points</span><span class="p">:</span> <span class="n">IntersectPoints</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the 3D coordinates of intersection points from barycentric data.</span>
+
+<span class="sd">        This method reconstructs the 3D position of the intersection points using the barycentric</span>
+<span class="sd">        coordinates and the triangle indices contained in the given :class:`IntersectPoints` object.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            intersect_points = trimesh3d.compute_intersect_points(rays)</span>
+<span class="sd">            coords = trimesh3d.compute_intersect_points_coordinates(intersect_points)</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            This method expects barycentric coordinates (u, v), with:</span>
+
+<span class="sd">            - u: weight for vertex B</span>
+<span class="sd">            - v: weight for vertex C</span>
+<span class="sd">            - w = 1 - u - v: weight for vertex A</span>
+
+<span class="sd">            The corresponding 3D coordinates are computed as:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                coordinates = w * A + u * B + v * C</span>
+
+<span class="sd">            Where A, B, and C are the vertices of the intersected triangle in the given frame.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        intersect_points : IntersectPoints</span>
+<span class="sd">            An object containing barycentric coordinates and triangle indices.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            An array of shape (..., 3) containing the 3D coordinates of the intersection points.</span>
+<span class="sd">            Points with no intersection are returned as [nan, nan, nan].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check the shape of the intersect_points</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">intersect_points</span><span class="p">,</span> <span class="n">IntersectPoints</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;intersect_points must be an instance of IntersectPoints.&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Flatten everything to 1D</span>
+        <span class="n">flat_bary</span> <span class="o">=</span> <span class="n">intersect_points</span><span class="o">.</span><span class="n">uv</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># Alias of intersect_points.barycentric_coordinates</span>
+        <span class="n">flat_idx</span> <span class="o">=</span> <span class="n">intersect_points</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Alias of intersect_points.element_indices</span>
+
+        <span class="c1"># Initialize output</span>
+        <span class="n">flat_points</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">flat_idx</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+        <span class="c1"># Filter valid hits</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">flat_idx</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+        <span class="n">valid_idx</span> <span class="o">=</span> <span class="n">flat_idx</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">flat_bary</span><span class="p">[</span><span class="n">valid</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">flat_bary</span><span class="p">[</span><span class="n">valid</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">u</span> <span class="o">-</span> <span class="n">v</span>
+
+        <span class="c1"># Get triangle vertices</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nodes</span><span class="p">()</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+
+        <span class="c1"># Compute coordinates</span>
+        <span class="n">flat_points</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">A</span> <span class="o">+</span> <span class="n">u</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span> <span class="o">+</span> <span class="n">v</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">C</span>
+
+        <span class="c1"># Reshape to original shape</span>
+        <span class="n">output_shape</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">intersect_points</span><span class="o">.</span><span class="n">uv</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">flat_points</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output_shape</span><span class="p">)</span></div>
+
+    
+
+<div class="viewcode-block" id="TriMesh3D.compute_element_normals">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.compute_element_normals.html#pyblenderSDIC.meshes.TriMesh3D.compute_element_normals">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_element_normals</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the normals of the elements in the mesh.</span>
+
+<span class="sd">        This method computes the normals of the elements in the mesh using the</span>
+<span class="sd">        cross product of two edges of each triangle. The normals are normalized</span>
+<span class="sd">        to unit length.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            normals = trimesh3d.compute_elements_normals()</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            A (M, 3) array of float64 containing the normals of the elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the nodes</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nodes</span><span class="p">()</span>
+
+        <span class="c1"># Compute the vectors for each triangle</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>
+
+        <span class="c1"># Compute two edges of each triangle</span>
+        <span class="n">AB</span> <span class="o">=</span> <span class="n">B</span> <span class="o">-</span> <span class="n">A</span>
+        <span class="n">AC</span> <span class="o">=</span> <span class="n">C</span> <span class="o">-</span> <span class="n">A</span>
+
+        <span class="c1"># Compute the cross product to get the normal vector</span>
+        <span class="n">normals</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">AB</span><span class="p">,</span> <span class="n">AC</span><span class="p">)</span>
+
+        <span class="c1"># Normalize the normals to unit length</span>
+        <span class="n">norms</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">normals</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">norms</span><span class="p">[</span><span class="n">norms</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-10</span>
+
+        <span class="n">normals</span> <span class="o">/=</span> <span class="n">norms</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">normals</span></div>
+
+    
+
+<div class="viewcode-block" id="TriMesh3D.compute_element_centroids">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.compute_element_centroids.html#pyblenderSDIC.meshes.TriMesh3D.compute_element_centroids">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_element_centroids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the centroids of the elements in the mesh.</span>
+
+<span class="sd">        This method computes the centroids of the elements in the mesh by averaging</span>
+<span class="sd">        the coordinates of their vertices.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            centroids = trimesh3d.compute_elements_centroids()</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            A (M, 3) array of float64 containing the centroids of the elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the nodes</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nodes</span><span class="p">()</span>
+
+        <span class="c1"># Compute the centroids by averaging the vertices of each triangle</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span> <span class="o">+</span> <span class="n">C</span><span class="p">)</span> <span class="o">/</span> <span class="mf">3.0</span></div>
+
+    
+
+<div class="viewcode-block" id="TriMesh3D.compute_element_areas">
+<a class="viewcode-back" href="../../../api_doc/trimesh3d_generated/pyblenderSDIC.meshes.TriMesh3D.compute_element_areas.html#pyblenderSDIC.meshes.TriMesh3D.compute_element_areas">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_element_areas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the areas of the elements in the mesh.</span>
+
+<span class="sd">        This method computes the areas of the elements in the mesh using the</span>
+<span class="sd">        cross product of two edges of each triangle.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            areas = trimesh3d.compute_elements_areas()</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            A (M,) array of float64 containing the areas of the elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the nodes</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nodes</span><span class="p">()</span>
+
+        <span class="c1"># Compute the vectors for each triangle</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>
+
+        <span class="c1"># Compute two edges of each triangle</span>
+        <span class="n">AB</span> <span class="o">=</span> <span class="n">B</span> <span class="o">-</span> <span class="n">A</span>
+        <span class="n">AC</span> <span class="o">=</span> <span class="n">C</span> <span class="o">-</span> <span class="n">A</span>
+
+        <span class="c1"># Compute the cross product to get the area vector</span>
+        <span class="n">areas</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">AB</span><span class="p">,</span> <span class="n">AC</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+        <span class="k">return</span> <span class="n">areas</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025-%Y, Artezaru.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
