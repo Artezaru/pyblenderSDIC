@@ -2,4 +2,5 @@ numpy
 meshio
 open3d
 matplotlib
+opencv-python-headless
 py3dframe @ git+https://github.com/Artezaru/py3dframe.git

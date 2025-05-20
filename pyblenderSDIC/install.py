@@ -7,6 +7,8 @@ def install_packages() -> None:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy"])
     subprocess.check_call([sys.executable, "-m", "pip", "install", "meshio"])
     subprocess.check_call([sys.executable, "-m", "pip", "install", "open3d"])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "matplotlib"])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "opencv-python-headless"])
     print("Packages installed successfully.")
 
     # Test imports
@@ -18,6 +20,10 @@ def install_packages() -> None:
     print("open3d imported successfully.")
     import py3dframe
     print("py3dframe imported successfully.")
+    import cv2
+    print("opencv-python-headless imported successfully.")
+    import matplotlib
+    print("matplotlib imported successfully.")
 
 
 
