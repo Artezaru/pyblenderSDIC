@@ -24,7 +24,7 @@ include = ["pyblenderSDIC", "pyblenderSDIC*"]
 exclude = ["laboratory", "laboratory.*", "tests", "tests*", "examples", "examples*"]
 
 [tool.setuptools.package-data]
-"pyblenderSDIC.ressources" = ["*"]
+"pyblenderSDIC.resources" = ["*"]
 
 [project.scripts]
 pyblenderSDIC = "pyblenderSDIC.__main__:__main__"
