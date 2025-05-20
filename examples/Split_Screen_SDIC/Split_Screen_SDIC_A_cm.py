@@ -7,7 +7,7 @@ from py3dframe import Frame
 
 from pyblenderSDIC import Camera, SpotLight, BlenderExperiment
 
-from pyblenderSDIC.meshes import create_axisymmetric_mesh, create_xy_heightmap_mesh
+from pyblenderSDIC.meshes import TriMesh3D, create_axisymmetric_mesh, create_xy_heightmap_mesh
 from pyblenderSDIC.materials import MaterialBSDF, get_iron_material, get_copper_material, get_mirror_material
 from pyblenderSDIC.patterns import create_speckle_BW_image
 
@@ -21,15 +21,12 @@ Realistic distance are also used.
 To observe the cylinder, we use only one camera placed at around 4 meters from the cylinder.
 The camera is fixed in the scene and we want to acquire two points of view of the same object in one image.
 
-To achive this, we use 4 mirrors placed to observe the cylinder from two different angles.
+To achive this, we use 2 mirrors placed to observe the cylinder from two different angles.
 
-Camera -> Mirror B1 -> Mirror A1 -> Cylinder
-Camera -> Mirror B2 -> Mirror A2 -> Cylinder
+Camera -> Mirror A1 -> Cylinder
+Camera -> Mirror A2 -> Cylinder
 
-
-TO solve no rendering,
-
-remove mirror B and use cm instead of mm 
+The distance are in centimeters (as millimeters make to large numbers to vizualize in the Blender GUI).
 """
 
 # =======================================================================
@@ -61,6 +58,8 @@ speckle_img = create_speckle_BW_image(
 plt.imsave(pattern_path, speckle_img, cmap='gray')
 
 
+
+
 # ====================
 # 1. CREATE THE MESH
 # ====================
@@ -82,9 +81,9 @@ cylinder_radius = 24.9 # cm
 cylinder_height_min = -12.0 # cm
 cylinder_height_max = 12.0 # cm
 cylinder_theta_min = -np.pi
-cylinder_theta_max = -np.pi + 2*np.pi*(1 - 1/100) # See the doc of the function create_axisymmetric_mesh
 cylinder_Nheight = 100
 cylinder_Ntheta = 100
+cylinder_theta_max = cylinder_theta_min + 2*np.pi*(1 - 1/cylinder_Ntheta) # See the doc of the function create_axisymmetric_mesh
 
 cylinder_mesh_time_0 = create_axisymmetric_mesh(
     profile_curve=lambda z: cylinder_radius,
@@ -114,8 +113,35 @@ cylinder_mesh_time_1 = create_axisymmetric_mesh(
     Ntheta=cylinder_Ntheta,
     closed=True,
     uv_layout=0, # We want the largest pattern dim along the thetas
-)
+) 
 
+
+
+# Lets design the top and bottom faces of the cylinder
+def triangulate_cylinder_faces(nodes) -> TriMesh3D:
+    """
+    Triangulate the circle defining by the given nodes.
+    Using fan triangulation.
+
+    nodes: shape (N, 3) array
+    """
+    elements = []
+    for i in range(1, len(nodes) - 1):
+        elements.append([0, i, i + 1])
+    
+    cells = {'triangle': np.array(elements)}
+    return TriMesh3D(points=nodes, cells=cells)
+    
+# Create the top and bottom faces of the cylinder (see the doc of the function create_axisymmetric_mesh)
+top_nodes_time_0 = cylinder_mesh_time_0.nodes[::cylinder_Nheight, :]
+bottom_nodes_time_0 = cylinder_mesh_time_0.nodes[cylinder_Nheight-1::cylinder_Nheight, :]
+top_nodes_time_1 = cylinder_mesh_time_1.nodes[::cylinder_Nheight, :]
+bottom_nodes_time_1 = cylinder_mesh_time_1.nodes[cylinder_Nheight-1::cylinder_Nheight, :]
+
+cylinder_top_face_time_0 = triangulate_cylinder_faces(top_nodes_time_0)
+cylinder_top_face_time_1 = triangulate_cylinder_faces(top_nodes_time_1)
+cylinder_bottom_face_time_0 = triangulate_cylinder_faces(bottom_nodes_time_0)
+cylinder_bottom_face_time_1 = triangulate_cylinder_faces(bottom_nodes_time_1)
 
 
 # ========================
@@ -276,11 +302,21 @@ print("Adding the mesh to the experiment...")
 experiment.add_mesh("Cylinder Time 0", cylinder_mesh_time_0, frames=[True, False]) # The mesh TIME 0 is only active for the first frame
 experiment.add_mesh_material("Cylinder Time 0", cylinder_material)
 experiment.add_mesh_pattern("Cylinder Time 0", pattern_path)
+experiment.add_mesh("Cylinder Top Face Time 0", cylinder_top_face_time_0, frames=[True, False]) # The mesh TIME 0 is only active for the first frame
+experiment.add_mesh_material("Cylinder Top Face Time 0", cylinder_material) # same material but no pattern
+experiment.add_mesh("Cylinder Bottom Face Time 0", cylinder_bottom_face_time_0, frames=[True, False]) 
+experiment.add_mesh_material("Cylinder Bottom Face Time 0", cylinder_material)
+
 experiment.add_mesh("Cylinder Time 1", cylinder_mesh_time_1, frames=[False, True]) # The mesh TIME 1 is only active for the second frame
 experiment.add_mesh_material("Cylinder Time 1", cylinder_material) # Same pattern and material for both meshes
 experiment.add_mesh_pattern("Cylinder Time 1", pattern_path)
+experiment.add_mesh("Cylinder Top Face Time 1", cylinder_top_face_time_1, frames=[False, True]) # The mesh TIME 1 is only active for the second frame
+experiment.add_mesh_material("Cylinder Top Face Time 1", cylinder_material) # same material but no pattern
+experiment.add_mesh("Cylinder Bottom Face Time 1", cylinder_bottom_face_time_1, frames=[False, True]) # The mesh TIME 1 is only active for the second frame
+experiment.add_mesh_material("Cylinder Bottom Face Time 1", cylinder_material) # same material but no pattern
 
 # Adding the mirrors to the experiment
+
 print("Adding the mirrors to the experiment...")
 experiment.add_mesh("Mirror A1", mirror_A1_mesh, frames=[True, True]) # The mirror is the same for both frames
 experiment.add_mesh_material("Mirror A1", mirror_material) # No pattern for the mirror

@@ -116,6 +116,12 @@ class BlenderExperiment:
             # ...
             experiment.add_camera(name="Camera1", camera=camera, frames=[True, False, True, False, True, False, True, False, True, False])
 
+        .. note::
+
+            The name of the camera must be unique in the experiment and in Blender data.
+            Furthemore, because Blender limits the name of the objects to 63 characters and ``pyblenderSDIC`` add prefixe for sub-dependant object of the camera,
+            the name of the camera must be less than 50 characters.
+
         .. seealso::
 
             - :class:`pyblenderSDIC.Camera` for more information on how to define a camera.
@@ -124,7 +130,7 @@ class BlenderExperiment:
         Parameters
         ----------
         name : str
-            The name of the camera.
+            The name of the camera with less than 50 characters.
         
         camera : Camera
             The camera object to be added. 
@@ -144,11 +150,12 @@ class BlenderExperiment:
 
         Blender Details
         ---------------
-        The camera is created in the Blender scene and linked to the experiment scene.
-        The camera name is set to the provided name.
+        The camera is created in the Blender scene and linked to the experiment scene with the name ``{name}``.
         """
         if not isinstance(name, str):
             raise TypeError("name must be a string")
+        if len(name) > 50:
+            raise ValueError("name of the camera must be less than 50 characters")
         if name in self._camera_objects:
             raise ValueError(f"Camera with name {name} already exists.")
         if name in bpy.data.objects:
@@ -504,6 +511,12 @@ class BlenderExperiment:
         If None, the mesh will be active for all frames.
         Else a list of booleans must be provided, where each boolean indicates if the mesh is active for that frame.
 
+        .. note::
+
+            The name of the mesh must be unique in the experiment and in Blender data.
+            Furthemore, because Blender limits the name of the objects to 63 characters and ``pyblenderSDIC`` add prefixe for sub-dependant object of the mesh,
+            the name of the mesh must be less than 50 characters.
+
         .. code-block:: python
 
             # Example usage
@@ -523,7 +536,7 @@ class BlenderExperiment:
         Parameters
         ----------
         name : str
-            The name of the mesh.
+            The name of the mesh with less than 50 characters.
         
         mesh : meshio.Mesh
             The mesh object to be added. 
@@ -546,12 +559,12 @@ class BlenderExperiment:
         The mesh is created in the Blender scene and linked to the experiment scene.
         The mesh name is set to the provided name.
 
-        A material is created for the mesh with the name ``__[pyblenderSDIC]__{name}_material``.
+        A material is created for the mesh with the name ``[pbSDIC]_{name}_mat``.
         The material uses a Principled BSDF shader and is set to ``use_nodes = True``.
         The material is located at the first index of the mesh data materials.
 
         A MixRGB node is created at the input of the Principled BSDF ``Base Color`` node.
-        The MixRGB node name is set to ``__[pyblenderSDIC]__{name}_mix_basecolor_pattern``.
+        The MixRGB node name is set to ``[pbSDIC]_{name}_mbp`` for "Mix BaseColor Pattern".
 
         The first input of the MixRGB node is the default base color of the material (white).
         It can be setted to any color using the ``add_mesh_material`` method.
@@ -563,6 +576,8 @@ class BlenderExperiment:
         """
         if not isinstance(name, str):
             raise TypeError("name must be a string")
+        if len(name) > 50:
+            raise ValueError("name of the mesh must be less than 50 characters")
         if name in self._mesh_objects:
             raise ValueError(f"Mesh with name {name} already exists.")
         if name in bpy.data.objects:
@@ -600,10 +615,10 @@ class BlenderExperiment:
         # =======================
 
         # Creating the material
-        if f'__[pyblenderSDIC]__{name}_material' in bpy.data.materials:
-            raise ValueError(f"Material with name __[pyblenderSDIC]__{name}_material already exists.")
+        if f'[pbSDIC]_{name}_mat' in bpy.data.materials:
+            raise ValueError(f"Material with name [pbSDIC]_{name}_mat already exists.")
 
-        blender_material = bpy.data.materials.new(name=f'__[pyblenderSDIC]__{name}_material')
+        blender_material = bpy.data.materials.new(name=f'[pbSDIC]_{name}_mat')
         blender_material.use_nodes = True
 
         # Assign the material to the object
@@ -629,11 +644,11 @@ class BlenderExperiment:
         links = blender_material.node_tree.links  # Access node tree links
 
         # Create a MixRGB node (type 'MIX') to combine base color and pattern
-        if f'__[pyblenderSDIC]__{name}_mix_basecolor_pattern' in nodes:
-            raise ValueError(f"MixRGB node with name __[pyblenderSDIC]__{name}_mix_basecolor_pattern already exists.")
+        if f'[pbSDIC]_{name}_mbp' in nodes:
+            raise ValueError(f"MixRGB node with name [pbSDIC]_{name}_mbp already exists.")
 
         mix_node = nodes.new(type='ShaderNodeMixRGB')
-        mix_node.name = f'__[pyblenderSDIC]__{name}_mix_basecolor_pattern'
+        mix_node.name = f'[pbSDIC]_{name}_mbp'
         mix_node.blend_type = 'MULTIPLY'
         mix_node.inputs['Fac'].default_value = 1.0  # Full multiplication
 
@@ -718,10 +733,10 @@ class BlenderExperiment:
         Blender Details
         ---------------
         A ``uv_layer`` is created for the mesh and the UVMAP is set to the texture coordinates defined in the mesh.
-        The uv_layer is named ``__[pyblenderSDIC]__{name}_uvmap``.
+        The uv_layer is named ``[pbSDIC]_{name}_uvm``.
 
         A node is created in the material node tree to load the image texture.
-        The node is named ``__[pyblenderSDIC]__{name}_image_texture``.
+        The node is named ``[pbSDIC]_{name}_imt``.
         This node is in `CLIP` mode to avoid stretching the image.
 
         The color output of the image texture node is connected to the second input of the MixRGB node.
@@ -754,10 +769,10 @@ class BlenderExperiment:
         uvmap = mesh.point_data["uvmap"] # (N, 3) array of texture coordinates
 
         # Setting the UVMap
-        if f"__[pyblenderSDIC]__{name}_uvmap" in blender_mesh.data.uv_layers:
-            raise ValueError(f"UVMap with name __[pyblenderSDIC]__{name}_uvmap already exists.")
+        if f"[pbSDIC]_{name}_uvm" in blender_mesh.data.uv_layers:
+            raise ValueError(f"UVMap with name [pbSDIC]_{name}_uvm already exists.")
         
-        uv_layer = blender_mesh.data.uv_layers.new(name=f"__[pyblenderSDIC]__{name}_uvmap")
+        uv_layer = blender_mesh.data.uv_layers.new(name=f"[pbSDIC]_{name}_uvm")
         for loop in blender_mesh.data.loops:
             uv_layer.data[loop.index].uv = tuple(uvmap[loop.vertex_index, :2])
             
@@ -773,19 +788,19 @@ class BlenderExperiment:
         links = material.node_tree.links  # Access node tree links
 
         # Add an image texture node
-        if f'__[pyblenderSDIC]__{name}_image_texture' in nodes:
-            raise ValueError(f"Image texture node with name __[pyblenderSDIC]__{name}_image_texture already exists.")
+        if f'[pbSDIC]_{name}_imt' in nodes:
+            raise ValueError(f"Image texture node with name [pbSDIC]_{name}_imt already exists.")
         
         tex_image_node = nodes.new(type="ShaderNodeTexImage")
-        tex_image_node.name = f'__[pyblenderSDIC]__{name}_image_texture'
+        tex_image_node.name = f'[pbSDIC]_{name}_imt'
         tex_image_node.image = bpy.data.images.load(pattern_path)
         tex_image_node.extension = 'CLIP'  
 
         # Get the MixRGB node and connect the image texture node to it
-        if not f'__[pyblenderSDIC]__{name}_mix_basecolor_pattern' in nodes:
-            raise ValueError(f"MixRGB node with name __[pyblenderSDIC]__{name}_mix_basecolor_pattern does not exist.")
+        if not f'[pbSDIC]_{name}_mbp' in nodes:
+            raise ValueError(f"MixRGB node with name [pbSDIC]_{name}_mbp does not exist.")
         
-        mix_node = nodes.get(f'__[pyblenderSDIC]__{name}_mix_basecolor_pattern')
+        mix_node = nodes.get(f'[pbSDIC]_{name}_mbp')
         links.new(tex_image_node.outputs['Color'], mix_node.inputs['Color2'])
 
         # Update the mesh
@@ -868,7 +883,7 @@ class BlenderExperiment:
         principled = blender_material.node_tree.nodes.get('Principled BSDF')
         
         # Access the mix node
-        mix_node = blender_material.node_tree.nodes.get(f'__[pyblenderSDIC]__{name}_mix_basecolor_pattern')
+        mix_node = blender_material.node_tree.nodes.get(f'[pbSDIC]_{name}_mbp')
         if not mix_node:
             raise ValueError(f"No MixRGB node found for mesh '{name}'. Ensure the mesh has been added with a material.")
 
@@ -1102,10 +1117,10 @@ class BlenderExperiment:
         When removing a mesh, the following actions are performed:
 
         - The mesh ``{name}`` is removed from the Blender scene.
-        - The material ``__[pyblenderSDIC]__{name}_material`` is removed from the Blender data.
-        - The MixRGB node ``__[pyblenderSDIC]__{name}_mix_basecolor_pattern`` is removed from the material node tree.
-        - The uv_layer ``__[pyblenderSDIC]__{name}_uvmap`` is removed from the mesh data.
-        - The node texture ``__[pyblenderSDIC]__{name}_image_texture`` is removed from the material node tree.
+        - The material ``[pbSDIC]_{name}_mat`` is removed from the Blender data.
+        - The MixRGB node ``[pbSDIC]_{name}_mbp`` is removed from the material node tree.
+        - The uv_layer ``[pbSDIC]_{name}_uvm`` is removed from the mesh data.
+        - The node texture ``[pbSDIC]_{name}_imt`` is removed from the material node tree.
 
         """
         if not isinstance(name, str):
@@ -1133,8 +1148,8 @@ class BlenderExperiment:
         _ = material.node_tree.links  # Access node tree links
 
         # Remove the MixRGB node
-        if f'__[pyblenderSDIC]__{name}_mix_basecolor_pattern' in nodes:
-            mix_node = nodes[f'__[pyblenderSDIC]__{name}_mix_basecolor_pattern']
+        if f'[pbSDIC]_{name}_mbp' in nodes:
+            mix_node = nodes[f'[pbSDIC]_{name}_mbp']
             nodes.remove(mix_node)
 
         # Remove the material
@@ -1142,13 +1157,13 @@ class BlenderExperiment:
         bpy.data.materials.remove(material)
 
         # Remove the uv_layer
-        if f'__[pyblenderSDIC]__{name}_uvmap' in blender_mesh.data.uv_layers:
-            uv_layer = blender_mesh.data.uv_layers[f'__[pyblenderSDIC]__{name}_uvmap']
+        if f'[pbSDIC]_{name}_uvm' in blender_mesh.data.uv_layers:
+            uv_layer = blender_mesh.data.uv_layers[f'[pbSDIC]_{name}_uvm']
             blender_mesh.data.uv_layers.remove(uv_layer)
 
         # Remove the image texture node
-        if f'__[pyblenderSDIC]__{name}_image_texture' in nodes:
-            tex_image_node = nodes[f'__[pyblenderSDIC]__{name}_image_texture']
+        if f'[pbSDIC]_{name}_imt' in nodes:
+            tex_image_node = nodes[f'[pbSDIC]_{name}_imt']
             if tex_image_node.image is not None:
                 bpy.data.images.remove(tex_image_node.image)
             nodes.remove(tex_image_node)
@@ -1221,8 +1236,8 @@ class BlenderExperiment:
             poly.vertices = [int(vertex) for vertex in cells[i]]
 
         # Update the uvmap if it exists
-        if f'__[pyblenderSDIC]__{name}_uvmap' in blender_mesh.data.uv_layers:
-            uv_layer = blender_mesh.data.uv_layers[f'__[pyblenderSDIC]__{name}_uvmap']
+        if f'[pbSDIC]_{name}_uvm' in blender_mesh.data.uv_layers:
+            uv_layer = blender_mesh.data.uv_layers[f'[pbSDIC]_{name}_uvm']
             if uvmap is not None:
                 for loop in blender_mesh.data.loops:
                     uv_layer.data[loop.index].uv = tuple(uvmap[loop.vertex_index, :2])
@@ -1303,10 +1318,10 @@ class BlenderExperiment:
         _ = material.node_tree.links  # Access node tree links
 
         # Add an image texture node
-        if not f'__[pyblenderSDIC]__{name}_image_texture' in nodes:
-            raise ValueError(f"Image texture node with name __[pyblenderSDIC]__{name}_image_texture does not exist.")
+        if not f'[pbSDIC]_{name}_imt' in nodes:
+            raise ValueError(f"Image texture node with name [pbSDIC]_{name}_imt does not exist.")
         
-        tex_image_node = nodes[f'__[pyblenderSDIC]__{name}_image_texture']
+        tex_image_node = nodes[f'[pbSDIC]_{name}_imt']
         if tex_image_node.image is not None:
             bpy.data.images.remove(tex_image_node.image)
         tex_image_node.image = bpy.data.images.load(pattern_path)
@@ -1327,6 +1342,12 @@ class BlenderExperiment:
 
         The spotlight must be an instance of SpotLight.
 
+        .. note::
+
+            The name of the light must be unique in the experiment and in Blender data.
+            Furthemore, because Blender limits the name of the objects to 63 characters and ``pyblenderSDIC`` add prefixe for sub-dependant object of the light,
+            the name of the light must be less than 50 characters.
+
         .. code-block:: python
 
             # Example usage
@@ -1343,7 +1364,7 @@ class BlenderExperiment:
         Parameters
         ----------
         name : str
-            The name of the spotlight.
+            The name of the spotlight with less than 50 characters.
         
         spotlight : SpotLight
             The spotlight object to be added.
@@ -1362,6 +1383,8 @@ class BlenderExperiment:
         """
         if not isinstance(name, str):
             raise TypeError("name must be a string")
+        if len(name) > 50:
+            raise ValueError("name must be less than 50 characters")
         if name in self._spotlight_objects:
             raise ValueError(f"Spotlight with name {name} already exists.")
         if name in bpy.data.objects:

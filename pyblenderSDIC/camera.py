@@ -44,7 +44,7 @@ class Camera(object):
 
     - resolution: The resolution of the camera in numbers of pixels. A 2-element array representing the resolution of the camera in numbers of pixels along the x and y axes.
     - pixel_size: The pixel size of the camera in the millimeters. A 2-element array representing the pixel size of the camera in millimeters along the x and y axes.
-    - clip_distance: The distances in millimeters to the near and far clipping planes. A 2-element array representing the distances of the near and far clipping planes of the camera in millimeters.
+    - clip_distance: The distances in millimeters to the near and far clipping planes. A 2-element array representing the distances of the near and far clipping planes of the camera in millimeters. Only points between the near and far clipping planes are visible in the camera view.
 
     Parameters
     ----------

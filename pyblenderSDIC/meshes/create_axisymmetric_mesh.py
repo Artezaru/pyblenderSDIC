@@ -211,8 +211,8 @@ def create_axisymmetric_mesh(
 
     if not isinstance(closed, bool):
         raise TypeError("closed must be a boolean")
-    if closed and abs(theta_bounds[0] - theta_bounds[1]) != 2.0*numpy.pi/Ntheta:
-        print("Warning: The theta bounds are not set to the closed condition. The mesh will be closed in the theta direction but the output can be unexpected.")
+    if closed and (abs(theta_bounds[0] - theta_bounds[1]) - 2.0*numpy.pi*(1 - 1/Ntheta)) > 1e-6:
+        print("Warning: The theta bounds are not set to the closed condition (theta_max = theta_min + 2*pi*(1 - 1/Ntheta)). The mesh will be closed in the theta direction but the output can be unexpected.")
 
     if not isinstance(first_diagonal, bool):
         raise TypeError("first_diagonal must be a boolean")
