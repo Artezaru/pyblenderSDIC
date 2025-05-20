@@ -903,8 +903,16 @@ class TriMesh3D(meshio.Mesh):
         Visualize the mesh using Open3D.
 
         This method displays the 3D mesh using Open3D's interactive viewer.
-        Optionally, it can highlight specific mesh elements (triangles) in blue, and show 3D
-        intersection points in red.
+        Optionally, it can highlight specific mesh elements (triangles) in light blue, and show 3D
+        intersection points in blue.
+
+        .. figure:: ../../../../pyblenderSDIC/resources/doc/trimesh3d_visualize.png
+            :width: 400
+            :align: center
+
+            Example of a mesh with highlighted elements and intersection points.
+
+        To visualize the mesh, you can use the following code where ``element_highlighted`` and ``intersect_points`` are optional:    
 
         .. code-block:: python
 
@@ -918,7 +926,7 @@ class TriMesh3D(meshio.Mesh):
         .. note::
 
             - Highlighted triangles are shown in ligth blue.
-            - Intersection points are visualized as **red**.
+            - Intersection points are visualized as blue.
 
         .. seealso::
 
@@ -928,10 +936,10 @@ class TriMesh3D(meshio.Mesh):
         Parameters
         ----------
         element_highlighted : int or sequence of int, optional
-            Indices of mesh elements (triangles) to color in blue.
+            Indices of mesh elements (triangles) to color in light blue.
 
         intersect_points : IntersectPoints, optional
-            3D intersection points to show in red. Only valid entries are displayed.
+            3D intersection points to show in blue. Only valid entries are displayed.
         """
         # Create the geometry
         geometries = []

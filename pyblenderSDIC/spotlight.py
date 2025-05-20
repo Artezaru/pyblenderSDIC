@@ -32,9 +32,6 @@ class SpotLight(object):
     The attribute ``spot_blend`` is the proportion of the spot light this a smooth transition between the spot light and the background light.
     Setting the ``spot_blend`` to 0.0 will create a sharp transition between the spot light and the background light.
 
-    The ``clip_distance`` attribute is the distance from the light to the near and far clipping planes of the camera. 
-    Only points between the near and far clipping planes will be illuminated by the light.
-
     Parameters
     ----------
     frame : Frame, optional
@@ -48,11 +45,6 @@ class SpotLight(object):
 
     spot_blend : float, optional
         The blend value of the spot light between 0 and 1, default 0.0.
-
-    clip_distance : Optional[Union[Number, Sequence[Number], numpy.ndarray]], optional
-        The distance of the near and far clipping planes of the camera, by default None.
-        If a single value is provided, it is used for both near clipping plane.
-        If two values are provided, they are used for near and far clipping planes respectively.
     """
 
     def __init__(
@@ -61,13 +53,11 @@ class SpotLight(object):
         energy: float = 1.0,
         spot_size: float = numpy.pi,
         spot_blend: float = 0.0,
-        clip_distance: Optional[Number] = None
     ) -> None:
         self.frame = frame
         self.spot_size = spot_size
         self.spot_blend = spot_blend
         self.energy = energy
-        self.clip_distance = clip_distance
 
 
     # ==============================================

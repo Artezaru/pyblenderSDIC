@@ -1,4 +1,5 @@
 numpy
 meshio
 open3d
+matplotlib
 py3dframe @ git+https://github.com/Artezaru/py3dframe.git

@@ -635,6 +635,7 @@ class Camera(object):
         Get or set the near clipping plane of the camera in millimeters.
 
         The near clipping plane is a float representing the near clipping plane of the camera in millimeters.
+        Only points between the near and far clipping planes are visible in the camera view.
 
         .. note::
 
@@ -678,6 +679,7 @@ class Camera(object):
         Get or set the far clipping plane of the camera in millimeters.
 
         The far clipping plane is a float representing the far clipping plane of the camera in millimeters.
+        Only points between the near and far clipping planes are visible in the camera view.
 
         .. note::
 
@@ -721,6 +723,7 @@ class Camera(object):
         Get or set the near and far clipping planes of the camera in millimeters.
 
         The near and far clipping planes are a tuple of two floats representing the near and far clipping planes of the camera in millimeters.
+        Only points between the near and far clipping planes are visible in the camera view.
 
         Returns
         -------
