@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyblenderSDIC.SpotLight &#8212; pyblenderSDIC 1.0.0 documentation</title>
+    <title>pyblenderSDIC.SpotLight &#8212; pyblenderSDIC 1.0.1 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../_static/documentation_options.js?v=292eb321"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 1.0.0 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 1.0.1 documentation</p>
   
 </a></div>
     
@@ -382,7 +382,7 @@
 <h1>pyblenderSDIC.SpotLight<a class="headerlink" href="#pyblendersdic-spotlight" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyblenderSDIC.SpotLight">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SpotLight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">frame:</span> <span class="pre">~py3dframe.frame.Frame</span> <span class="pre">=</span> <span class="pre">Frame(origin=[[0.]</span>&#160; <span class="pre">[0.]</span>&#160; <span class="pre">[0.]],</span> <span class="pre">x_axis=[[1.]</span>&#160; <span class="pre">[0.]</span>&#160; <span class="pre">[0.]],</span> <span class="pre">y_axis=[[0.]</span>&#160; <span class="pre">[1.]</span>&#160; <span class="pre">[0.]],</span> <span class="pre">z_axis=[[0.]</span>&#160; <span class="pre">[0.]</span>&#160; <span class="pre">[1.]],</span> <span class="pre">energy:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0,</span> <span class="pre">spot_size:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">3.141592653589793,</span> <span class="pre">spot_blend:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.0</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyblenderSDIC/spotlight.html#SpotLight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.SpotLight" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SpotLight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">frame:</span> <span class="pre">~py3dframe.frame.Frame</span> <span class="pre">=</span> <span class="pre">Frame(origin=[[0.]</span>&#160; <span class="pre">[0.]</span>&#160; <span class="pre">[0.]],</span> <span class="pre">x_axis=[[1.]</span>&#160; <span class="pre">[0.]</span>&#160; <span class="pre">[0.]],</span> <span class="pre">y_axis=[[0.]</span>&#160; <span class="pre">[1.]</span>&#160; <span class="pre">[0.]],</span> <span class="pre">z_axis=[[0.]</span>&#160; <span class="pre">[0.]</span>&#160; <span class="pre">[1.]],</span> <span class="pre">energy:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0,</span> <span class="pre">spot_size:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">3.141592653589793,</span> <span class="pre">spot_blend:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.0,</span> <span class="pre">clip_distance:</span> <span class="pre">~numbers.Number</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyblenderSDIC/spotlight.html#SpotLight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.SpotLight" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents a spot light in 3D space with a defined position and orientation.</p>
 <p>The spot light orientation is defined by the frame.
@@ -406,6 +406,8 @@ The figure below shows the definition of the spot light size in Blender (Image s
 </figure>
 <p>The attribute <code class="docutils literal notranslate"><span class="pre">spot_blend</span></code> is the proportion of the spot light this a smooth transition between the spot light and the background light.
 Setting the <code class="docutils literal notranslate"><span class="pre">spot_blend</span></code> to 0.0 will create a sharp transition between the spot light and the background light.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">clip_distance</span></code> attribute is the distance from the light to the near and far clipping planes of the camera.
+Only points between the near and far clipping planes will be illuminated by the light.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -413,6 +415,9 @@ Setting the <code class="docutils literal notranslate"><span class="pre">spot_bl
 <li><p><strong>energy</strong> (<em>float</em><em>, </em><em>optional</em>) – The energy of the spot light. The energy this light would emit over its entire area if it wasn’t limited by the spot angle, default 1.0.</p></li>
 <li><p><strong>spot_size</strong> (<em>float</em><em>, </em><em>optional</em>) – The size of the spot light in radians, default is numpy.pi.</p></li>
 <li><p><strong>spot_blend</strong> (<em>float</em><em>, </em><em>optional</em>) – The blend value of the spot light between 0 and 1, default 0.0.</p></li>
+<li><p><strong>clip_distance</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>Number</em><em>, </em><em>Sequence</em><em>[</em><em>Number</em><em>]</em><em>, </em><em>numpy.ndarray</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – The distance of the near and far clipping planes of the camera, by default None.
+If a single value is provided, it is used for both near clipping plane.
+If two values are provided, they are used for near and far clipping planes respectively.</p></li>
 </ul>
 </dd>
 </dl>

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyblenderSDIC.blender_experiment &#8212; pyblenderSDIC 1.0.0 documentation</title>
+    <title>pyblenderSDIC.blender_experiment &#8212; pyblenderSDIC 1.0.1 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../_static/documentation_options.js?v=292eb321"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyblenderSDIC/blender_experiment';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 1.0.0 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 1.0.1 documentation</p>
   
 </a></div>
     
@@ -435,6 +435,12 @@
 <span class="sd">            # ...</span>
 <span class="sd">            experiment.add_camera(name=&quot;Camera1&quot;, camera=camera, frames=[True, False, True, False, True, False, True, False, True, False])</span>
 
+<span class="sd">        .. note::</span>
+
+<span class="sd">            The name of the camera must be unique in the experiment and in Blender data.</span>
+<span class="sd">            Furthemore, because Blender limits the name of the objects to 63 characters and ``pyblenderSDIC`` add prefixe for sub-dependant object of the camera,</span>
+<span class="sd">            the name of the camera must be less than 50 characters.</span>
+
 <span class="sd">        .. seealso::</span>
 
 <span class="sd">            - :class:`pyblenderSDIC.Camera` for more information on how to define a camera.</span>
@@ -443,7 +449,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        name : str</span>
-<span class="sd">            The name of the camera.</span>
+<span class="sd">            The name of the camera with less than 50 characters.</span>
 <span class="sd">        </span>
 <span class="sd">        camera : Camera</span>
 <span class="sd">            The camera object to be added. </span>
@@ -463,11 +469,12 @@
 
 <span class="sd">        Blender Details</span>
 <span class="sd">        ---------------</span>
-<span class="sd">        The camera is created in the Blender scene and linked to the experiment scene.</span>
-<span class="sd">        The camera name is set to the provided name.</span>
+<span class="sd">        The camera is created in the Blender scene and linked to the experiment scene with the name ``{name}``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;name must be a string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;name of the camera must be less than 50 characters&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_camera_objects</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Camera with name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> already exists.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
@@ -850,6 +857,12 @@
 <span class="sd">        If None, the mesh will be active for all frames.</span>
 <span class="sd">        Else a list of booleans must be provided, where each boolean indicates if the mesh is active for that frame.</span>
 
+<span class="sd">        .. note::</span>
+
+<span class="sd">            The name of the mesh must be unique in the experiment and in Blender data.</span>
+<span class="sd">            Furthemore, because Blender limits the name of the objects to 63 characters and ``pyblenderSDIC`` add prefixe for sub-dependant object of the mesh,</span>
+<span class="sd">            the name of the mesh must be less than 50 characters.</span>
+
 <span class="sd">        .. code-block:: python</span>
 
 <span class="sd">            # Example usage</span>
@@ -869,7 +882,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        name : str</span>
-<span class="sd">            The name of the mesh.</span>
+<span class="sd">            The name of the mesh with less than 50 characters.</span>
 <span class="sd">        </span>
 <span class="sd">        mesh : meshio.Mesh</span>
 <span class="sd">            The mesh object to be added. </span>
@@ -892,12 +905,12 @@
 <span class="sd">        The mesh is created in the Blender scene and linked to the experiment scene.</span>
 <span class="sd">        The mesh name is set to the provided name.</span>
 
-<span class="sd">        A material is created for the mesh with the name ``__[pyblenderSDIC]__{name}_material``.</span>
+<span class="sd">        A material is created for the mesh with the name ``[pbSDIC]_{name}_mat``.</span>
 <span class="sd">        The material uses a Principled BSDF shader and is set to ``use_nodes = True``.</span>
 <span class="sd">        The material is located at the first index of the mesh data materials.</span>
 
 <span class="sd">        A MixRGB node is created at the input of the Principled BSDF ``Base Color`` node.</span>
-<span class="sd">        The MixRGB node name is set to ``__[pyblenderSDIC]__{name}_mix_basecolor_pattern``.</span>
+<span class="sd">        The MixRGB node name is set to ``[pbSDIC]_{name}_mbp`` for &quot;Mix BaseColor Pattern&quot;.</span>
 
 <span class="sd">        The first input of the MixRGB node is the default base color of the material (white).</span>
 <span class="sd">        It can be setted to any color using the ``add_mesh_material`` method.</span>
@@ -909,6 +922,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;name must be a string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;name of the mesh must be less than 50 characters&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mesh_objects</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mesh with name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> already exists.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
@@ -946,10 +961,10 @@
         <span class="c1"># =======================</span>
 
         <span class="c1"># Creating the material</span>
-        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_material&#39;</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">materials</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Material with name __[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_material already exists.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mat&#39;</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">materials</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Material with name [pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_mat already exists.&quot;</span><span class="p">)</span>
 
-        <span class="n">blender_material</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">materials</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_material&#39;</span><span class="p">)</span>
+        <span class="n">blender_material</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">materials</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mat&#39;</span><span class="p">)</span>
         <span class="n">blender_material</span><span class="o">.</span><span class="n">use_nodes</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="c1"># Assign the material to the object</span>
@@ -975,11 +990,11 @@
         <span class="n">links</span> <span class="o">=</span> <span class="n">blender_material</span><span class="o">.</span><span class="n">node_tree</span><span class="o">.</span><span class="n">links</span>  <span class="c1"># Access node tree links</span>
 
         <span class="c1"># Create a MixRGB node (type &#39;MIX&#39;) to combine base color and pattern</span>
-        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mix_basecolor_pattern&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MixRGB node with name __[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_mix_basecolor_pattern already exists.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mbp&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MixRGB node with name [pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_mbp already exists.&quot;</span><span class="p">)</span>
 
         <span class="n">mix_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;ShaderNodeMixRGB&#39;</span><span class="p">)</span>
-        <span class="n">mix_node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mix_basecolor_pattern&#39;</span>
+        <span class="n">mix_node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mbp&#39;</span>
         <span class="n">mix_node</span><span class="o">.</span><span class="n">blend_type</span> <span class="o">=</span> <span class="s1">&#39;MULTIPLY&#39;</span>
         <span class="n">mix_node</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;Fac&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Full multiplication</span>
 
@@ -1067,10 +1082,10 @@
 <span class="sd">        Blender Details</span>
 <span class="sd">        ---------------</span>
 <span class="sd">        A ``uv_layer`` is created for the mesh and the UVMAP is set to the texture coordinates defined in the mesh.</span>
-<span class="sd">        The uv_layer is named ``__[pyblenderSDIC]__{name}_uvmap``.</span>
+<span class="sd">        The uv_layer is named ``[pbSDIC]_{name}_uvm``.</span>
 
 <span class="sd">        A node is created in the material node tree to load the image texture.</span>
-<span class="sd">        The node is named ``__[pyblenderSDIC]__{name}_image_texture``.</span>
+<span class="sd">        The node is named ``[pbSDIC]_{name}_imt``.</span>
 <span class="sd">        This node is in `CLIP` mode to avoid stretching the image.</span>
 
 <span class="sd">        The color output of the image texture node is connected to the second input of the MixRGB node.</span>
@@ -1103,10 +1118,10 @@
         <span class="n">uvmap</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">]</span> <span class="c1"># (N, 3) array of texture coordinates</span>
 
         <span class="c1"># Setting the UVMap</span>
-        <span class="k">if</span> <span class="sa">f</span><span class="s2">&quot;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_uvmap&quot;</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;UVMap with name __[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_uvmap already exists.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="sa">f</span><span class="s2">&quot;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_uvm&quot;</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;UVMap with name [pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_uvm already exists.&quot;</span><span class="p">)</span>
         
-        <span class="n">uv_layer</span> <span class="o">=</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_uvmap&quot;</span><span class="p">)</span>
+        <span class="n">uv_layer</span> <span class="o">=</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_uvm&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">loop</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loops</span><span class="p">:</span>
             <span class="n">uv_layer</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">loop</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">uv</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">uvmap</span><span class="p">[</span><span class="n">loop</span><span class="o">.</span><span class="n">vertex_index</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span>
             
@@ -1122,19 +1137,19 @@
         <span class="n">links</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">node_tree</span><span class="o">.</span><span class="n">links</span>  <span class="c1"># Access node tree links</span>
 
         <span class="c1"># Add an image texture node</span>
-        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_image_texture&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Image texture node with name __[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_image_texture already exists.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_imt&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Image texture node with name [pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_imt already exists.&quot;</span><span class="p">)</span>
         
         <span class="n">tex_image_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;ShaderNodeTexImage&quot;</span><span class="p">)</span>
-        <span class="n">tex_image_node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_image_texture&#39;</span>
+        <span class="n">tex_image_node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_imt&#39;</span>
         <span class="n">tex_image_node</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">pattern_path</span><span class="p">)</span>
         <span class="n">tex_image_node</span><span class="o">.</span><span class="n">extension</span> <span class="o">=</span> <span class="s1">&#39;CLIP&#39;</span>  
 
         <span class="c1"># Get the MixRGB node and connect the image texture node to it</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mix_basecolor_pattern&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MixRGB node with name __[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_mix_basecolor_pattern does not exist.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mbp&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MixRGB node with name [pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_mbp does not exist.&quot;</span><span class="p">)</span>
         
-        <span class="n">mix_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mix_basecolor_pattern&#39;</span><span class="p">)</span>
+        <span class="n">mix_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mbp&#39;</span><span class="p">)</span>
         <span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">tex_image_node</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;Color&#39;</span><span class="p">],</span> <span class="n">mix_node</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;Color2&#39;</span><span class="p">])</span>
 
         <span class="c1"># Update the mesh</span>
@@ -1220,7 +1235,7 @@
         <span class="n">principled</span> <span class="o">=</span> <span class="n">blender_material</span><span class="o">.</span><span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Principled BSDF&#39;</span><span class="p">)</span>
         
         <span class="c1"># Access the mix node</span>
-        <span class="n">mix_node</span> <span class="o">=</span> <span class="n">blender_material</span><span class="o">.</span><span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mix_basecolor_pattern&#39;</span><span class="p">)</span>
+        <span class="n">mix_node</span> <span class="o">=</span> <span class="n">blender_material</span><span class="o">.</span><span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mbp&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">mix_node</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No MixRGB node found for mesh &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;. Ensure the mesh has been added with a material.&quot;</span><span class="p">)</span>
 
@@ -1469,10 +1484,10 @@
 <span class="sd">        When removing a mesh, the following actions are performed:</span>
 
 <span class="sd">        - The mesh ``{name}`` is removed from the Blender scene.</span>
-<span class="sd">        - The material ``__[pyblenderSDIC]__{name}_material`` is removed from the Blender data.</span>
-<span class="sd">        - The MixRGB node ``__[pyblenderSDIC]__{name}_mix_basecolor_pattern`` is removed from the material node tree.</span>
-<span class="sd">        - The uv_layer ``__[pyblenderSDIC]__{name}_uvmap`` is removed from the mesh data.</span>
-<span class="sd">        - The node texture ``__[pyblenderSDIC]__{name}_image_texture`` is removed from the material node tree.</span>
+<span class="sd">        - The material ``[pbSDIC]_{name}_mat`` is removed from the Blender data.</span>
+<span class="sd">        - The MixRGB node ``[pbSDIC]_{name}_mbp`` is removed from the material node tree.</span>
+<span class="sd">        - The uv_layer ``[pbSDIC]_{name}_uvm`` is removed from the mesh data.</span>
+<span class="sd">        - The node texture ``[pbSDIC]_{name}_imt`` is removed from the material node tree.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -1500,8 +1515,8 @@
         <span class="n">_</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">node_tree</span><span class="o">.</span><span class="n">links</span>  <span class="c1"># Access node tree links</span>
 
         <span class="c1"># Remove the MixRGB node</span>
-        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mix_basecolor_pattern&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
-            <span class="n">mix_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mix_basecolor_pattern&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mbp&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="n">mix_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_mbp&#39;</span><span class="p">]</span>
             <span class="n">nodes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">mix_node</span><span class="p">)</span>
 
         <span class="c1"># Remove the material</span>
@@ -1509,13 +1524,13 @@
         <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">materials</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
 
         <span class="c1"># Remove the uv_layer</span>
-        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_uvmap&#39;</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">:</span>
-            <span class="n">uv_layer</span> <span class="o">=</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_uvmap&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_uvm&#39;</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">:</span>
+            <span class="n">uv_layer</span> <span class="o">=</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_uvm&#39;</span><span class="p">]</span>
             <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">uv_layer</span><span class="p">)</span>
 
         <span class="c1"># Remove the image texture node</span>
-        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_image_texture&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
-            <span class="n">tex_image_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_image_texture&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_imt&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="n">tex_image_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_imt&#39;</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">tex_image_node</span><span class="o">.</span><span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tex_image_node</span><span class="o">.</span><span class="n">image</span><span class="p">)</span>
             <span class="n">nodes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tex_image_node</span><span class="p">)</span>
@@ -1591,8 +1606,8 @@
             <span class="n">poly</span><span class="o">.</span><span class="n">vertices</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span> <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">cells</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
 
         <span class="c1"># Update the uvmap if it exists</span>
-        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_uvmap&#39;</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">:</span>
-            <span class="n">uv_layer</span> <span class="o">=</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_uvmap&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_uvm&#39;</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">:</span>
+            <span class="n">uv_layer</span> <span class="o">=</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_uvm&#39;</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">uvmap</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">loop</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loops</span><span class="p">:</span>
                     <span class="n">uv_layer</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">loop</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">uv</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">uvmap</span><span class="p">[</span><span class="n">loop</span><span class="o">.</span><span class="n">vertex_index</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span>
@@ -1676,10 +1691,10 @@
         <span class="n">_</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">node_tree</span><span class="o">.</span><span class="n">links</span>  <span class="c1"># Access node tree links</span>
 
         <span class="c1"># Add an image texture node</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_image_texture&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Image texture node with name __[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_image_texture does not exist.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_imt&#39;</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Image texture node with name [pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_imt does not exist.&quot;</span><span class="p">)</span>
         
-        <span class="n">tex_image_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;__[pyblenderSDIC]__</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_image_texture&#39;</span><span class="p">]</span>
+        <span class="n">tex_image_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_imt&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">tex_image_node</span><span class="o">.</span><span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tex_image_node</span><span class="o">.</span><span class="n">image</span><span class="p">)</span>
         <span class="n">tex_image_node</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">pattern_path</span><span class="p">)</span>
@@ -1703,6 +1718,12 @@
 
 <span class="sd">        The spotlight must be an instance of SpotLight.</span>
 
+<span class="sd">        .. note::</span>
+
+<span class="sd">            The name of the light must be unique in the experiment and in Blender data.</span>
+<span class="sd">            Furthemore, because Blender limits the name of the objects to 63 characters and ``pyblenderSDIC`` add prefixe for sub-dependant object of the light,</span>
+<span class="sd">            the name of the light must be less than 50 characters.</span>
+
 <span class="sd">        .. code-block:: python</span>
 
 <span class="sd">            # Example usage</span>
@@ -1719,7 +1740,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        name : str</span>
-<span class="sd">            The name of the spotlight.</span>
+<span class="sd">            The name of the spotlight with less than 50 characters.</span>
 <span class="sd">        </span>
 <span class="sd">        spotlight : SpotLight</span>
 <span class="sd">            The spotlight object to be added.</span>
@@ -1738,6 +1759,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;name must be a string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;name must be less than 50 characters&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spotlight_objects</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Spotlight with name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> already exists.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyblenderSDIC.BlenderExperiment &#8212; pyblenderSDIC 1.0.0 documentation</title>
+    <title>pyblenderSDIC.BlenderExperiment &#8212; pyblenderSDIC 1.0.1 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../_static/documentation_options.js?v=292eb321"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/blender_experiment';</script>
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 1.0.0 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 1.0.1 documentation</p>
   
 </a></div>
     
@@ -422,6 +422,12 @@ Else a list of booleans must be provided, where each boolean indicates if the ca
 <span class="n">experiment</span><span class="o">.</span><span class="n">add_camera</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Camera1&quot;</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="n">camera</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The name of the camera must be unique in the experiment and in Blender data.
+Furthemore, because Blender limits the name of the objects to 63 characters and <code class="docutils literal notranslate"><span class="pre">pyblenderSDIC</span></code> add prefixe for sub-dependant object of the camera,
+the name of the camera must be less than 50 characters.</p>
+</div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
@@ -432,7 +438,7 @@ Else a list of booleans must be provided, where each boolean indicates if the ca
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str</em>) – The name of the camera.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the camera with less than 50 characters.</p></li>
 <li><p><strong>camera</strong> (<a class="reference internal" href="camera.html#pyblenderSDIC.Camera" title="pyblenderSDIC.Camera"><em>Camera</em></a>) – The camera object to be added.</p></li>
 <li><p><strong>frames</strong> (<em>List</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – A list of booleans indicating which frames the camera will be active.
 If None, the camera will be active for all frames (default is None).</p></li>
@@ -446,8 +452,7 @@ If None, the camera will be active for all frames (default is None).</p></li>
     If the camera is not completely defined.</p></li>
 <li><p><strong>Blender Details</strong> – </p></li>
 <li><p><strong>---------------</strong> – </p></li>
-<li><p><strong>The camera is created in the Blender scene and linked to the experiment scene.</strong> – </p></li>
-<li><p><strong>The camera name is set to the provided name.</strong> – </p></li>
+<li><p><strong>The camera is created in the Blender scene and linked to the experiment scene with the name {name}.</strong> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -466,6 +471,12 @@ If None, the camera will be active for all frames (default is None).</p></li>
 <p>The frames parameter indicates which frames the mesh will be active.
 If None, the mesh will be active for all frames.
 Else a list of booleans must be provided, where each boolean indicates if the mesh is active for that frame.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The name of the mesh must be unique in the experiment and in Blender data.
+Furthemore, because Blender limits the name of the objects to 63 characters and <code class="docutils literal notranslate"><span class="pre">pyblenderSDIC</span></code> add prefixe for sub-dependant object of the mesh,
+the name of the mesh must be less than 50 characters.</p>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
 <span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">(</span><span class="n">Nb_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="c1"># Define the mesh properties here</span>
@@ -486,7 +497,7 @@ Else a list of booleans must be provided, where each boolean indicates if the me
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str</em>) – The name of the mesh.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the mesh with less than 50 characters.</p></li>
 <li><p><strong>mesh</strong> (<em>meshio.Mesh</em>) – The mesh object to be added.</p></li>
 <li><p><strong>frames</strong> (<em>List</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – A list of booleans indicating which frames the mesh will be active.
 If None, the mesh will be active for all frames (default is None).</p></li>
@@ -502,11 +513,11 @@ If None, the mesh will be active for all frames (default is None).</p></li>
 <li><p><strong>---------------</strong> – </p></li>
 <li><p><strong>The mesh is created in the Blender scene and linked to the experiment scene.</strong> – </p></li>
 <li><p><strong>The mesh name is set to the provided name.</strong> – </p></li>
-<li><p><strong>A material is created for the mesh with the name __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_material.</strong> – </p></li>
+<li><p><strong>A material is created for the mesh with the name</strong><strong> [</strong><strong>pbSDIC</strong><strong>]</strong><strong>_{name}_mat.</strong> – </p></li>
 <li><p><strong>The material uses a Principled BSDF shader and is set to use_nodes = True.</strong> – </p></li>
 <li><p><strong>The material is located at the first index</strong><strong> of </strong><strong>the mesh data materials.</strong> – </p></li>
 <li><p><strong>A MixRGB node is created at the input</strong><strong> of </strong><strong>the Principled BSDF Base Color node.</strong> – </p></li>
-<li><p><strong>The MixRGB node name is set to __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_mix_basecolor_pattern.</strong> – </p></li>
+<li><p><strong>The MixRGB node name is set to</strong><strong> [</strong><strong>pbSDIC</strong><strong>]</strong><strong>_{name}_mbp for &quot;Mix BaseColor Pattern&quot;.</strong> – </p></li>
 <li><p><strong>The first input</strong><strong> of </strong><strong>the MixRGB node is the default base color</strong><strong> of </strong><strong>the material</strong><strong> (</strong><strong>white</strong><strong>)</strong><strong>.</strong> – </p></li>
 <li><p><strong>It can be setted to any color using the add_mesh_material method.</strong> – </p></li>
 <li><p><strong>The second input</strong><strong> of </strong><strong>the MixRGB node is the default pattern</strong><strong> of </strong><strong>the material</strong><strong> (</strong><strong>white</strong><strong>)</strong><strong>.</strong> – </p></li>
@@ -603,9 +614,9 @@ as “uvmap” in the point_data dictionary.</p>
 <li><p><strong>Blender Details</strong> – </p></li>
 <li><p><strong>---------------</strong> – </p></li>
 <li><p><strong>A uv_layer is created for the mesh and the UVMAP is set to the texture coordinates defined in the mesh.</strong> – </p></li>
-<li><p><strong>The uv_layer is named __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_uvmap.</strong> – </p></li>
+<li><p><strong>The uv_layer is named</strong><strong> [</strong><strong>pbSDIC</strong><strong>]</strong><strong>_{name}_uvm.</strong> – </p></li>
 <li><p><strong>A node is created in the material node tree to load the image texture.</strong> – </p></li>
-<li><p><strong>The node is named __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_image_texture.</strong> – </p></li>
+<li><p><strong>The node is named</strong><strong> [</strong><strong>pbSDIC</strong><strong>]</strong><strong>_{name}_imt.</strong> – </p></li>
 <li><p><strong>This node is in CLIP mode to avoid stretching the image.</strong> – </p></li>
 <li><p><strong>The color output</strong><strong> of </strong><strong>the image texture node is connected to the second input</strong><strong> of </strong><strong>the MixRGB node.</strong> – </p></li>
 <li><p><strong>The MixRGB node is connected to the Base Color input</strong><strong> of </strong><strong>the Principled BSDF node in multiply mode.</strong> – </p></li>
@@ -619,6 +630,12 @@ as “uvmap” in the point_data dictionary.</p>
 <span class="sig-name descname"><span class="pre">add_spotlight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spotlight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="spotlight.html#pyblenderSDIC.SpotLight" title="pyblenderSDIC.spotlight.SpotLight"><span class="pre">SpotLight</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.add_spotlight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.add_spotlight" title="Link to this definition">#</a></dt>
 <dd><p>Add a spotlight to the experiment.</p>
 <p>The spotlight must be an instance of SpotLight.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The name of the light must be unique in the experiment and in Blender data.
+Furthemore, because Blender limits the name of the objects to 63 characters and <code class="docutils literal notranslate"><span class="pre">pyblenderSDIC</span></code> add prefixe for sub-dependant object of the light,
+the name of the light must be less than 50 characters.</p>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
 <span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">(</span><span class="n">Nb_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">spotlight</span> <span class="o">=</span> <span class="n">SpotLight</span><span class="p">()</span>
@@ -636,7 +653,7 @@ as “uvmap” in the point_data dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str</em>) – The name of the spotlight.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the spotlight with less than 50 characters.</p></li>
 <li><p><strong>spotlight</strong> (<a class="reference internal" href="spotlight.html#pyblenderSDIC.SpotLight" title="pyblenderSDIC.SpotLight"><em>SpotLight</em></a>) – The spotlight object to be added.</p></li>
 <li><p><strong>frames</strong> (<em>List</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – A list of booleans indicating which frames the spotlight will be active.
 If None, the spotlight will be active for all frames (default is None).</p></li>
@@ -889,10 +906,10 @@ The pattern will be applied to the mesh material as a texture.</p>
 <li><p><strong>---------------</strong> – </p></li>
 <li><p><strong>When removing a mesh</strong><strong>, </strong><strong>the following actions are performed:</strong> – </p></li>
 <li><p><strong>- The mesh {name} is removed from the Blender scene.</strong> – </p></li>
-<li><p><strong>- The material __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_material is removed from the Blender data.</strong> – </p></li>
-<li><p><strong>- The MixRGB node __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_mix_basecolor_pattern is removed from the material node tree.</strong> – </p></li>
-<li><p><strong>- The uv_layer __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_uvmap is removed from the mesh data.</strong> – </p></li>
-<li><p><strong>- The node texture __</strong><strong>[</strong><strong>pyblenderSDIC</strong><strong>]</strong><strong>__{name}_image_texture is removed from the material node tree.</strong> – </p></li>
+<li><p><strong>- The material</strong><strong> [</strong><strong>pbSDIC</strong><strong>]</strong><strong>_{name}_mat is removed from the Blender data.</strong> – </p></li>
+<li><p><strong>- The MixRGB node</strong><strong> [</strong><strong>pbSDIC</strong><strong>]</strong><strong>_{name}_mbp is removed from the material node tree.</strong> – </p></li>
+<li><p><strong>- The uv_layer</strong><strong> [</strong><strong>pbSDIC</strong><strong>]</strong><strong>_{name}_uvm is removed from the mesh data.</strong> – </p></li>
+<li><p><strong>- The node texture</strong><strong> [</strong><strong>pbSDIC</strong><strong>]</strong><strong>_{name}_imt is removed from the material node tree.</strong> – </p></li>
 </ul>
 </dd>
 </dl>
