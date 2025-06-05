@@ -28,7 +28,6 @@ The package ``pyblenderSDIC`` is composed of the following functions, classes, a
     ./api_doc/create_axisymmetric_mesh.rst
     ./api_doc/create_xy_heightmap_mesh.rst
 
-
 .. toctree:: 
     :maxdepth: 1
     :caption: materials Module

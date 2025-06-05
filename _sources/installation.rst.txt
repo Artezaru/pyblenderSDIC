@@ -22,8 +22,9 @@ Then, go to the directory and run the following command:
 Use ``-e .[dev]`` to install it with the development dependencies.
 
 Installing Blender
-==================
+------------------
 
+The package ``pyblenderSDIC`` is designed to be run with the Blender Python interpreter, which is included with Blender
 Before using ``pyblenderSDIC``, you need to install Blender. You can download it from the official website:
 
 https://www.blender.org/download/

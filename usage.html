@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Usage &#8212; pyblenderSDIC 1.0.3 documentation</title>
+    <title>Usage &#8212; pyblenderSDIC 1.0.4 documentation</title>
   
   
   
@@ -38,12 +38,13 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=baaebd52"></script>
+    <script src="_static/documentation_options.js?v=71272d9f"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'usage';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Running Python Scripts with Blender" href="usage_doc/running_scripts.html" />
     <link rel="prev" title="pyblenderSDIC.patterns (Default Patterns)" href="api_doc/default_patterns.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -109,7 +110,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 1.0.3 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 1.0.4 documentation</p>
   
 </a></div>
     
@@ -140,6 +141,13 @@
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="#">
     Usage
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
   </a>
 </li>
 
@@ -236,6 +244,13 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
   </ul>
 </nav></div>
           
@@ -263,7 +278,12 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"></div>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Before First Use</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="usage_doc/running_scripts.html">Running Python Scripts with Blender</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage_doc/installing_pyblenderSDIC.html">Installing pyblenderSDIC in Blender</a></li>
+</ul>
+</div>
 </nav></div>
     </div>
   
@@ -322,85 +342,23 @@
   <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h1>
 <p>Other Documentation will be added later.
-See the folder <code class="docutils literal notranslate"><span class="pre">examples</span></code> of the package for examples of usage.</p>
-</section>
-<section id="before-first-use">
-<h1>Before First Use<a class="headerlink" href="#before-first-use" title="Link to this heading">#</a></h1>
-<p>All the scripts made with <code class="docutils literal notranslate"><span class="pre">pyblenderSDIC</span></code> are made to be run in the Blender Python interpreter.
-First, you need to install the package in the Blender Python interpreter.</p>
-<p>To do this, create a default <code class="docutils literal notranslate"><span class="pre">install_pyblenderSDIC.py</span></code> with the following content:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
-
-<span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;git+https://github.com/Artezaru/pyblenderSDIC.git&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
-<p>Then, run the script in the Blender Python interpreter. You can do this by opening a terminal and running the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">~/blender/blender --background --python install_pyblenderSDIC.py</span>
-</pre></div>
-</div>
-<p>Where <code class="docutils literal notranslate"><span class="pre">~/blender/blender</span></code> is the path to the Blender executable. Replace it with the path to your Blender installation.
-If the installation of <code class="docutils literal notranslate"><span class="pre">pyblenderSDIC</span></code> don’t install all the dependencies, you can add the following line to the script:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
-
-<span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;git+https://github.com/Artezaru/pyblenderSDIC.git&quot;</span><span class="p">])</span>
-
-<span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;git+https://github.com/Artezaru/py3dframe.git&quot;</span><span class="p">])</span>
-<span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;numpy&quot;</span><span class="p">])</span>
-<span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;matplotlib&quot;</span><span class="p">])</span>
-<span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;opencv-python-headless.&quot;</span><span class="p">])</span>
-<span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;open3d&quot;</span><span class="p">])</span>
-<span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;meshio&quot;</span><span class="p">])</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;numpy is well installed in Blender Python interpreter&quot;</span><span class="p">)</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;matplotlib is well installed in Blender Python interpreter&quot;</span><span class="p">)</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opencv-python-headless is well installed in Blender Python interpreter&quot;</span><span class="p">)</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">open3d</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;open3d is well installed in Blender Python interpreter&quot;</span><span class="p">)</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">meshio</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;meshio is well installed in Blender Python interpreter&quot;</span><span class="p">)</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">py3dframe</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;py3dframe is well installed in Blender Python interpreter&quot;</span><span class="p">)</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pyblenderSDIC</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pyblenderSDIC is well installed in Blender Python interpreter&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="how-to-run-a-script-with-the-blender-python-interpreter">
-<h1>How to run a script with the Blender Python interpreter<a class="headerlink" href="#how-to-run-a-script-with-the-blender-python-interpreter" title="Link to this heading">#</a></h1>
-<p>To run a script using the Blender Python interpreter, you need to use the Blender executable and pass the script as an argument.</p>
-<p>Assume the Blender executable is located at:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">~/blender/blender</span>
-</pre></div>
-</div>
-<p>And your project is structured as follows:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">.</span>
-<span class="go">├── blender</span>
-<span class="go">│   └── blender</span>
-<span class="go">├── Documents</span>
-<span class="go">│   └── My_project</span>
-<span class="go">│       └── scripts</span>
-<span class="go">│           └── script1.py</span>
-</pre></div>
-</div>
-<p>You are currently in the <code class="docutils literal notranslate"><span class="pre">~/Documents/My_project</span></code> directory and want to run the script <code class="docutils literal notranslate"><span class="pre">script1.py</span></code>, located at:</p>
-<ul class="simple">
-<li><p>Absolute path: <code class="docutils literal notranslate"><span class="pre">~/Documents/My_project/scripts/script1.py</span></code></p></li>
-<li><p>Relative path: <code class="docutils literal notranslate"><span class="pre">scripts/script1.py</span></code></p></li>
+See the folder <code class="docutils literal notranslate"><span class="pre">examples</span></code> of the package for examples of usage.
+Please follow the Before First Use section to install the package in the Blender Python interpreter.</p>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Before First Use</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage_doc/running_scripts.html">Running Python Scripts with Blender</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage_doc/running_scripts.html#using-the-blender-python-interpreter">Using the Blender Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_doc/running_scripts.html#using-the-blender-gui-scripting-console">Using the Blender GUI Scripting Console</a></li>
 </ul>
-<p>To run the script using the Blender Python interpreter and launch the Blender GUI, use:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">~/blender/blender --python scripts/script1.py</span>
-</pre></div>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage_doc/installing_pyblenderSDIC.html">Installing pyblenderSDIC in Blender</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage_doc/installing_pyblenderSDIC.html#when-using-the-blender-python-interpreter">When using the Blender Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_doc/installing_pyblenderSDIC.html#when-using-the-blender-gui-scripting-console">When using the Blender GUI Scripting Console</a></li>
+</ul>
+</li>
+</ul>
 </div>
-<p>If you want to run the script without opening the GUI (in background mode), use:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">~/blender/blender --background --python scripts/script1.py</span>
-</pre></div>
-</div>
-<p>This will execute the script using Blender’s Python interpreter without showing the Blender interface.</p>
 </section>
 
 
@@ -422,6 +380,15 @@ If the installation of <code class="docutils literal notranslate"><span class="p
         <p class="prev-next-title">pyblenderSDIC.patterns (Default Patterns)</p>
       </div>
     </a>
+    <a class="right-next"
+       href="usage_doc/running_scripts.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Running Python Scripts with Blender</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -432,21 +399,6 @@ If the installation of <code class="docutils literal notranslate"><span class="p
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Usage</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#before-first-use">Before First Use</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-run-a-script-with-the-blender-python-interpreter">How to run a script with the Blender Python interpreter</a></li>
-</ul>
-
-  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">
