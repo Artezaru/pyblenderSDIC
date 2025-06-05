@@ -26,7 +26,7 @@ Where ``~/blender/blender`` is the path to the Blender executable. Replace it wi
 
 .. seealso::
 
-    :doc:`usage_doc/running_scripts` for more information on how to run scripts in Blender.
+    :doc:`running_scripts` for more information on how to run scripts in Blender.
 
 If the installation of ``pyblenderSDIC`` don't install all the dependencies, you can add the following lines to the script:
 
@@ -68,7 +68,7 @@ Simply import the package in your scripts:
 
    """ Some code using BlenderExperiment Here """
 
-And run your scripts in the Blender Python interpreter as described in the :doc:`usage_doc/running_scripts` section.
+And run your scripts in the Blender Python interpreter as described in the :doc:`running_scripts` section.
 
 
 When using the Blender GUI Scripting Console
