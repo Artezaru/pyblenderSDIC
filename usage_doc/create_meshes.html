@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Creating Meshes Example &#8212; pyblenderSDIC 1.0.4 documentation</title>
+    <title>Creating Meshes Example &#8212; pyblenderSDIC 2.0.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=71272d9f"></script>
+    <script src="../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'usage_doc/create_meshes';</script>
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 1.0.4 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 2.0.0 documentation</p>
   
 </a></div>
     
@@ -346,7 +346,7 @@
                   
   <section id="creating-meshes-example">
 <h1>Creating Meshes Example<a class="headerlink" href="#creating-meshes-example" title="Link to this heading">#</a></h1>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyblenderSDIC.meshes</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_axisymmetric_mesh</span><span class="p">,</span> <span class="n">TriMesh3D</span><span class="p">,</span> <span class="n">create_xy_heightmap_mesh</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyblenderSDIC.meshes</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_axisymmetric_mesh</span><span class="p">,</span> <span class="n">create_xy_heightmap_mesh</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">py3dframe</span><span class="w"> </span><span class="kn">import</span> <span class="n">Frame</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -396,8 +396,8 @@
     <span class="n">frame</span><span class="o">=</span><span class="n">frame</span><span class="p">,</span>
     <span class="n">height_bounds</span><span class="o">=</span><span class="n">height_bounds</span><span class="p">,</span>
     <span class="n">theta_bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">20</span><span class="p">)),</span>
-    <span class="n">Nheight</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="c1"># Number of node along the height</span>
-    <span class="n">Ntheta</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="c1"># Number of node along the theta</span>
+    <span class="n">Nheight</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="c1"># Number of vertices along the height</span>
+    <span class="n">Ntheta</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="c1"># Number of vertices along the theta</span>
     <span class="n">closed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">first_diagonal</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">direct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -407,7 +407,7 @@
 
 <span class="c1"># Save the mesh to a file</span>
 <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;cone.vtk&quot;</span><span class="p">)</span>
-<span class="n">mesh</span><span class="o">.</span><span class="n">save_to_vtk</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">to_vtk</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
 
 
 
@@ -440,8 +440,8 @@
     <span class="n">height_function</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
     <span class="n">x_bounds</span><span class="o">=</span><span class="n">x_bounds</span><span class="p">,</span>
     <span class="n">y_bounds</span><span class="o">=</span><span class="n">y_bounds</span><span class="p">,</span>
-    <span class="n">Nx</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="c1"># Number of node along the x axis</span>
-    <span class="n">Ny</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="c1"># Number of node along the y axis</span>
+    <span class="n">Nx</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="c1"># Number of vertices along the x axis</span>
+    <span class="n">Ny</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="c1"># Number of vertices along the y axis</span>
 <span class="p">)</span>
 
 <span class="c1"># Visualize the mesh</span>
@@ -449,7 +449,7 @@
 
 <span class="c1"># Save the mesh to a file</span>
 <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;wave_plane.vtk&quot;</span><span class="p">)</span>
-<span class="n">mesh</span><span class="o">.</span><span class="n">save_to_vtk</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">to_vtk</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

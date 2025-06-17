@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyblenderSDIC.blender_experiment &#8212; pyblenderSDIC 1.0.4 documentation</title>
+    <title>pyblenderSDIC.blender_experiment &#8212; pyblenderSDIC 2.0.0 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=71272d9f"></script>
+    <script src="../../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyblenderSDIC/blender_experiment';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 1.0.4 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 2.0.0 documentation</p>
   
 </a></div>
     
@@ -334,10 +334,12 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">.camera</span><span class="w"> </span><span class="kn">import</span> <span class="n">Camera</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.materials.material_bsdf</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBSDF</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.meshes.trianglemesh3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">TriangleMesh3D</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.spotlight</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpotLight</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">meshio</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
 
@@ -353,6 +355,13 @@
 
 <span class="sd">    The number of frames in the experiment can be set using the `end_frame` parameter.</span>
 <span class="sd">    This parameters can not be updated after the experiment is created.</span>
+
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">        </span>
+<span class="sd">        from pyblenderSDIC import BlenderExperiment</span>
+
+<span class="sd">        # Example instantiation</span>
+<span class="sd">        experiment = BlenderExperiment(Nb_frames=10)</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -857,15 +866,11 @@
     <span class="c1"># =======================================================</span>
 <div class="viewcode-block" id="BlenderExperiment.add_mesh">
 <a class="viewcode-back" href="../../api_doc/blender_experiment.html#pyblenderSDIC.BlenderExperiment.add_mesh">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mesh</span><span class="p">:</span> <span class="n">meshio</span><span class="o">.</span><span class="n">Mesh</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mesh</span><span class="p">:</span> <span class="n">TriangleMesh3D</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a mesh to the experiment.</span>
 
-<span class="sd">        The mesh must be an instance of meshio.Mesh with the following structure:</span>
-
-<span class="sd">        - ``points``: A NumPy array of shape (N, 3) representing the coordinates of N mesh nodes.</span>
-<span class="sd">        - ``cells_dict{&quot;triangle&quot;}.data``: A NumPy array of shape (M, 3) representing M triangular elements defined by node indices.</span>
-<span class="sd">        - ``point_data``: A dictionary storing data associated with each point, such as &quot;uvmap&quot; a (N, 3) array of texture coordinates (only the first two columns are used).</span>
+<span class="sd">        The mesh must be an instance of TriangleMesh3D.</span>
 
 <span class="sd">        The frames parameter indicates which frames the mesh will be active.</span>
 <span class="sd">        If None, the mesh will be active for all frames.</span>
@@ -883,12 +888,12 @@
 <span class="sd">            experiment = BlenderExperiment(Nb_frames=10)</span>
 <span class="sd">            # Define the mesh properties here</span>
 <span class="sd">            # ...</span>
-<span class="sd">            mesh = meshio.Mesh(points, cells_dict={&quot;triangle&quot;: elements}, point_data={&quot;uvmap&quot;: texture_coordinates})</span>
+<span class="sd">            mesh = TriangleMesh3D(vertices=..., triangles=...)</span>
 <span class="sd">            experiment.add_mesh(name=&quot;Mesh1&quot;, mesh=mesh, frames=[True, False, True, False, True, False, True, False, True, False])</span>
 
 <span class="sd">        .. seealso::</span>
 
-<span class="sd">            - :class:`pyblenderSDIC.meshio.Mesh` for more information on how to define a mesh.</span>
+<span class="sd">            - :class:`pyblenderSDIC.meshes.TriangleMesh3D` for more information on how to define a mesh.</span>
 <span class="sd">            - :meth:`pyblenderSDIC.BlenderExperiment.update_mesh` to update the mesh properties in the Blender scene.</span>
 <span class="sd">            - :meth:`pyblenderSDIC.BlenderExperiment.add_mesh_material` to set the material of the mesh.</span>
 <span class="sd">            - :meth:`pyblenderSDIC.BlenderExperiment.add_mesh_pattern` to set the pattern image of the mesh.</span>
@@ -898,8 +903,8 @@
 <span class="sd">        name : str</span>
 <span class="sd">            The name of the mesh with less than 50 characters.</span>
 <span class="sd">        </span>
-<span class="sd">        mesh : meshio.Mesh</span>
-<span class="sd">            The mesh object to be added. </span>
+<span class="sd">        mesh : TriangleMesh3D</span>
+<span class="sd">            The mesh object to be added. It must be an instance of TriangleMesh3D.</span>
 
 <span class="sd">        frames : List[bool], optional</span>
 <span class="sd">            A list of booleans indicating which frames the mesh will be active.</span>
@@ -908,7 +913,7 @@
 <span class="sd">        Raises</span>
 <span class="sd">        -------</span>
 <span class="sd">        TypeError</span>
-<span class="sd">            If name is not a string or mesh is not an instance of meshio.Mesh.</span>
+<span class="sd">            If name is not a string or mesh is not an instance of TriangleMesh3D.</span>
 <span class="sd">        ValueError</span>
 <span class="sd">            If a mesh with the same name already exists in the experiment or in Blender data.</span>
 <span class="sd">            If the length of frames is not equal to the number of frames in the experiment (end_frame).</span>
@@ -942,17 +947,15 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mesh with name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> already exists.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Object with name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> already exists in Blender data.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">meshio</span><span class="o">.</span><span class="n">Mesh</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;mesh must be an instance of meshio.Mesh&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;triangle&#39;</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">cells_dict</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;mesh must contain a &#39;triangle&#39; cell type&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">TriangleMesh3D</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;mesh must be an instance of TriangleMesh3D&quot;</span><span class="p">)</span>
         
         <span class="c1"># Ensure the experiment scene is active</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_scene</span>
 
         <span class="c1"># Extract the vertices and faces from the mesh</span>
-        <span class="n">points</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">points</span>
-        <span class="n">cells</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">cells_dict</span><span class="p">[</span><span class="s2">&quot;triangle&quot;</span><span class="p">]</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">vertices</span>
+        <span class="n">cells</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">triangles</span>
         
         <span class="c1"># ======================</span>
         <span class="c1"># MESH CREATION</span>
@@ -1062,19 +1065,19 @@
 <span class="sd">            experiment = BlenderExperiment(Nb_frames=10)</span>
 <span class="sd">            # Define the mesh properties here</span>
 <span class="sd">            # ...</span>
-<span class="sd">            mesh = meshio.Mesh(points, cells_dict={&quot;triangle&quot;: elements}, point_data={&quot;uvmap&quot;: texture_coordinates})</span>
+<span class="sd">            mesh = TriangleMesh3D(vertices=..., triangles=...)</span>
+<span class="sd">            mesh.uvmap = ...</span>
 <span class="sd">            experiment.add_mesh(name=&quot;Mesh1&quot;, mesh=mesh, frames=[True, False, True, False, True, False, True, False, True, False])</span>
 <span class="sd">            experiment.add_mesh_pattern(name=&quot;Mesh1&quot;, pattern_path=&quot;path/to/pattern.png&quot;)</span>
 
 <span class="sd">        .. warning::</span>
 <span class="sd">        </span>
-<span class="sd">            The UV coordinates of the mesh must be defined in the meshio.Mesh object.   </span>
+<span class="sd">            The UV coordinates of the mesh must be defined in the TriangleMesh3D object.   </span>
 <span class="sd">            as &quot;uvmap&quot; in the point_data dictionary.</span>
 
 <span class="sd">        .. seealso::</span>
 
-<span class="sd">            - :class:`pyblenderSDIC.meshes.TriMesh3D` for more information on how to define a mesh.</span>
-
+<span class="sd">            - :class:`pyblenderSDIC.meshes.TriangleMesh3D` for more information on how to define a mesh.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1126,18 +1129,20 @@
         <span class="n">mesh</span><span class="p">,</span> <span class="n">blender_mesh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
         <span class="c1"># Check if the mesh has a UVMAP defined</span>
-        <span class="k">if</span> <span class="n">mesh</span><span class="o">.</span><span class="n">point_data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s2">&quot;uvmap&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">point_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">mesh</span><span class="o">.</span><span class="n">uvmap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mesh </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> does not have a UVMAP defined.&quot;</span><span class="p">)</span>
         
-        <span class="n">uvmap</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">]</span> <span class="c1"># (N, 3) array of texture coordinates</span>
+        <span class="n">uvmap</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">uvmap</span> <span class="c1"># Get the UVMap from the mesh (shape: (M, 6))</span>
 
         <span class="c1"># Setting the UVMap</span>
         <span class="k">if</span> <span class="sa">f</span><span class="s2">&quot;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_uvm&quot;</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;UVMap with name [pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_uvm already exists.&quot;</span><span class="p">)</span>
         
         <span class="n">uv_layer</span> <span class="o">=</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_uvm&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">loop</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loops</span><span class="p">:</span>
-            <span class="n">uv_layer</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">loop</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">uv</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">uvmap</span><span class="p">[</span><span class="n">loop</span><span class="o">.</span><span class="n">vertex_index</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">poly_index</span><span class="p">,</span> <span class="n">polygon</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">polygons</span><span class="p">):</span> <span class="c1"># poly_index is the index of the polygon in the mesh (ie triangle)</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">loop_index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">polygon</span><span class="o">.</span><span class="n">loop_indices</span><span class="p">):</span> <span class="c1"># index is the index of the vertex in the polygon</span>
+                <span class="n">loop</span> <span class="o">=</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loops</span><span class="p">[</span><span class="n">loop_index</span><span class="p">]</span> <span class="c1"># The loop associated to the current vertex in the polygon</span>
+                <span class="n">uv_layer</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">loop</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">uv</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">uvmap</span><span class="p">[</span><span class="n">poly_index</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">index</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>  <span class="c1"># Set the UV coordinates for each loop</span>
             
         <span class="c1"># Access the material</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">materials</span><span class="p">:</span>
@@ -1185,7 +1190,7 @@
 <span class="sd">            experiment = BlenderExperiment(Nb_frames=10)</span>
 <span class="sd">            # Define the mesh properties here</span>
 <span class="sd">            # ...</span>
-<span class="sd">            mesh = meshio.Mesh(points, cells_dict={&quot;triangle&quot;: elements}, point_data={&quot;uvmap&quot;: texture_coordinates})</span>
+<span class="sd">            mesh = TriangleMesh3D(points, cells_dict={&quot;triangle&quot;: elements}, point_data={&quot;uvmap&quot;: texture_coordinates})</span>
 <span class="sd">            experiment.set_mesh(name=&quot;Mesh1&quot;, mesh=mesh, frames=[True, False, True, False, True, False, True, False, True, False])</span>
 <span class="sd">            material = MaterialBSDF()</span>
 <span class="sd">            # Define the material properties here</span>
@@ -1422,7 +1427,7 @@
 
 <div class="viewcode-block" id="BlenderExperiment.get_mesh">
 <a class="viewcode-back" href="../../api_doc/blender_experiment.html#pyblenderSDIC.BlenderExperiment.get_mesh">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">meshio</span><span class="o">.</span><span class="n">Mesh</span><span class="p">,</span> <span class="n">Object</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">TriangleMesh3D</span><span class="p">,</span> <span class="n">Object</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the mesh object and its Blender object.</span>
 <span class="sd">        </span>
@@ -1433,8 +1438,8 @@
 <span class="sd">        </span>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Tuple[meshio.Mesh, Object]</span>
-<span class="sd">            A tuple containing the meshio.Mesh object and its corresponding Blender object.</span>
+<span class="sd">        Tuple[TriangleMesh3D, Object]</span>
+<span class="sd">            A tuple containing the TriangleMesh3D object and its corresponding Blender object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;name must be a string&quot;</span><span class="p">)</span>
@@ -1451,8 +1456,8 @@
         <span class="n">blender_mesh</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
 
         <span class="c1"># Check the types of the objects</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">meshio</span><span class="o">.</span><span class="n">Mesh</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;[ERROR] mesh must be an instance of meshio.Mesh&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">TriangleMesh3D</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;[ERROR] mesh must be an instance of TriangleMesh3D&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">blender_mesh</span><span class="p">,</span> <span class="n">Object</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;[ERROR] blender_mesh must be an instance of Object&quot;</span><span class="p">)</span>
         
@@ -1560,7 +1565,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">update_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the mesh properties in the Blender scene.</span>
-<span class="sd">        This method must be called after updating the mesh properties in the meshio.Mesh object.</span>
+<span class="sd">        This method must be called after updating the mesh properties in the TriangleMesh3D object.</span>
 
 <span class="sd">        .. code-block:: python</span>
 
@@ -1568,7 +1573,7 @@
 <span class="sd">            experiment = BlenderExperiment(Nb_frames=10)</span>
 <span class="sd">            # Define the mesh properties here</span>
 <span class="sd">            # ...</span>
-<span class="sd">            mesh = meshio.Mesh(points, cells_dict={&quot;triangle&quot;: elements}, point_data={&quot;uvmap&quot;: texture_coordinates})</span>
+<span class="sd">            mesh = TriangleMesh3D(points, cells_dict={&quot;triangle&quot;: elements}, point_data={&quot;uvmap&quot;: texture_coordinates})</span>
 <span class="sd">            experiment.add_mesh(name=&quot;Mesh1&quot;, mesh=mesh, frames=[True, False, True, False, True, False, True, False, True, False])</span>
 <span class="sd">            # Update some nodes of the mesh here</span>
 <span class="sd">            # ...</span>
@@ -1607,8 +1612,8 @@
 
         <span class="c1"># Extract the vertices and faces from the mesh</span>
         <span class="n">points</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">points</span>
-        <span class="n">cells</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">cells_dict</span><span class="p">[</span><span class="s2">&quot;triangle&quot;</span><span class="p">]</span>
-        <span class="n">uvmap</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">point_data</span><span class="p">[</span><span class="s2">&quot;uvmap&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">mesh</span><span class="o">.</span><span class="n">point_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;uvmap&quot;</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">point_data</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">cells</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">triangles</span>
+        <span class="n">uvmap</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">uvmap</span>
 
         <span class="c1"># Apply the vertices and faces to the Blender mesh</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">vertices</span><span class="p">):</span>
@@ -1623,8 +1628,10 @@
         <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_uvm&#39;</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">:</span>
             <span class="n">uv_layer</span> <span class="o">=</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uv_layers</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;[pbSDIC]_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_uvm&#39;</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">uvmap</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">loop</span> <span class="ow">in</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loops</span><span class="p">:</span>
-                    <span class="n">uv_layer</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">loop</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">uv</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">uvmap</span><span class="p">[</span><span class="n">loop</span><span class="o">.</span><span class="n">vertex_index</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">poly_index</span><span class="p">,</span> <span class="n">polygon</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">polygons</span><span class="p">):</span> <span class="c1"># poly_index is the index of the polygon in the mesh (ie triangle)</span>
+                    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">loop_index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">polygon</span><span class="o">.</span><span class="n">loop_indices</span><span class="p">):</span> <span class="c1"># index is the index of the vertex in the polygon</span>
+                        <span class="n">loop</span> <span class="o">=</span> <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loops</span><span class="p">[</span><span class="n">loop_index</span><span class="p">]</span> <span class="c1"># The loop associated to the current vertex in the polygon</span>
+                        <span class="n">uv_layer</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">loop</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">uv</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">uvmap</span><span class="p">[</span><span class="n">poly_index</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">index</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>  <span class="c1"># Set the UV coordinates for each loop</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mesh </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> does not have a UVMAP defined but the uv_layer exists.&quot;</span><span class="p">)</span>
 
@@ -1648,7 +1655,7 @@
 <span class="sd">            experiment = BlenderExperiment(Nb_frames=10)</span>
 <span class="sd">            # Define the mesh properties here</span>
 <span class="sd">            # ...</span>
-<span class="sd">            mesh = meshio.Mesh(points, cells_dict={&quot;triangle&quot;: elements}, point_data={&quot;uvmap&quot;: texture_coordinates})</span>
+<span class="sd">            mesh = TriangleMesh3D(points, cells_dict={&quot;triangle&quot;: elements}, point_data={&quot;uvmap&quot;: texture_coordinates})</span>
 <span class="sd">            experiment.add_mesh(name=&quot;Mesh1&quot;, mesh=mesh, frames=[True, False, True, False, True, False, True, False, True, False])</span>
 <span class="sd">            experiment.add_mesh_pattern(name=&quot;Mesh1&quot;, pattern_path=&quot;path/to/pattern.png&quot;)</span>
 <span class="sd">            experiment.change_mesh_pattern(name=&quot;Mesh1&quot;, pattern_path=&quot;path/to/new_pattern.png&quot;)</span>

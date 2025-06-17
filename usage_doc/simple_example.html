@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Simple Experiment Example &#8212; pyblenderSDIC 1.0.4 documentation</title>
+    <title>Simple Experiment Example &#8212; pyblenderSDIC 2.0.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=71272d9f"></script>
+    <script src="../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'usage_doc/simple_example';</script>
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 1.0.4 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 2.0.0 documentation</p>
   
 </a></div>
     
@@ -349,14 +349,15 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">meshio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">py3dframe</span><span class="w"> </span><span class="kn">import</span> <span class="n">Frame</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyblenderSDIC</span><span class="w"> </span><span class="kn">import</span> <span class="n">Camera</span><span class="p">,</span> <span class="n">SpotLight</span><span class="p">,</span> <span class="n">BlenderExperiment</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyblenderSDIC.meshes</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_axisymmetric_mesh</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyblenderSDIC.materials</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBSDF</span><span class="p">,</span> <span class="n">get_iron_material</span><span class="p">,</span> <span class="n">get_copper_material</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyblenderSDIC.patterns</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_mouchtichu_path</span><span class="p">,</span> <span class="n">get_speckle_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyblenderSDIC.materials</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBSDF</span><span class="p">,</span> <span class="n">get_copper_material</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyblenderSDIC.patterns</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_mouchtichu_path</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">We observe a demi-cylinder with a mouchtichu pattern on it.</span>
@@ -406,7 +407,7 @@
 <span class="c1"># ====================</span>
 <span class="c1"># 2. CREATE THE CAMERA</span>
 <span class="c1"># ====================</span>
-<span class="n">camera_position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">120.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">50.0</span><span class="p">])</span>
+<span class="n">camera_position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">120.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">150.0</span><span class="p">])</span>
 <span class="n">camera_target</span> <span class="o">=</span> <span class="n">cylinder_center</span> <span class="o">+</span> <span class="n">cylinder_radius</span><span class="o">*</span><span class="n">cylinder_x_axis</span>
 <span class="n">camera_z_axis</span> <span class="o">=</span> <span class="n">camera_target</span> <span class="o">-</span> <span class="n">camera_position</span>
 <span class="n">camera_y_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
@@ -444,7 +445,7 @@
 
 <span class="n">light</span> <span class="o">=</span> <span class="n">SpotLight</span><span class="p">(</span>
     <span class="n">frame</span><span class="o">=</span><span class="n">light_frame</span><span class="p">,</span>
-    <span class="n">energy</span><span class="o">=</span><span class="mf">50000.0</span><span class="p">,</span>
+    <span class="n">energy</span><span class="o">=</span><span class="mf">5000000.0</span><span class="p">,</span>
     <span class="n">spot_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
     <span class="n">spot_blend</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
 <span class="p">)</span>
@@ -469,7 +470,7 @@
 <span class="c1"># ==========================</span>
 <span class="c1"># 5. CREATE THE EXPERIMENT</span>
 <span class="c1"># ==========================</span>
-<span class="n">STOP_BEFORE_RENDER</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">STOP_BEFORE_RENDER</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">dat_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
 
 <span class="n">experiment</span> <span class="o">=</span> <span class="n">BlenderExperiment</span><span class="p">()</span>
@@ -507,6 +508,7 @@
     <span class="n">experiment</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dat_folder</span><span class="p">,</span> <span class="s2">&quot;simple_render.tiff&quot;</span><span class="p">),</span>
         <span class="n">N_samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+
     <span class="p">)</span>
 </pre></div>
 </div>
