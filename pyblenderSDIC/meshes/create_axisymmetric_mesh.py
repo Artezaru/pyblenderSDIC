@@ -4,7 +4,7 @@ from py3dframe import Frame, Transform
 from typing import Callable
 from numbers import Integral
 
-from .trimesh3d import TriMesh3D
+from .trianglemesh3d import TriangleMesh3D
 
 
 def create_axisymmetric_mesh(
@@ -18,7 +18,7 @@ def create_axisymmetric_mesh(
     first_diagonal: bool = True,
     direct: bool = True,
     uv_layout: int = 0,
-    ) -> TriMesh3D:
+    ) -> TriangleMesh3D:
     r"""
     Create a 3D axisymmetric mesh using a given profile curve.
 
@@ -30,12 +30,12 @@ def create_axisymmetric_mesh(
     The x-axis of the frame defines the direction of :math:`\theta=0`, and the y-axis defines the direction of :math:`\theta=\pi/2`.
     
     The ``height_bounds`` parameter defines the vertical extent of the mesh, and ``theta_bounds`` defines the angular sweep around the axis.
-    ``Nheight`` and ``Ntheta`` determine the number of nodes in the height and angular directions, respectively.
+    ``Nheight`` and ``Ntheta`` determine the number of vertices in the height and angular directions, respectively.
     Nodes are uniformly distributed along both directions.
 
     .. note::
 
-        - ``Nheight`` and ``Ntheta`` refer to the number of **nodes**, not segments.
+        - ``Nheight`` and ``Ntheta`` refer to the number of **vertices**, not segments.
 
     For example, the following code generates a mesh of a half-cylinder whose flat face is centered on the world x-axis:
 
@@ -61,13 +61,13 @@ def create_axisymmetric_mesh(
         Demi-cylinder mesh with the face centered on the world x-axis.
 
     Nodes are ordered first in height (indexed by ``i_H``) and then in theta (indexed by ``i_T``).
-    So the node at height index ``i_H`` and angular index ``i_T`` (both starting from 0) is located at:
+    So the vertex at height index ``i_H`` and angular index ``i_T`` (both starting from 0) is located at:
 
     .. code-block:: python
 
-        mesh.nodes[i_T * Nheight + i_H, :]
+        mesh.vertices[i_T * Nheight + i_H, :]
 
-    Each quadrilateral element is defined by the nodes:
+    Each quadrilateral element is defined by the vertices:
 
     - :math:`(i_H, i_T)`
     - :math:`(i_H + 1, i_T)`
@@ -96,7 +96,7 @@ def create_axisymmetric_mesh(
 
         (\theta_0, \theta_0 \pm 2\pi (1 - \frac{1}{Ntheta}))
 
-    to avoid duplicating nodes at the seam.
+    to avoid duplicating vertices at the seam.
 
     To generate a closed full cylinder:
 
@@ -111,12 +111,12 @@ def create_axisymmetric_mesh(
             closed=True,
         )
 
-    The UV coordinates are generated based on the node positions in the mesh and uniformly distributed in the range [0, 1] for the OpenGL texture mapping convention.
+    The UV coordinates are generated based on the vertex positions in the mesh and uniformly distributed in the range [0, 1] for the OpenGL texture mapping convention.
     Several UV mapping strategies are available and synthesized in the ``uv_layout`` parameter.
     The following options are available for ``uv_layout``:
 
     +-----------------+-------------------------+-------------------------+--------------------------+--------------------------+
-    | uv_layout       | Node lower-left corner  | Node upper-left corner  | Node lower-right corner  | Node upper-right corner  |
+    | uv_layout       | Vertex lower-left corner| Vertex upper-left corner| Vertex lower-right corner| Vertex upper-right corner|
     +=================+=========================+=========================+==========================+==========================+   
     | 0               | (0, 0)                  | (Nheight-1, 0)          | (0, Ntheta-1)            | (Nheight-1, Ntheta-1)    |
     +-----------------+-------------------------+-------------------------+--------------------------+--------------------------+
@@ -135,11 +135,11 @@ def create_axisymmetric_mesh(
     | 7               | (Nheight-1, Ntheta-1)   | (Nheight-1, 0)          | (0, Ntheta-1)            | (0, 0)                   |
     +-----------------+-------------------------+-------------------------+--------------------------+--------------------------+
 
-    The table above gives for the 4 corners of a image the corresponding node in the mesh.
+    The table above gives for the 4 corners of a image the corresponding vertex in the mesh.
 
     .. seealso:: 
     
-        - :class:`pyblenderSDIC.meshes.TriMesh3D` for more information on how to visualize and manipulate the mesh.
+        - :class:`pyblenderSDIC.meshes.TriangleMesh3D` for more information on how to visualize and manipulate the mesh.
         - https://github.com/Artezaru/py3dframe for details on the ``Frame`` class.
 
     Parameters
@@ -153,17 +153,17 @@ def create_axisymmetric_mesh(
     
     height_bounds : tuple[float, float], optional
         The lower and upper bounds for the height coordinate. Defaults to (0.0, 1.0).
-        The order determines the direction of node placement.
+        The order determines the direction of vertex placement.
     
     theta_bounds : tuple[float, float], optional
         The angular sweep in radians. Defaults to (-numpy.pi, numpy.pi).
-        The order determines the angular direction of node placement.
+        The order determines the angular direction of vertex placement.
     
     Nheight : int, optional
-        Number of nodes along the height direction. Must be more than 1. Default is 10.
+        Number of vertices along the height direction. Must be more than 1. Default is 10.
     
     Ntheta : int, optional
-        Number of nodes along the angular direction. Must be more than 1. Default is 10.
+        Number of vertices along the angular direction. Must be more than 1. Default is 10.
     
     closed : bool, optional
         If True, the mesh is closed in the angular direction. Default is False.
@@ -179,8 +179,8 @@ def create_axisymmetric_mesh(
 
     Returns
     -------
-    TriMesh3D
-        The generated axisymmetric mesh as a TriMesh3D object.
+    TriangleMesh3D
+        The generated axisymmetric mesh as a TriangleMesh3D object.
     """
     # Check the input parameters
     if not isinstance(frame, Frame):
@@ -233,14 +233,14 @@ def create_axisymmetric_mesh(
     theta_min = theta_bounds[0]
     theta_max = theta_bounds[1]
 
-    # Get the indices of the nodes in the array
+    # Get the indices of the vertices in the array
     index = lambda ih, it: it*Nheight + ih
 
     # Set the UV mapping strategy (list of 3D points -> [(0,0) ; (0,Nt) ; (Nh,0) ; (Nh,Nt)])
-    lower_left = numpy.array([0.0, 0.0, 0.0])
-    lower_right = numpy.array([1.0, 0.0, 0.0])
-    upper_left = numpy.array([0.0, 1.0, 0.0])
-    upper_right = numpy.array([1.0, 1.0, 0.0])
+    lower_left = numpy.array([0.0, 0.0])
+    lower_right = numpy.array([1.0, 0.0])
+    upper_left = numpy.array([0.0, 1.0])
+    upper_right = numpy.array([1.0, 1.0])
     if uv_layout == 0:
         uv_mapping = [lower_left, lower_right, upper_left, upper_right]
     elif uv_layout == 1:
@@ -258,13 +258,13 @@ def create_axisymmetric_mesh(
     elif uv_layout == 7:
         uv_mapping = [upper_right, lower_right, upper_left, lower_left]
 
-    # Generate the nodes
-    uvmap = numpy.zeros((Nheight*Ntheta, 3))
-    nodes = numpy.zeros((Nheight*Ntheta, 3))
+    # Generate the vertices
+    uvmap = numpy.zeros((Nheight*Ntheta, 2))
+    vertices = numpy.zeros((Nheight*Ntheta, 3))
 
     for it in range(Ntheta):
         for ih in range(Nheight):
-            # Compute the coordinates of the node in the local frame.
+            # Compute the coordinates of the vertex in the local frame.
             theta = theta_min + (theta_max - theta_min)*it/(Ntheta-1)
             height = height_min + (height_max - height_min)*ih/(Nheight-1)
             rho = profile_curve(height)
@@ -274,58 +274,58 @@ def create_axisymmetric_mesh(
 
             # Convert the local point to the global frame
             local_point = numpy.array([x, y, z]).reshape((3,1))
-            nodes[index(ih, it), :] = transform.transform(point=local_point).flatten()
+            vertices[index(ih, it), :] = transform.transform(point=local_point).flatten()
 
             # Compute the uvmap
             uvmap[index(ih, it), :] = uv_mapping[0] + ih/(Nheight-1)*(uv_mapping[2] - uv_mapping[0]) + it/(Ntheta-1)*(uv_mapping[1] - uv_mapping[0])
 
 
     # Generate the mesh
-    elements = []
+    triangles = []
 
     for it in range(Ntheta-1):
         for ih in range(Nheight-1):
             if first_diagonal and direct:
-                elements.append([index(ih, it), index(ih, it+1), index(ih+1, it+1)])
-                elements.append([index(ih, it), index(ih+1, it+1), index(ih+1, it)])
+                triangles.append([index(ih, it), index(ih, it+1), index(ih+1, it+1)])
+                triangles.append([index(ih, it), index(ih+1, it+1), index(ih+1, it)])
 
             elif first_diagonal and not direct:
-                elements.append([index(ih, it), index(ih+1, it+1), index(ih, it+1)])
-                elements.append([index(ih, it), index(ih+1, it), index(ih+1, it+1)])
+                triangles.append([index(ih, it), index(ih+1, it+1), index(ih, it+1)])
+                triangles.append([index(ih, it), index(ih+1, it), index(ih+1, it+1)])
 
             elif not first_diagonal and direct:
-                elements.append([index(ih, it), index(ih, it+1), index(ih+1, it)])
-                elements.append([index(ih, it+1), index(ih+1, it+1), index(ih+1, it)])
+                triangles.append([index(ih, it), index(ih, it+1), index(ih+1, it)])
+                triangles.append([index(ih, it+1), index(ih+1, it+1), index(ih+1, it)])
 
             elif not first_diagonal and not direct:
-                elements.append([index(ih, it), index(ih+1, it), index(ih, it+1)])
-                elements.append([index(ih, it+1), index(ih+1, it), index(ih+1, it+1)])
+                triangles.append([index(ih, it), index(ih+1, it), index(ih, it+1)])
+                triangles.append([index(ih, it+1), index(ih+1, it), index(ih+1, it+1)])
 
     if closed:
         for ih in range(Nheight-1):
             if first_diagonal and direct:
-                elements.append([index(ih, Ntheta-1), index(ih, 0), index(ih+1, 0)])
-                elements.append([index(ih, Ntheta-1), index(ih+1, 0), index(ih+1, Ntheta-1)])
+                triangles.append([index(ih, Ntheta-1), index(ih, 0), index(ih+1, 0)])
+                triangles.append([index(ih, Ntheta-1), index(ih+1, 0), index(ih+1, Ntheta-1)])
 
             elif first_diagonal and not direct:
-                elements.append([index(ih, Ntheta-1), index(ih+1, 0), index(ih, 0)])
-                elements.append([index(ih, Ntheta-1), index(ih+1, Ntheta-1), index(ih+1, 0)])
+                triangles.append([index(ih, Ntheta-1), index(ih+1, 0), index(ih, 0)])
+                triangles.append([index(ih, Ntheta-1), index(ih+1, Ntheta-1), index(ih+1, 0)])
 
             elif not first_diagonal and direct:
-                elements.append([index(ih, Ntheta-1), index(ih, 0), index(ih+1, Ntheta-1)])
-                elements.append([index(ih, 0), index(ih+1, 0), index(ih+1, Ntheta-1)])
+                triangles.append([index(ih, Ntheta-1), index(ih, 0), index(ih+1, Ntheta-1)])
+                triangles.append([index(ih, 0), index(ih+1, 0), index(ih+1, Ntheta-1)])
 
             elif not first_diagonal and not direct:
-                elements.append([index(ih, Ntheta-1), index(ih+1, Ntheta-1), index(ih, 0)])
-                elements.append([index(ih, 0), index(ih+1, Ntheta-1), index(ih+1, 0)])
+                triangles.append([index(ih, Ntheta-1), index(ih+1, Ntheta-1), index(ih, 0)])
+                triangles.append([index(ih, 0), index(ih+1, Ntheta-1), index(ih+1, 0)])
 
-    elements = numpy.array(elements)
+    triangles = numpy.array(triangles)
 
-    # Prepare the elements for the mesh
-    points = nodes
-    cells = [("triangle", elements)]
-    point_data = {"uvmap": uvmap}
-
-    # Create the mesh
-    mesh = TriMesh3D(points=points, cells=cells, point_data=point_data)
+    # Prepare the triangles for the mesh
+    mesh = TriangleMesh3D(
+        vertices=vertices,
+        triangles=triangles,
+    )
+    # Set the UV map
+    mesh.set_vertices_uvmap(uvmap)
     return mesh

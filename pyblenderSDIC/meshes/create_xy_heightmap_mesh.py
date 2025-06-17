@@ -4,7 +4,7 @@ from py3dframe import Frame, Transform
 from typing import Callable
 from numbers import Integral
 
-from .trimesh3d import TriMesh3D
+from .trianglemesh3d import TriangleMesh3D
 
 def create_xy_heightmap_mesh(
     height_function: Callable[[float, float], float] = lambda x, y: 0.0,
@@ -16,7 +16,7 @@ def create_xy_heightmap_mesh(
     first_diagonal: bool = True,
     direct: bool = True,
     uv_layout: int = 0,
-) -> TriMesh3D:
+) -> TriangleMesh3D:
     r"""
     Create a 3D XY-plane mesh with variable height defined by a surface function.
 
@@ -28,12 +28,12 @@ def create_xy_heightmap_mesh(
     The height (z) is applied along the local Z-axis of the frame.
 
     The ``x_bounds`` and ``y_bounds`` parameters define the rectangular domain over which the mesh is generated.
-    ``Nx`` and ``Ny`` determine the number of nodes along the x and y directions, respectively.
+    ``Nx`` and ``Ny`` determine the number of vertices along the x and y directions, respectively.
     Nodes are uniformly distributed across both directions.
 
     .. note::
 
-        - ``Nx`` and ``Ny`` refer to the number of **nodes**, not segments.
+        - ``Nx`` and ``Ny`` refer to the number of **vertices**, not segments.
         - The height function must return a finite scalar value for every (x, y) in the specified domain.
 
     For example, the following code generates a sinusoidal surface mesh centered on the world origin:
@@ -60,13 +60,13 @@ def create_xy_heightmap_mesh(
         Sinusoidal height map over a square domain centered at the origin.
 
     Nodes are ordered first in y (indexed by ``i_Y``), then in x (indexed by ``i_X``).
-    So the node at y index ``i_Y`` and x index ``i_X`` (both starting from 0) is located at:
+    So the vertex at y index ``i_Y`` and x index ``i_X`` (both starting from 0) is located at:
 
     .. code-block:: python
 
-        mesh.nodes[i_Y * Nx + i_X, :]
+        mesh.vertices[i_Y * Nx + i_X, :]
 
-    Each quadrilateral element is defined by the nodes:
+    Each quadrilateral face is defined by the vertices:
 
     - :math:`(i_X, i_Y)`
     - :math:`(i_X + 1, i_Y)`
@@ -88,12 +88,12 @@ def create_xy_heightmap_mesh(
     By default, the triangles are oriented counterclockwise (direct orientation) for an observer looking from above.
     Set ``direct=False`` to reverse the orientation.
 
-    The UV coordinates are generated based on the node positions in the mesh and uniformly distributed in the range [0, 1] for the OpenGL texture mapping convention.
+    The UV coordinates are generated based on the vertex positions in the mesh and uniformly distributed in the range [0, 1] for the OpenGL texture mapping convention.
     Several UV mapping strategies are available and synthesized in the ``uv_layout`` parameter.
     The following options are available for ``uv_layout``:
 
     +-----------------+-------------------------+-------------------------+--------------------------+--------------------------+
-    | uv_layout       | Node lower-left corner  | Node upper-left corner  | Node lower-right corner  | Node upper-right corner  |
+    | uv_layout       | Vertex lower-left corner| Vertex upper-left corner| Vertex lower-right corner| Vertex upper-right corner|
     +=================+=========================+=========================+==========================+==========================+   
     | 0               | (0, 0)                  | (Nx-1, 0)               | (0, Ny-1)                | (Nx-1, Ny-1)             |
     +-----------------+-------------------------+-------------------------+--------------------------+--------------------------+
@@ -112,11 +112,11 @@ def create_xy_heightmap_mesh(
     | 7               | (Nx-1, Ny-1)            | (Nx-1, 0)               | (0, Ny-1)                | (0, 0)                   |
     +-----------------+-------------------------+-------------------------+--------------------------+--------------------------+
 
-    The table above gives for the 4 corners of a image the corresponding node in the mesh.
+    The table above gives for the 4 corners of a image the corresponding vertex in the mesh.
 
     .. seealso:: 
         
-        - :class:`pyblenderSDIC.meshes.TriMesh3D` for more information on how to visualize and manipulate the mesh.
+        - :class:`pyblenderSDIC.meshes.TriangleMesh3D` for more information on how to visualize and manipulate the mesh.
         - https://github.com/Artezaru/py3dframe for details on the ``Frame`` class.
 
     Parameters
@@ -134,10 +134,10 @@ def create_xy_heightmap_mesh(
         The lower and upper bounds for the y coordinate. Default is (-1.0, 1.0).
 
     Nx : int, optional
-        Number of nodes along the x direction. Must be more than 1. Default is 10.
+        Number of vertices along the x direction. Must be more than 1. Default is 10.
 
     Ny : int, optional
-        Number of nodes along the y direction. Must be more than 1. Default is 10.
+        Number of vertices along the y direction. Must be more than 1. Default is 10.
 
     first_diagonal : bool, optional
         If True, the quad is split along the first diagonal (bottom-left to top-right). Default is True.
@@ -150,8 +150,8 @@ def create_xy_heightmap_mesh(
 
     Returns
     -------
-    TriMesh3D
-        The generated surface mesh as a TriMesh3D object.
+    TriangleMesh3D
+        The generated surface mesh as a TriangleMesh3D object.
     """
     # Check the input parameters
     if not isinstance(frame, Frame):
@@ -199,14 +199,14 @@ def create_xy_heightmap_mesh(
     y_min = y_bounds[0]
     y_max = y_bounds[1]
 
-    # Get the indices of the nodes in the array
+    # Get the indices of the vertices in the array
     index = lambda ih, it: it*Nx + ih
 
     # Set the UV mapping strategy (list of 3D points -> [(0,0) ; (0,Nt) ; (Nh,0) ; (Nh,Nt)])
-    lower_left = numpy.array([0.0, 0.0, 0.0])
-    lower_right = numpy.array([1.0, 0.0, 0.0])
-    upper_left = numpy.array([0.0, 1.0, 0.0])
-    upper_right = numpy.array([1.0, 1.0, 0.0])
+    lower_left = numpy.array([0.0, 0.0])
+    lower_right = numpy.array([1.0, 0.0])
+    upper_left = numpy.array([0.0, 1.0])
+    upper_right = numpy.array([1.0, 1.0])
     if uv_layout == 0:
         uv_mapping = [lower_left, lower_right, upper_left, upper_right]
     elif uv_layout == 1:
@@ -224,53 +224,53 @@ def create_xy_heightmap_mesh(
     elif uv_layout == 7:
         uv_mapping = [upper_right, lower_right, upper_left, lower_left]
 
-    # Generate the nodes
-    uvmap = numpy.zeros((Nx*Ny, 3))
-    nodes = numpy.zeros((Nx*Ny, 3))
+    # Generate the vertices
+    uvmap = numpy.zeros((Nx*Ny, 2))
+    vertices = numpy.zeros((Nx*Ny, 3))
 
     for it in range(Ny):
         for ih in range(Nx):
-            # Compute the coordinates of the node in the local frame.
+            # Compute the coordinates of the vertex in the local frame.
             y = y_min + (y_max - y_min)*it/(Ny-1)
             x = x_min + (x_max - x_min)*ih/(Nx-1)
             z = height_function(x, y)
 
             # Convert the local point to the global frame
             local_point = numpy.array([x, y, z]).reshape((3,1))
-            nodes[index(ih, it), :] = transform.transform(point=local_point).flatten()
+            vertices[index(ih, it), :] = transform.transform(point=local_point).flatten()
 
             # Compute the uvmap
             uvmap[index(ih, it), :] = uv_mapping[0] + ih/(Nx-1)*(uv_mapping[2] - uv_mapping[0]) + it/(Ny-1)*(uv_mapping[1] - uv_mapping[0])
 
 
     # Generate the mesh
-    elements = []
+    triangles = []
 
     for it in range(Ny-1):
         for ih in range(Nx-1):
             if first_diagonal and direct:
-                elements.append([index(ih, it), index(ih, it+1), index(ih+1, it+1)])
-                elements.append([index(ih, it), index(ih+1, it+1), index(ih+1, it)])
+                triangles.append([index(ih, it), index(ih, it+1), index(ih+1, it+1)])
+                triangles.append([index(ih, it), index(ih+1, it+1), index(ih+1, it)])
 
             elif first_diagonal and not direct:
-                elements.append([index(ih, it), index(ih+1, it+1), index(ih, it+1)])
-                elements.append([index(ih, it), index(ih+1, it), index(ih+1, it+1)])
+                triangles.append([index(ih, it), index(ih+1, it+1), index(ih, it+1)])
+                triangles.append([index(ih, it), index(ih+1, it), index(ih+1, it+1)])
 
             elif not first_diagonal and direct:
-                elements.append([index(ih, it), index(ih, it+1), index(ih+1, it)])
-                elements.append([index(ih, it+1), index(ih+1, it+1), index(ih+1, it)])
+                triangles.append([index(ih, it), index(ih, it+1), index(ih+1, it)])
+                triangles.append([index(ih, it+1), index(ih+1, it+1), index(ih+1, it)])
 
             elif not first_diagonal and not direct:
-                elements.append([index(ih, it), index(ih+1, it), index(ih, it+1)])
-                elements.append([index(ih, it+1), index(ih+1, it), index(ih+1, it+1)])
+                triangles.append([index(ih, it), index(ih+1, it), index(ih, it+1)])
+                triangles.append([index(ih, it+1), index(ih+1, it), index(ih+1, it+1)])
 
-    elements = numpy.array(elements)
+    triangles = numpy.array(triangles)
 
-    # Prepare the elements for the mesh
-    points = nodes
-    cells = [("triangle", elements)]
-    point_data = {"uvmap": uvmap}
-
-    # Create the mesh
-    mesh = TriMesh3D(points=points, cells=cells, point_data=point_data)
+    # Prepare the mesh
+    mesh = TriangleMesh3D(
+        vertices=vertices,
+        triangles=triangles,
+    )
+    # Set the UV map
+    mesh.set_vertices_uvmap(uvmap)
     return mesh

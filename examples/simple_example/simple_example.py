@@ -1,14 +1,15 @@
 import numpy as np
 import os
 import meshio
+import bpy
 
 from py3dframe import Frame
 
 from pyblenderSDIC import Camera, SpotLight, BlenderExperiment
 
 from pyblenderSDIC.meshes import create_axisymmetric_mesh
-from pyblenderSDIC.materials import MaterialBSDF, get_iron_material, get_copper_material
-from pyblenderSDIC.patterns import get_mouchtichu_path, get_speckle_path
+from pyblenderSDIC.materials import MaterialBSDF, get_copper_material
+from pyblenderSDIC.patterns import get_mouchtichu_path
 
 """
 We observe a demi-cylinder with a mouchtichu pattern on it.
@@ -58,7 +59,7 @@ cylinder_mesh = create_axisymmetric_mesh(
 # ====================
 # 2. CREATE THE CAMERA
 # ====================
-camera_position = np.array([120.0, 0.0, 50.0])
+camera_position = np.array([120.0, 0.0, 150.0])
 camera_target = cylinder_center + cylinder_radius*cylinder_x_axis
 camera_z_axis = camera_target - camera_position
 camera_y_axis = np.array([0.0, 1.0, 0.0])
@@ -96,7 +97,7 @@ light_frame = Frame(
 
 light = SpotLight(
     frame=light_frame,
-    energy=50000.0,
+    energy=5000000.0,
     spot_size=0.5,
     spot_blend=0.5,
 )
@@ -121,7 +122,7 @@ material = get_copper_material()
 # ==========================
 # 5. CREATE THE EXPERIMENT
 # ==========================
-STOP_BEFORE_RENDER = False
+STOP_BEFORE_RENDER = True
 dat_folder = os.path.dirname(__file__)
 
 experiment = BlenderExperiment()
@@ -159,4 +160,5 @@ if not STOP_BEFORE_RENDER:
     experiment.render(
         os.path.join(dat_folder, "simple_render.tiff"),
         N_samples=200,
+
     )

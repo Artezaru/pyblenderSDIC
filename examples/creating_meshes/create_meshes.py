@@ -1,4 +1,4 @@
-from pyblenderSDIC.meshes import create_axisymmetric_mesh, TriMesh3D, create_xy_heightmap_mesh
+from pyblenderSDIC.meshes import create_axisymmetric_mesh, create_xy_heightmap_mesh
 from py3dframe import Frame
 import numpy as np
 import os
@@ -48,8 +48,8 @@ mesh = create_axisymmetric_mesh(
     frame=frame,
     height_bounds=height_bounds,
     theta_bounds=(0, 2*np.pi*(1 - 1/20)),
-    Nheight=10, # Number of node along the height
-    Ntheta=20, # Number of node along the theta
+    Nheight=10, # Number of vertices along the height
+    Ntheta=20, # Number of vertices along the theta
     closed=True,
     first_diagonal=False,
     direct=True,
@@ -59,7 +59,7 @@ mesh.visualize()
 
 # Save the mesh to a file
 filepath = os.path.join(os.path.dirname(__file__), "cone.vtk")
-mesh.save_to_vtk(filepath)
+mesh.to_vtk(filepath)
 
 
 
@@ -92,8 +92,8 @@ mesh = create_xy_heightmap_mesh(
     height_function=f,
     x_bounds=x_bounds,
     y_bounds=y_bounds,
-    Nx=50, # Number of node along the x axis
-    Ny=50, # Number of node along the y axis
+    Nx=50, # Number of vertices along the x axis
+    Ny=50, # Number of vertices along the y axis
 )
 
 # Visualize the mesh
@@ -101,4 +101,4 @@ mesh.visualize()
 
 # Save the mesh to a file
 filepath = os.path.join(os.path.dirname(__file__), "wave_plane.vtk")
-mesh.save_to_vtk(filepath)
+mesh.to_vtk(filepath)

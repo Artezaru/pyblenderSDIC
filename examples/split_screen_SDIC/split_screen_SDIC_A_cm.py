@@ -9,7 +9,7 @@ from py3dframe import Frame
 from pyblenderSDIC import Camera, SpotLight, BlenderExperiment
 
 from pyblenderSDIC.meshes import TriMesh3D, create_axisymmetric_mesh, create_xy_heightmap_mesh
-from pyblenderSDIC.materials import MaterialBSDF, get_iron_material, get_copper_material, get_mirror_material
+from pyblenderSDIC.materials import get_iron_material, get_mirror_material
 from pyblenderSDIC.patterns import create_speckle_BW_image
 """
 We observe a closed cylinder with a speckle pattern on it.

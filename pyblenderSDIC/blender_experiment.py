@@ -8,10 +8,12 @@ except ImportError:
 
 from typing import Tuple, Optional, List
 from numbers import Integral
+
 from .camera import Camera
 from .materials.material_bsdf import MaterialBSDF
+from .meshes.trianglemesh3d import TriangleMesh3D
 from .spotlight import SpotLight
-import meshio
+
 import os
 import numpy
 
@@ -25,6 +27,13 @@ class BlenderExperiment:
 
     The number of frames in the experiment can be set using the `end_frame` parameter.
     This parameters can not be updated after the experiment is created.
+
+    .. code-block:: python
+        
+        from pyblenderSDIC import BlenderExperiment
+
+        # Example instantiation
+        experiment = BlenderExperiment(Nb_frames=10)
 
     Parameters
     ----------
@@ -497,15 +506,11 @@ class BlenderExperiment:
     # =======================================================
     # Blender Scene Management (MESH)
     # =======================================================
-    def add_mesh(self, name: str, mesh: meshio.Mesh, frames: Optional[List[bool]] = None) -> None:
+    def add_mesh(self, name: str, mesh: TriangleMesh3D, frames: Optional[List[bool]] = None) -> None:
         r"""
         Add a mesh to the experiment.
 
-        The mesh must be an instance of meshio.Mesh with the following structure:
-
-        - ``points``: A NumPy array of shape (N, 3) representing the coordinates of N mesh nodes.
-        - ``cells_dict{"triangle"}.data``: A NumPy array of shape (M, 3) representing M triangular elements defined by node indices.
-        - ``point_data``: A dictionary storing data associated with each point, such as "uvmap" a (N, 3) array of texture coordinates (only the first two columns are used).
+        The mesh must be an instance of TriangleMesh3D.
 
         The frames parameter indicates which frames the mesh will be active.
         If None, the mesh will be active for all frames.
@@ -523,12 +528,12 @@ class BlenderExperiment:
             experiment = BlenderExperiment(Nb_frames=10)
             # Define the mesh properties here
             # ...
-            mesh = meshio.Mesh(points, cells_dict={"triangle": elements}, point_data={"uvmap": texture_coordinates})
+            mesh = TriangleMesh3D(vertices=..., triangles=...)
             experiment.add_mesh(name="Mesh1", mesh=mesh, frames=[True, False, True, False, True, False, True, False, True, False])
 
         .. seealso::
 
-            - :class:`pyblenderSDIC.meshio.Mesh` for more information on how to define a mesh.
+            - :class:`pyblenderSDIC.meshes.TriangleMesh3D` for more information on how to define a mesh.
             - :meth:`pyblenderSDIC.BlenderExperiment.update_mesh` to update the mesh properties in the Blender scene.
             - :meth:`pyblenderSDIC.BlenderExperiment.add_mesh_material` to set the material of the mesh.
             - :meth:`pyblenderSDIC.BlenderExperiment.add_mesh_pattern` to set the pattern image of the mesh.
@@ -538,8 +543,8 @@ class BlenderExperiment:
         name : str
             The name of the mesh with less than 50 characters.
         
-        mesh : meshio.Mesh
-            The mesh object to be added. 
+        mesh : TriangleMesh3D
+            The mesh object to be added. It must be an instance of TriangleMesh3D.
 
         frames : List[bool], optional
             A list of booleans indicating which frames the mesh will be active.
@@ -548,7 +553,7 @@ class BlenderExperiment:
         Raises
         -------
         TypeError
-            If name is not a string or mesh is not an instance of meshio.Mesh.
+            If name is not a string or mesh is not an instance of TriangleMesh3D.
         ValueError
             If a mesh with the same name already exists in the experiment or in Blender data.
             If the length of frames is not equal to the number of frames in the experiment (end_frame).
@@ -582,17 +587,15 @@ class BlenderExperiment:
             raise ValueError(f"Mesh with name {name} already exists.")
         if name in bpy.data.objects:
             raise ValueError(f"Object with name {name} already exists in Blender data.")
-        if not isinstance(mesh, meshio.Mesh):
-            raise TypeError("mesh must be an instance of meshio.Mesh")
-        if not 'triangle' in mesh.cells_dict:
-            raise ValueError("mesh must contain a 'triangle' cell type")
+        if not isinstance(mesh, TriangleMesh3D):
+            raise TypeError("mesh must be an instance of TriangleMesh3D")
         
         # Ensure the experiment scene is active
         bpy.context.window.scene = self._experiment_scene
 
         # Extract the vertices and faces from the mesh
-        points = mesh.points
-        cells = mesh.cells_dict["triangle"]
+        points = mesh.vertices
+        cells = mesh.triangles
         
         # ======================
         # MESH CREATION
@@ -699,19 +702,19 @@ class BlenderExperiment:
             experiment = BlenderExperiment(Nb_frames=10)
             # Define the mesh properties here
             # ...
-            mesh = meshio.Mesh(points, cells_dict={"triangle": elements}, point_data={"uvmap": texture_coordinates})
+            mesh = TriangleMesh3D(vertices=..., triangles=...)
+            mesh.uvmap = ...
             experiment.add_mesh(name="Mesh1", mesh=mesh, frames=[True, False, True, False, True, False, True, False, True, False])
             experiment.add_mesh_pattern(name="Mesh1", pattern_path="path/to/pattern.png")
 
         .. warning::
         
-            The UV coordinates of the mesh must be defined in the meshio.Mesh object.   
+            The UV coordinates of the mesh must be defined in the TriangleMesh3D object.   
             as "uvmap" in the point_data dictionary.
 
         .. seealso::
 
-            - :class:`pyblenderSDIC.meshes.TriMesh3D` for more information on how to define a mesh.
-
+            - :class:`pyblenderSDIC.meshes.TriangleMesh3D` for more information on how to define a mesh.
 
         Parameters
         ----------
@@ -763,18 +766,20 @@ class BlenderExperiment:
         mesh, blender_mesh = self.get_mesh(name)
 
         # Check if the mesh has a UVMAP defined
-        if mesh.point_data is None or "uvmap" not in mesh.point_data:
+        if mesh.uvmap is None:
             raise ValueError(f"Mesh {name} does not have a UVMAP defined.")
         
-        uvmap = mesh.point_data["uvmap"] # (N, 3) array of texture coordinates
+        uvmap = mesh.uvmap # Get the UVMap from the mesh (shape: (M, 6))
 
         # Setting the UVMap
         if f"[pbSDIC]_{name}_uvm" in blender_mesh.data.uv_layers:
             raise ValueError(f"UVMap with name [pbSDIC]_{name}_uvm already exists.")
         
         uv_layer = blender_mesh.data.uv_layers.new(name=f"[pbSDIC]_{name}_uvm")
-        for loop in blender_mesh.data.loops:
-            uv_layer.data[loop.index].uv = tuple(uvmap[loop.vertex_index, :2])
+        for poly_index, polygon in enumerate(blender_mesh.data.polygons): # poly_index is the index of the polygon in the mesh (ie triangle)
+            for index, loop_index in enumerate(polygon.loop_indices): # index is the index of the vertex in the polygon
+                loop = blender_mesh.data.loops[loop_index] # The loop associated to the current vertex in the polygon
+                uv_layer.data[loop.index].uv = tuple(uvmap[poly_index, 2*index:2*(index+1)])  # Set the UV coordinates for each loop
             
         # Access the material
         if not blender_mesh.data.materials:
@@ -819,7 +824,7 @@ class BlenderExperiment:
             experiment = BlenderExperiment(Nb_frames=10)
             # Define the mesh properties here
             # ...
-            mesh = meshio.Mesh(points, cells_dict={"triangle": elements}, point_data={"uvmap": texture_coordinates})
+            mesh = TriangleMesh3D(points, cells_dict={"triangle": elements}, point_data={"uvmap": texture_coordinates})
             experiment.set_mesh(name="Mesh1", mesh=mesh, frames=[True, False, True, False, True, False, True, False, True, False])
             material = MaterialBSDF()
             # Define the material properties here
@@ -1047,7 +1052,7 @@ class BlenderExperiment:
         return self._mesh_objects[name][1]
     
 
-    def get_mesh(self, name: str) -> Tuple[meshio.Mesh, Object]:
+    def get_mesh(self, name: str) -> Tuple[TriangleMesh3D, Object]:
         r"""
         Get the mesh object and its Blender object.
         
@@ -1058,8 +1063,8 @@ class BlenderExperiment:
         
         Returns
         -------
-        Tuple[meshio.Mesh, Object]
-            A tuple containing the meshio.Mesh object and its corresponding Blender object.
+        Tuple[TriangleMesh3D, Object]
+            A tuple containing the TriangleMesh3D object and its corresponding Blender object.
         """
         if not isinstance(name, str):
             raise TypeError("name must be a string")
@@ -1076,8 +1081,8 @@ class BlenderExperiment:
         blender_mesh = bpy.data.objects[name]
 
         # Check the types of the objects
-        if not isinstance(mesh, meshio.Mesh):
-            raise TypeError("[ERROR] mesh must be an instance of meshio.Mesh")
+        if not isinstance(mesh, TriangleMesh3D):
+            raise TypeError("[ERROR] mesh must be an instance of TriangleMesh3D")
         if not isinstance(blender_mesh, Object):
             raise TypeError("[ERROR] blender_mesh must be an instance of Object")
         
@@ -1176,7 +1181,7 @@ class BlenderExperiment:
     def update_mesh(self, name: str) -> None:
         r"""
         Update the mesh properties in the Blender scene.
-        This method must be called after updating the mesh properties in the meshio.Mesh object.
+        This method must be called after updating the mesh properties in the TriangleMesh3D object.
 
         .. code-block:: python
 
@@ -1184,7 +1189,7 @@ class BlenderExperiment:
             experiment = BlenderExperiment(Nb_frames=10)
             # Define the mesh properties here
             # ...
-            mesh = meshio.Mesh(points, cells_dict={"triangle": elements}, point_data={"uvmap": texture_coordinates})
+            mesh = TriangleMesh3D(points, cells_dict={"triangle": elements}, point_data={"uvmap": texture_coordinates})
             experiment.add_mesh(name="Mesh1", mesh=mesh, frames=[True, False, True, False, True, False, True, False, True, False])
             # Update some nodes of the mesh here
             # ...
@@ -1223,8 +1228,8 @@ class BlenderExperiment:
 
         # Extract the vertices and faces from the mesh
         points = mesh.points
-        cells = mesh.cells_dict["triangle"]
-        uvmap = mesh.point_data["uvmap"] if mesh.point_data is not None and "uvmap" in mesh.point_data else None
+        cells = mesh.triangles
+        uvmap = mesh.uvmap
 
         # Apply the vertices and faces to the Blender mesh
         for i, vertex in enumerate(blender_mesh.data.vertices):
@@ -1239,8 +1244,10 @@ class BlenderExperiment:
         if f'[pbSDIC]_{name}_uvm' in blender_mesh.data.uv_layers:
             uv_layer = blender_mesh.data.uv_layers[f'[pbSDIC]_{name}_uvm']
             if uvmap is not None:
-                for loop in blender_mesh.data.loops:
-                    uv_layer.data[loop.index].uv = tuple(uvmap[loop.vertex_index, :2])
+                for poly_index, polygon in enumerate(blender_mesh.data.polygons): # poly_index is the index of the polygon in the mesh (ie triangle)
+                    for index, loop_index in enumerate(polygon.loop_indices): # index is the index of the vertex in the polygon
+                        loop = blender_mesh.data.loops[loop_index] # The loop associated to the current vertex in the polygon
+                        uv_layer.data[loop.index].uv = tuple(uvmap[poly_index, 2*index:2*(index+1)])  # Set the UV coordinates for each loop
             else:
                 raise ValueError(f"Mesh {name} does not have a UVMAP defined but the uv_layer exists.")
 
@@ -1261,7 +1268,7 @@ class BlenderExperiment:
             experiment = BlenderExperiment(Nb_frames=10)
             # Define the mesh properties here
             # ...
-            mesh = meshio.Mesh(points, cells_dict={"triangle": elements}, point_data={"uvmap": texture_coordinates})
+            mesh = TriangleMesh3D(points, cells_dict={"triangle": elements}, point_data={"uvmap": texture_coordinates})
             experiment.add_mesh(name="Mesh1", mesh=mesh, frames=[True, False, True, False, True, False, True, False, True, False])
             experiment.add_mesh_pattern(name="Mesh1", pattern_path="path/to/pattern.png")
             experiment.change_mesh_pattern(name="Mesh1", pattern_path="path/to/new_pattern.png")
