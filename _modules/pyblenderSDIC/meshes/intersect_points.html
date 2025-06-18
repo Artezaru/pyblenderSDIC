@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyblenderSDIC.meshes.intersect_points &#8212; pyblenderSDIC 2.0.0 documentation</title>
+    <title>pyblenderSDIC.meshes.intersect_points &#8212; pyblenderSDIC 2.0.1 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../../../_static/documentation_options.js?v=f5cff4aa"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyblenderSDIC/meshes/intersect_points';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 2.0.0 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 2.0.1 documentation</p>
   
 </a></div>
     
@@ -334,9 +334,9 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to represent the intersection points of rays with a 3D mesh.</span>
 
-<span class="sd">    This class stores the barycentric coordinates and element indices of the</span>
+<span class="sd">    This class stores the barycentric coordinates and triangle indices of the</span>
 <span class="sd">    intersection points. The barycentric coordinates are used to locate the</span>
-<span class="sd">    position of the intersection within a triangle, and the element indices</span>
+<span class="sd">    position of the intersection within a triangle, and the triangle indices</span>
 <span class="sd">    represent the specific triangle in the mesh that was intersected by a ray.</span>
 
 <span class="sd">    For a triangle with vertices A, B, and C, the barycentric coordinates (u, v) are</span>
@@ -352,7 +352,7 @@
 <span class="sd">    .. note::</span>
 
 <span class="sd">        If no intersection occurs, the barycentric coordinates are set to NaN and</span>
-<span class="sd">        the element index is set to -1.</span>
+<span class="sd">        the triangle index is set to -1.</span>
 
 <span class="sd">    .. warning::</span>
 
@@ -367,15 +367,125 @@
 <span class="sd">        barycentric coordinates (u, v) of an intersection point within the</span>
 <span class="sd">        corresponding triangle. If no intersection occurs, the coordinates are NaN.</span>
 <span class="sd">    </span>
-<span class="sd">    element_indices : numpy.ndarray</span>
+<span class="sd">    triangle_indices : numpy.ndarray</span>
 <span class="sd">        A ND array of shape (...,), where each entry represents the index of the</span>
 <span class="sd">        triangle that was intersected. If no intersection occurs, the index is -1.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barycentric_coordinates</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">element_indices</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barycentric_coordinates</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">triangle_indices</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Active bypass mode for testing purposes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__internal_bypass__</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">barycentric_coordinates</span> <span class="o">=</span> <span class="n">barycentric_coordinates</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">element_indices</span> <span class="o">=</span> <span class="n">element_indices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">triangle_indices</span> <span class="o">=</span> <span class="n">triangle_indices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__internal_bypass__</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__internal_check_barycentric_coordinates</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__internal_check_triangle_indices</span><span class="p">()</span>
 
+    <span class="c1"># =======================================================================</span>
+    <span class="c1"># Internal Methods</span>
+    <span class="c1"># =======================================================================</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">internal_bypass</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get and set the internal bypass mode status.</span>
+<span class="sd">        When enabled, internal checks are skipped.</span>
+
+<span class="sd">        This is useful for testing purposes, but should not be used in production code.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        value : bool</span>
+<span class="sd">            If True, internal checks are bypassed. If False, internal checks are performed.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        --------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If the value is not a boolean.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__internal_bypass__</span>
+    
+    <span class="nd">@internal_bypass</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">internal_bypass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bypass mode must be a boolean, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__internal_bypass__</span> <span class="o">=</span> <span class="n">value</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">__internal_check_barycentric_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internal method to check the validity of the barycentric coordinates array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__internal_bypass__</span><span class="p">:</span>
+            <span class="k">return</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Barycentric coordinates must be a numpy.ndarray, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Barycentric coordinates must be of type float64, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Barycentric coordinates must have at least 2 dimensions, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2"> dimensions.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Barycentric coordinates must have shape (..., 2), got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                
+        <span class="n">valid_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_mask</span><span class="p">()</span>
+        <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uv</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">uv</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">])):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Barycentric coordinates must contain finite values only.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="o">~</span><span class="n">valid_mask</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="o">~</span><span class="n">valid_mask</span><span class="p">])):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Barycentric coordinates must be set to NaN if no intersection occurs.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Barycentric coordinates must contain non-negative values only.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">v</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Barycentric coordinates must satisfy u + v &lt;= 1.&quot;</span><span class="p">)</span>
+
+        
+    <span class="k">def</span><span class="w"> </span><span class="nf">__internal_check_triangle_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internal method to check the validity of the triangle indices array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__internal_bypass__</span><span class="p">:</span>
+            <span class="k">return</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_triangle_indices</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Triangle indices must be a numpy.ndarray, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_triangle_indices</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_triangle_indices</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Triangle indices must be of type int, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_triangle_indices</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_triangle_indices</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Triangle indices must have at least 1 dimension, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_triangle_indices</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2"> dimensions.&quot;</span><span class="p">)</span>
+        
+        <span class="n">valid_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_mask</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_triangle_indices</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">])):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Triangle indices must contain finite values only.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_triangle_indices</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Triangle indices must contain non-negative values only.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_triangle_indices</span><span class="p">[</span><span class="o">~</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Triangle indices must be set to -1 if no intersection occurs.&quot;</span><span class="p">)</span>
+        
+
+<div class="viewcode-block" id="IntersectPoints.validate">
+<a class="viewcode-back" href="../../../api_doc/intersect_points.html#pyblenderSDIC.meshes.IntersectPoints.validate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate the mesh structure.</span>
+
+<span class="sd">        This method checks the validity of the vertices, triangles, and UV map.</span>
+<span class="sd">        If any of the checks fail, an exception is raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bypass_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__internal_bypass__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__internal_bypass__</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># Disable bypass mode for validation</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__internal_check_barycentric_coordinates</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__internal_check_triangle_indices</span><span class="p">()</span>
+        
+        <span class="c1"># restore bypass mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__internal_bypass__</span> <span class="o">=</span> <span class="n">bypass_mode</span></div>
+
+
+ 
+    <span class="c1"># =======================================================================</span>
+    <span class="c1"># Properties Getters and Setters</span>
+    <span class="c1"># =======================================================================</span>
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">barycentric_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -401,21 +511,12 @@
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            A 2D array of shape (..., 2) representing the barycentric coordinates of the intersections.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">barycentric_coords</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">barycentric_coords</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;[INTERNAL CLASS ERROR]: Barycentric coordinates must have at least 2 dimension.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">barycentric_coords</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;[INTERNAL CLASS ERROR]: Barycentric coordinates must have shape (..., 2).&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">barycentric_coords</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span>
 
     <span class="nd">@barycentric_coordinates</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">barycentric_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Barycentric coordinates must have at least 2 dimension.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Barycentric coordinates must have shape (..., 2).&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_barycentric_coordinates</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__internal_check_barycentric_coordinates</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">uv</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -429,42 +530,40 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">barycentric_coordinates</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">element_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">triangle_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets the element indices of the intersections.</span>
+<span class="sd">        Gets the triangle indices of the intersections.</span>
 
 <span class="sd">        .. note::</span>
 
-<span class="sd">            An alias for the element indices is ``id``.</span>
+<span class="sd">            An alias for the triangle indices is ``id``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
-<span class="sd">            A 1D array representing the element indices of the intersections.</span>
+<span class="sd">            A 1D array representing the triangle indices of the intersections.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">element_indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element_indices</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">element_indices</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;[INTERNAL CLASS ERROR]: Element indices must have at least 1 dimension.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">element_indices</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_triangle_indices</span>
 
-    <span class="nd">@element_indices</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">element_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Element indices must have at least 1 dimension.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_element_indices</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="nd">@triangle_indices</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">triangle_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_triangle_indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__internal_check_triangle_indices</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Alias for the element indices.</span>
+<span class="sd">        Alias for the triangle indices.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">element_indices</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">triangle_indices</span>
     
     <span class="nd">@id</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">element_indices</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">triangle_indices</span> <span class="o">=</span> <span class="n">value</span>
 
+    <span class="c1"># =======================================================================</span>
+    <span class="c1"># Public Methods</span>
+    <span class="c1"># =======================================================================</span>
 <div class="viewcode-block" id="IntersectPoints.valid_mask">
 <a class="viewcode-back" href="../../../api_doc/intersect_points.html#pyblenderSDIC.meshes.IntersectPoints.valid_mask">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">valid_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -479,55 +578,14 @@
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            A boolean array of shape (...,) indicating the validity of the barycentric coordinates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Vérification si les barycentriques sont finis (pas NaN ni infini)</span>
         <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barycentric_coordinates</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span></div>
-
-
-<div class="viewcode-block" id="IntersectPoints.validate">
-<a class="viewcode-back" href="../../../api_doc/intersect_points.html#pyblenderSDIC.meshes.IntersectPoints.validate">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Validates the input data to ensure the barycentric coordinates and element indices</span>
-<span class="sd">        arrays have the correct shapes and values.</span>
-
-<span class="sd">        Raises</span>
-<span class="sd">        ------</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            If the barycentric coordinates array does not have shape (..., 2),</span>
-<span class="sd">            if element indices are not positive integers,</span>
-<span class="sd">            or if barycentric coordinates do not meet the conditions.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Check the shape of barycentric coordinates and element indices</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">barycentric_coordinates</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Barycentric coordinates must have at least 2 dimension.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">barycentric_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Barycentric coordinates must have shape (..., 2).&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">element_indices</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Element indices must have at least 1 dimension.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">barycentric_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element_indices</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The shapes of barycentric coordinates and element indices must match in the first dimensions.&quot;</span><span class="p">)</span>
-
-        <span class="n">valid_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_mask</span><span class="p">()</span>
-
-        <span class="c1"># Check the barycentric coordinates (u, v): 0 &lt;= u, v &lt;= 1 and u + v &lt;= 1</span>
-        <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uv</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">uv</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">u</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">v</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Barycentric coordinates must satisfy 0 &lt;= u, v &lt;= 1 and u + v &lt;= 1.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">numpy</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="o">~</span><span class="n">valid_mask</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">])))):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Barycentric coordinates must be setted to NaN if no intersection occurs.&quot;</span><span class="p">)</span>
-
-        <span class="c1"># Check the element indices: must be positive integers</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element_indices</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Element indices must be positive integers.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element_indices</span><span class="p">[</span><span class="o">~</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Element indices must be setted to -1 if no intersection occurs.&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="IntersectPoints.filter_valid">
 <a class="viewcode-back" href="../../../api_doc/intersect_points.html#pyblenderSDIC.meshes.IntersectPoints.filter_valid">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">filter_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IntersectPoints</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Filters out invalid intersections (where the element index is -1 or barycentric coordinates are NaN).</span>
+<span class="sd">        Filters out invalid intersections (where the triangle index is -1 or barycentric coordinates are NaN).</span>
 
 <span class="sd">        This method modifies the shape of the arrays, changing them from the original</span>
 <span class="sd">        (..., 2) and (...,) to (L&#39;, 2), where L&#39; is the number of valid intersections.</span>
@@ -539,10 +597,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">valid_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_mask</span><span class="p">()</span>
         <span class="n">valid_barycentric_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barycentric_coordinates</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="n">valid_element_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element_indices</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">valid_triangle_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">triangle_indices</span><span class="p">[</span><span class="n">valid_mask</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># Reshaping to (L&#39;, 3) where L&#39; is the number of valid intersections</span>
-        <span class="k">return</span> <span class="n">IntersectPoints</span><span class="p">(</span><span class="n">valid_barycentric_coords</span><span class="p">,</span> <span class="n">valid_element_indices</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">IntersectPoints</span><span class="p">(</span><span class="n">valid_barycentric_coords</span><span class="p">,</span> <span class="n">valid_triangle_indices</span><span class="p">)</span></div>
 </div>
 
 

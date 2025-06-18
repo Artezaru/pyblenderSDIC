@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyblenderSDIC.meshes.IntersectPoints &#8212; pyblenderSDIC 2.0.0 documentation</title>
+    <title>pyblenderSDIC.meshes.IntersectPoints &#8212; pyblenderSDIC 2.0.1 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../_static/documentation_options.js?v=f5cff4aa"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 2.0.0 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 2.0.1 documentation</p>
   
 </a></div>
     
@@ -407,12 +407,12 @@
 <h1>pyblenderSDIC.meshes.IntersectPoints<a class="headerlink" href="#pyblendersdic-meshes-intersectpoints" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyblenderSDIC.meshes.IntersectPoints">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IntersectPoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barycentric_coordinates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyblenderSDIC/meshes/intersect_points.html#IntersectPoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.meshes.IntersectPoints" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IntersectPoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barycentric_coordinates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">triangle_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyblenderSDIC/meshes/intersect_points.html#IntersectPoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.meshes.IntersectPoints" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class to represent the intersection points of rays with a 3D mesh.</p>
-<p>This class stores the barycentric coordinates and element indices of the
+<p>This class stores the barycentric coordinates and triangle indices of the
 intersection points. The barycentric coordinates are used to locate the
-position of the intersection within a triangle, and the element indices
+position of the intersection within a triangle, and the triangle indices
 represent the specific triangle in the mesh that was intersected by a ray.</p>
 <p>For a triangle with vertices A, B, and C, the barycentric coordinates (u, v) are
 defined as follows:</p>
@@ -423,7 +423,7 @@ defined as follows:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If no intersection occurs, the barycentric coordinates are set to NaN and
-the element index is set to -1.</p>
+the triangle index is set to -1.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -437,7 +437,7 @@ users should be aware that the arrays can be changed after the object is created
 <li><p><strong>barycentric_coordinates</strong> (<em>numpy.ndarray</em>) – A (N+1)D array of shape (…, 2), where each entry represents the
 barycentric coordinates (u, v) of an intersection point within the
 corresponding triangle. If no intersection occurs, the coordinates are NaN.</p></li>
-<li><p><strong>element_indices</strong> (<em>numpy.ndarray</em>) – A ND array of shape (…,), where each entry represents the index of the
+<li><p><strong>triangle_indices</strong> (<em>numpy.ndarray</em>) – A ND array of shape (…,), where each entry represents the index of the
 triangle that was intersected. If no intersection occurs, the index is -1.</p></li>
 </ul>
 </dd>
@@ -467,28 +467,10 @@ defined as follows:</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="pyblenderSDIC.meshes.IntersectPoints.element_indices">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">element_indices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pyblenderSDIC.meshes.IntersectPoints.element_indices" title="Link to this definition">#</a></dt>
-<dd><p>Gets the element indices of the intersections.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>An alias for the element indices is <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A 1D array representing the element indices of the intersections.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>numpy.ndarray</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="pyblenderSDIC.meshes.IntersectPoints.filter_valid">
 <span class="sig-name descname"><span class="pre">filter_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyblenderSDIC.meshes.IntersectPoints" title="pyblenderSDIC.meshes.intersect_points.IntersectPoints"><span class="pre">IntersectPoints</span></a></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/meshes/intersect_points.html#IntersectPoints.filter_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.meshes.IntersectPoints.filter_valid" title="Link to this definition">#</a></dt>
-<dd><p>Filters out invalid intersections (where the element index is -1 or barycentric coordinates are NaN).</p>
+<dd><p>Filters out invalid intersections (where the triangle index is -1 or barycentric coordinates are NaN).</p>
 <p>This method modifies the shape of the arrays, changing them from the original
 (…, 2) and (…,) to (L’, 2), where L’ is the number of valid intersections.</p>
 <dl class="field-list simple">
@@ -504,7 +486,41 @@ defined as follows:</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pyblenderSDIC.meshes.IntersectPoints.id">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pyblenderSDIC.meshes.IntersectPoints.id" title="Link to this definition">#</a></dt>
-<dd><p>Alias for the element indices.</p>
+<dd><p>Alias for the triangle indices.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyblenderSDIC.meshes.IntersectPoints.internal_bypass">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">internal_bypass</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#pyblenderSDIC.meshes.IntersectPoints.internal_bypass" title="Link to this definition">#</a></dt>
+<dd><p>Get and set the internal bypass mode status.
+When enabled, internal checks are skipped.</p>
+<p>This is useful for testing purposes, but should not be used in production code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>bool</em>) – If True, internal checks are bypassed. If False, internal checks are performed.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If the value is not a boolean.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyblenderSDIC.meshes.IntersectPoints.triangle_indices">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">triangle_indices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pyblenderSDIC.meshes.IntersectPoints.triangle_indices" title="Link to this definition">#</a></dt>
+<dd><p>Gets the triangle indices of the intersections.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>An alias for the triangle indices is <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A 1D array representing the triangle indices of the intersections.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -532,15 +548,9 @@ The shape of the mask will be the same as the first dimensions of the barycentri
 <dl class="py method">
 <dt class="sig sig-object py" id="pyblenderSDIC.meshes.IntersectPoints.validate">
 <span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/meshes/intersect_points.html#IntersectPoints.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.meshes.IntersectPoints.validate" title="Link to this definition">#</a></dt>
-<dd><p>Validates the input data to ensure the barycentric coordinates and element indices
-arrays have the correct shapes and values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the barycentric coordinates array does not have shape (…, 2),
-    if element indices are not positive integers,
-    or if barycentric coordinates do not meet the conditions.</p>
-</dd>
-</dl>
+<dd><p>Validate the mesh structure.</p>
+<p>This method checks the validity of the vertices, triangles, and UV map.
+If any of the checks fail, an exception is raised.</p>
 </dd></dl>
 
 </dd></dl>
@@ -596,9 +606,10 @@ arrays have the correct shapes and values.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.meshes.IntersectPoints"><code class="docutils literal notranslate"><span class="pre">IntersectPoints</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.meshes.IntersectPoints.barycentric_coordinates"><code class="docutils literal notranslate"><span class="pre">IntersectPoints.barycentric_coordinates</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.meshes.IntersectPoints.element_indices"><code class="docutils literal notranslate"><span class="pre">IntersectPoints.element_indices</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.meshes.IntersectPoints.filter_valid"><code class="docutils literal notranslate"><span class="pre">IntersectPoints.filter_valid()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.meshes.IntersectPoints.id"><code class="docutils literal notranslate"><span class="pre">IntersectPoints.id</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.meshes.IntersectPoints.internal_bypass"><code class="docutils literal notranslate"><span class="pre">IntersectPoints.internal_bypass</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.meshes.IntersectPoints.triangle_indices"><code class="docutils literal notranslate"><span class="pre">IntersectPoints.triangle_indices</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.meshes.IntersectPoints.uv"><code class="docutils literal notranslate"><span class="pre">IntersectPoints.uv</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.meshes.IntersectPoints.valid_mask"><code class="docutils literal notranslate"><span class="pre">IntersectPoints.valid_mask()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.meshes.IntersectPoints.validate"><code class="docutils literal notranslate"><span class="pre">IntersectPoints.validate()</span></code></a></li>
