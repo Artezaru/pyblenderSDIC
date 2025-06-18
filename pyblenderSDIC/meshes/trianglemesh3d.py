@@ -59,6 +59,8 @@ class TriangleMesh3D():
 
         mesh.validate()  # Raises an exception if the mesh is invalid
 
+    By default the method validate is automatically called when the mesh is created,
+
     Mesh Creation
     --------------
 
@@ -244,7 +246,7 @@ class TriangleMesh3D():
     @internal_bypass.setter
     def internal_bypass(self, value: bool) -> None:
         if not isinstance(value, bool):
-            raise TypeError(f"[INTERNAL] Bypass mode must be a boolean, got {type(value)}.")
+            raise TypeError(f"Bypass mode must be a boolean, got {type(value)}.")
         self.__internal_bypass__ = value
     
     def __internal_check_vertices(self) -> None:
@@ -255,17 +257,17 @@ class TriangleMesh3D():
             return
         
         if not isinstance(self._vertices, numpy.ndarray):
-            raise TypeError(f"[INTERNAL] Points must be a numpy.ndarray, got {type(self._vertices)}.")
+            raise TypeError(f"Points must be a numpy.ndarray, got {type(self._vertices)}.")
         if not self._vertices.dtype == numpy.float64:
-            raise TypeError(f"[INTERNAL] Points must be of type float64, got {self._vertices.dtype}.")
+            raise TypeError(f"Points must be of type float64, got {self._vertices.dtype}.")
         if not self._vertices.ndim == 2:
-            raise ValueError(f"[INTERNAL] Points must be a 2D array, got {self._vertices.ndim} dimensions.")
+            raise ValueError(f"Points must be a 2D array, got {self._vertices.ndim} dimensions.")
         if not self._vertices.shape == (self.Nvertices, 3):
-            raise ValueError(f"[INTERNAL] Points must have shape ({self.Nvertices}, 3), got {self._vertices.shape}.")
+            raise ValueError(f"Points must have shape ({self.Nvertices}, 3), got {self._vertices.shape}.")
         if not numpy.all(numpy.isfinite(self._vertices)):
-            raise ValueError("[INTERNAL] Points must contain finite values only.")
+            raise ValueError("Points must contain finite values only.")
         if not self.Nvertices >= 3:
-            raise ValueError("[INTERNAL] Points array must contain at least 3 vertices to form a triangle.")
+            raise ValueError("Points array must contain at least 3 vertices to form a triangle.")
         
     def __internal_check_triangles(self) -> None:
         r"""
@@ -275,21 +277,21 @@ class TriangleMesh3D():
             return
         
         if not isinstance(self._triangles, numpy.ndarray):
-            raise TypeError(f"[INTERNAL] Triangles must be a numpy.ndarray, got {type(self._triangles)}.")
+            raise TypeError(f"Triangles must be a numpy.ndarray, got {type(self._triangles)}.")
         if not self._triangles.dtype == numpy.int64:
-            raise TypeError(f"[INTERNAL] Triangles must be of type int64, got {self._triangles.dtype}.")
+            raise TypeError(f"Triangles must be of type int64, got {self._triangles.dtype}.")
         if not self._triangles.ndim == 2:
-            raise ValueError(f"[INTERNAL] Triangles must be a 2D array, got {self._triangles.ndim} dimensions.")
+            raise ValueError(f"Triangles must be a 2D array, got {self._triangles.ndim} dimensions.")
         if not self._triangles.shape == (self.Ntriangles, 3):
-            raise ValueError(f"[INTERNAL] Triangles must have shape ({self.Ntriangles}, 3), got {self._triangles.shape}.")
+            raise ValueError(f"Triangles must have shape ({self.Ntriangles}, 3), got {self._triangles.shape}.")
         if not numpy.all(numpy.isfinite(self._triangles)):
-            raise ValueError("[INTERNAL] Triangles must contain finite values only.")
+            raise ValueError("Triangles must contain finite values only.")
         if not numpy.all(self._triangles >= 0):
-            raise ValueError("[INTERNAL] Triangles must contain non-negative indices only.")
+            raise ValueError("Triangles must contain non-negative indices only.")
         if not numpy.all(self._triangles < self.Nvertices):
-            raise ValueError("[INTERNAL] Triangle indices must be less than the number of vertices.")
+            raise ValueError("Triangle indices must be less than the number of vertices.")
         if not self.Ntriangles >= 1:
-            raise ValueError("[INTERNAL] Triangles array must contain at least 1 triangle.")
+            raise ValueError("Triangles array must contain at least 1 triangle.")
         
     def __internal_check_uvmap(self) -> None:
         r"""
@@ -300,17 +302,17 @@ class TriangleMesh3D():
         
         if self._uvmap is not None:
             if not isinstance(self._uvmap, numpy.ndarray):
-                raise TypeError(f"[INTERNAL] UV map must be a numpy.ndarray, got {type(self._uvmap)}.")
+                raise TypeError(f"UV map must be a numpy.ndarray, got {type(self._uvmap)}.")
             if not self._uvmap.dtype == numpy.float64:
-                raise TypeError(f"[INTERNAL] UV map must be of type float64, got {self._uvmap.dtype}.")
+                raise TypeError(f"UV map must be of type float64, got {self._uvmap.dtype}.")
             if not self._uvmap.ndim == 2:
-                raise ValueError(f"[INTERNAL] UV map must be a 2D array, got {self._uvmap.ndim} dimensions.")
+                raise ValueError(f"UV map must be a 2D array, got {self._uvmap.ndim} dimensions.")
             if not self._uvmap.shape == (self.Ntriangles, 6):
-                raise ValueError(f"[INTERNAL] UV map must have shape ({self.Ntriangles}, 6), got {self._uvmap.shape}.")
+                raise ValueError(f"UV map must have shape ({self.Ntriangles}, 6), got {self._uvmap.shape}.")
             if not numpy.all(numpy.isfinite(self._uvmap)):
-                raise ValueError("[INTERNAL] UV map must contain finite values only.")
+                raise ValueError("UV map must contain finite values only.")
             if not numpy.all((self._uvmap >= 0) & (self._uvmap <= 1)):
-                raise ValueError("[INTERNAL] UV map coordinates must be in the range [0, 1].")
+                raise ValueError("UV map coordinates must be in the range [0, 1].")
             
     def __internal_check_bounding_box(self) -> None:
         r"""
@@ -321,15 +323,15 @@ class TriangleMesh3D():
         
         if self._bounding_box is not None:
             if not isinstance(self._bounding_box, numpy.ndarray):
-                raise TypeError(f"[INTERNAL] Bounding box must be a numpy.ndarray, got {type(self._bounding_box)}.")
+                raise TypeError(f"Bounding box must be a numpy.ndarray, got {type(self._bounding_box)}.")
             if not self._bounding_box.dtype == numpy.float64:
-                raise TypeError(f"[INTERNAL] Bounding box must be of type float64, got {self._bounding_box.dtype}.")
+                raise TypeError(f"Bounding box must be of type float64, got {self._bounding_box.dtype}.")
             if not self._bounding_box.ndim == 2:
-                raise ValueError(f"[INTERNAL] Bounding box must be a 2D array, got {self._bounding_box.ndim} dimensions.")
+                raise ValueError(f"Bounding box must be a 2D array, got {self._bounding_box.ndim} dimensions.")
             if not self._bounding_box.shape == (2, 3):
-                raise ValueError(f"[INTERNAL] Bounding box must have shape (2, 3), got {self._bounding_box.shape}.")
+                raise ValueError(f"Bounding box must have shape (2, 3), got {self._bounding_box.shape}.")
             if not numpy.all(numpy.isfinite(self._bounding_box)):
-                raise ValueError("[INTERNAL] Bounding box must contain finite values only.")
+                raise ValueError("Bounding box must contain finite values only.")
             
     def __internal_check_volume(self) -> None:
         r"""
@@ -340,9 +342,9 @@ class TriangleMesh3D():
         
         if self._volume is not None:
             if not isinstance(self._volume, Number):
-                raise TypeError(f"[INTERNAL] Volume must be a number, got {type(self._volume)}.")
+                raise TypeError(f"Volume must be a number, got {type(self._volume)}.")
             if not numpy.isfinite(self._volume):
-                raise ValueError("[INTERNAL] Volume must be a finite value.")
+                raise ValueError("Volume must be a finite value.")
             
     def __internal_check_vertex_normals(self) -> None:
         r"""
@@ -353,15 +355,15 @@ class TriangleMesh3D():
         
         if self._vertex_normals is not None:
             if not isinstance(self._vertex_normals, numpy.ndarray):
-                raise TypeError(f"[INTERNAL] Points normals must be a numpy.ndarray, got {type(self._vertex_normals)}.")
+                raise TypeError(f"Points normals must be a numpy.ndarray, got {type(self._vertex_normals)}.")
             if not self._vertex_normals.dtype == numpy.float64:
-                raise TypeError(f"[INTERNAL] Points normals must be of type float64, got {self._vertex_normals.dtype}.")
+                raise TypeError(f"Points normals must be of type float64, got {self._vertex_normals.dtype}.")
             if not self._vertex_normals.ndim == 2:
-                raise ValueError(f"[INTERNAL] Points normals must be a 2D array, got {self._vertex_normals.ndim} dimensions.")
+                raise ValueError(f"Points normals must be a 2D array, got {self._vertex_normals.ndim} dimensions.")
             if not self._vertex_normals.shape == (self.Nvertices, 3):
-                raise ValueError(f"[INTERNAL] Points normals must have shape ({self.Nvertices}, 3), got {self._vertex_normals.shape}.")
+                raise ValueError(f"Points normals must have shape ({self.Nvertices}, 3), got {self._vertex_normals.shape}.")
             if not numpy.all(numpy.isfinite(self._vertex_normals)):
-                raise ValueError("[INTERNAL] Points normals must contain finite values only.")
+                raise ValueError("Points normals must contain finite values only.")
             
     def __internal_check_triangle_normals(self) -> None:
         r"""
@@ -372,15 +374,15 @@ class TriangleMesh3D():
         
         if self._triangle_normals is not None:
             if not isinstance(self._triangle_normals, numpy.ndarray):
-                raise TypeError(f"[INTERNAL] Triangles normals must be a numpy.ndarray, got {type(self._triangle_normals)}.")
+                raise TypeError(f"Triangles normals must be a numpy.ndarray, got {type(self._triangle_normals)}.")
             if not self._triangle_normals.dtype == numpy.float64:
-                raise TypeError(f"[INTERNAL] Triangles normals must be of type float64, got {self._triangle_normals.dtype}.")
+                raise TypeError(f"Triangles normals must be of type float64, got {self._triangle_normals.dtype}.")
             if not self._triangle_normals.ndim == 2:
-                raise ValueError(f"[INTERNAL] Triangles normals must be a 2D array, got {self._triangle_normals.ndim} dimensions.")
+                raise ValueError(f"Triangles normals must be a 2D array, got {self._triangle_normals.ndim} dimensions.")
             if not self._triangle_normals.shape == (self.Ntriangles, 3):
-                raise ValueError(f"[INTERNAL] Triangles normals must have shape ({self.Ntriangles}, 3), got {self._triangle_normals.shape}.")
+                raise ValueError(f"Triangles normals must have shape ({self.Ntriangles}, 3), got {self._triangle_normals.shape}.")
             if not numpy.all(numpy.isfinite(self._triangle_normals)):
-                raise ValueError("[INTERNAL] Triangles normals must contain finite values only.")
+                raise ValueError("Triangles normals must contain finite values only.")
             
     def __internal_check_triangle_centroids(self) -> None:
         r"""
@@ -391,15 +393,15 @@ class TriangleMesh3D():
         
         if self._triangle_centroids is not None:
             if not isinstance(self._triangle_centroids, numpy.ndarray):
-                raise TypeError(f"[INTERNAL] Triangles centroids must be a numpy.ndarray, got {type(self._triangle_centroids)}.")
+                raise TypeError(f"Triangles centroids must be a numpy.ndarray, got {type(self._triangle_centroids)}.")
             if not self._triangle_centroids.dtype == numpy.float64:
-                raise TypeError(f"[INTERNAL] Triangles centroids must be of type float64, got {self._triangle_centroids.dtype}.")
+                raise TypeError(f"Triangles centroids must be of type float64, got {self._triangle_centroids.dtype}.")
             if not self._triangle_centroids.ndim == 2:
-                raise ValueError(f"[INTERNAL] Triangles centroids must be a 2D array, got {self._triangle_centroids.ndim} dimensions.")
+                raise ValueError(f"Triangles centroids must be a 2D array, got {self._triangle_centroids.ndim} dimensions.")
             if not self._triangle_centroids.shape == (self.Ntriangles, 3):
-                raise ValueError(f"[INTERNAL] Triangles centroids must have shape ({self.Ntriangles}, 3), got {self._triangle_centroids.shape}.")
+                raise ValueError(f"Triangles centroids must have shape ({self.Ntriangles}, 3), got {self._triangle_centroids.shape}.")
             if not numpy.all(numpy.isfinite(self._triangle_centroids)):
-                raise ValueError("[INTERNAL] Triangles centroids must contain finite values only.")
+                raise ValueError("Triangles centroids must contain finite values only.")
             
     def __internal_check_triangle_areas(self) -> None:
         r"""
@@ -410,17 +412,17 @@ class TriangleMesh3D():
         
         if self._triangle_areas is not None:
             if not isinstance(self._triangle_areas, numpy.ndarray):
-                raise TypeError(f"[INTERNAL] Triangles areas must be a numpy.ndarray, got {type(self._triangle_areas)}.")
+                raise TypeError(f"Triangles areas must be a numpy.ndarray, got {type(self._triangle_areas)}.")
             if not self._triangle_areas.dtype == numpy.float64:
-                raise TypeError(f"[INTERNAL] Triangles areas must be of type float64, got {self._triangle_areas.dtype}.")
+                raise TypeError(f"Triangles areas must be of type float64, got {self._triangle_areas.dtype}.")
             if not self._triangle_areas.ndim == 1:
-                raise ValueError(f"[INTERNAL] Triangles areas must be a 1D array, got {self._triangle_areas.ndim} dimensions.")
+                raise ValueError(f"Triangles areas must be a 1D array, got {self._triangle_areas.ndim} dimensions.")
             if not self._triangle_areas.shape == (self.Ntriangles,):
-                raise ValueError(f"[INTERNAL] Triangles areas must have shape ({self.Ntriangles},), got {self._triangle_areas.shape}.")
+                raise ValueError(f"Triangles areas must have shape ({self.Ntriangles},), got {self._triangle_areas.shape}.")
             if not numpy.all(numpy.isfinite(self._triangle_areas)):
-                raise ValueError("[INTERNAL] Triangles areas must contain finite values only.")
+                raise ValueError("Triangles areas must contain finite values only.")
             if not numpy.all(self._triangle_areas >= 0):
-                raise ValueError("[INTERNAL] Triangles areas must be non-negative values.")
+                raise ValueError("Triangles areas must be non-negative values.")
             
     def validate(self) -> None:
         r"""
@@ -1934,7 +1936,6 @@ class TriangleMesh3D():
 
         # Filter valid hits
         valid = flat_idx >= 0
-        valid_idx = flat_idx[valid]
         u = flat_bary[valid, 0]
         v = flat_bary[valid, 1]
         w = 1.0 - u - v

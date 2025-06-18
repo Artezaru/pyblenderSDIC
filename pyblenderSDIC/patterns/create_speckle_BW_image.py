@@ -1,6 +1,5 @@
 from typing import Optional, Tuple, Sequence
 import numpy
-from scipy.ndimage import gaussian_filter
 
 def create_speckle_BW_image(
     image_shape: Tuple[int, int],

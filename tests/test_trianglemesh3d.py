@@ -188,11 +188,11 @@ def test_trianglemesh3d_intersect_points(tetra_mesh):
 
     # Results for rays with intersections
     intersect_pts = tetra_mesh.cast_rays(rays_intersect)
-    assert numpy.all(intersect_pts.element_indices >= 0), "Intersections were expected but not found."
+    assert numpy.all(intersect_pts.triangle_indices >= 0), "Intersections were expected but not found."
 
     # Results for rays without intersections
     no_intersect_pts = tetra_mesh.cast_rays(rays_no_intersect)
-    assert numpy.all(no_intersect_pts.element_indices == -1), "Intersections were detected where none were expected."
+    assert numpy.all(no_intersect_pts.triangle_indices == -1), "Intersections were detected where none were expected."
 
     points_coords = tetra_mesh.calculate_intersect_coordinates(intersect_pts)
     assert points_coords.shape == (intersect_pts.id.size, 3), "Coordinates shape mismatch."

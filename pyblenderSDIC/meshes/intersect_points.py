@@ -6,9 +6,9 @@ class IntersectPoints:
     """
     A class to represent the intersection points of rays with a 3D mesh.
 
-    This class stores the barycentric coordinates and element indices of the
+    This class stores the barycentric coordinates and triangle indices of the
     intersection points. The barycentric coordinates are used to locate the
-    position of the intersection within a triangle, and the element indices
+    position of the intersection within a triangle, and the triangle indices
     represent the specific triangle in the mesh that was intersected by a ray.
 
     For a triangle with vertices A, B, and C, the barycentric coordinates (u, v) are
@@ -24,7 +24,7 @@ class IntersectPoints:
     .. note::
 
         If no intersection occurs, the barycentric coordinates are set to NaN and
-        the element index is set to -1.
+        the triangle index is set to -1.
 
     .. warning::
 
@@ -39,15 +39,122 @@ class IntersectPoints:
         barycentric coordinates (u, v) of an intersection point within the
         corresponding triangle. If no intersection occurs, the coordinates are NaN.
     
-    element_indices : numpy.ndarray
+    triangle_indices : numpy.ndarray
         A ND array of shape (...,), where each entry represents the index of the
         triangle that was intersected. If no intersection occurs, the index is -1.
     """
 
-    def __init__(self, barycentric_coordinates: numpy.ndarray, element_indices: numpy.ndarray) -> None:
+    def __init__(self, barycentric_coordinates: numpy.ndarray, triangle_indices: numpy.ndarray) -> None:
+        # Active bypass mode for testing purposes
+        self.__internal_bypass__ = True
         self.barycentric_coordinates = barycentric_coordinates
-        self.element_indices = element_indices
+        self.triangle_indices = triangle_indices
+        self.__internal_bypass__ = False
+        self.__internal_check_barycentric_coordinates()
+        self.__internal_check_triangle_indices()
 
+    # =======================================================================
+    # Internal Methods
+    # =======================================================================
+    @property
+    def internal_bypass(self) -> bool:
+        r"""
+        Get and set the internal bypass mode status.
+        When enabled, internal checks are skipped.
+
+        This is useful for testing purposes, but should not be used in production code.
+
+        Parameters
+        ----------
+        value : bool
+            If True, internal checks are bypassed. If False, internal checks are performed.
+
+        Raises
+        --------
+        TypeError
+            If the value is not a boolean.
+        """
+        return self.__internal_bypass__
+    
+    @internal_bypass.setter
+    def internal_bypass(self, value: bool) -> None:
+        if not isinstance(value, bool):
+            raise TypeError(f"Bypass mode must be a boolean, got {type(value)}.")
+        self.__internal_bypass__ = value
+    
+    def __internal_check_barycentric_coordinates(self) -> None:
+        r"""
+        Internal method to check the validity of the barycentric coordinates array.
+        """
+        if self.__internal_bypass__:
+            return
+        
+        if not isinstance(self._barycentric_coordinates, numpy.ndarray):
+            raise TypeError(f"Barycentric coordinates must be a numpy.ndarray, got {type(self._barycentric_coordinates)}.")
+        if not self._barycentric_coordinates.dtype == numpy.float64:
+            raise TypeError(f"Barycentric coordinates must be of type float64, got {self._barycentric_coordinates.dtype}.")
+        if not self._barycentric_coordinates.ndim >= 2:
+            raise ValueError(f"Barycentric coordinates must have at least 2 dimensions, got {self._barycentric_coordinates.ndim} dimensions.")
+        if not self._barycentric_coordinates.shape[-1] == 2:
+            raise ValueError(f"Barycentric coordinates must have shape (..., 2), got {self._barycentric_coordinates.shape}.")
+                
+        valid_mask = self.valid_mask()
+        u, v = self.uv[..., 0], self.uv[..., 1]
+
+        if not numpy.all(numpy.isfinite(u[valid_mask]) & numpy.isfinite(v[valid_mask])):
+            raise ValueError("Barycentric coordinates must contain finite values only.")
+        if not numpy.all(numpy.isnan(u[~valid_mask]) & numpy.isnan(v[~valid_mask])):
+            raise ValueError("Barycentric coordinates must be set to NaN if no intersection occurs.")
+        if not numpy.all(u[valid_mask] >= 0) or not numpy.all(v[valid_mask] >= 0):
+            raise ValueError("Barycentric coordinates must contain non-negative values only.")
+        if not numpy.all(u[valid_mask] + v[valid_mask] <= 1):
+            raise ValueError("Barycentric coordinates must satisfy u + v <= 1.")
+
+        
+    def __internal_check_triangle_indices(self) -> None:
+        r"""
+        Internal method to check the validity of the triangle indices array.
+        """
+        if self.__internal_bypass__:
+            return
+        
+        if not isinstance(self._triangle_indices, numpy.ndarray):
+            raise TypeError(f"Triangle indices must be a numpy.ndarray, got {type(self._triangle_indices)}.")
+        if not self._triangle_indices.dtype == numpy.int64:
+            raise TypeError(f"Triangle indices must be of type int, got {self._triangle_indices.dtype}.")
+        if not self._triangle_indices.ndim >= 1:
+            raise ValueError(f"Triangle indices must have at least 1 dimension, got {self._triangle_indices.ndim} dimensions.")
+        
+        valid_mask = self.valid_mask()
+        
+        if not numpy.all(numpy.isfinite(self._triangle_indices[valid_mask])):
+            raise ValueError("Triangle indices must contain finite values only.")
+        if not numpy.all(self._triangle_indices[valid_mask] >= 0):
+            raise ValueError("Triangle indices must contain non-negative values only.")
+        if not numpy.all(self._triangle_indices[~valid_mask] == -1):
+            raise ValueError("Triangle indices must be set to -1 if no intersection occurs.")
+        
+
+    def validate(self) -> None:
+        r"""
+        Validate the mesh structure.
+
+        This method checks the validity of the vertices, triangles, and UV map.
+        If any of the checks fail, an exception is raised.
+        """
+        bypass_mode = self.__internal_bypass__
+        self.__internal_bypass__ = False # Disable bypass mode for validation
+
+        self.__internal_check_barycentric_coordinates()
+        self.__internal_check_triangle_indices()
+        
+        # restore bypass mode
+        self.__internal_bypass__ = bypass_mode
+
+ 
+    # =======================================================================
+    # Properties Getters and Setters
+    # =======================================================================
     @property
     def barycentric_coordinates(self) -> numpy.ndarray:
         r"""
@@ -73,21 +180,12 @@ class IntersectPoints:
         numpy.ndarray
             A 2D array of shape (..., 2) representing the barycentric coordinates of the intersections.
         """
-        barycentric_coords = numpy.asarray(self._barycentric_coordinates, dtype=numpy.float64)
-        if barycentric_coords.ndim <= 1:
-            raise ValueError("[INTERNAL CLASS ERROR]: Barycentric coordinates must have at least 2 dimension.")
-        if barycentric_coords.shape[-1] != 2:
-            raise ValueError("[INTERNAL CLASS ERROR]: Barycentric coordinates must have shape (..., 2).")
-        return barycentric_coords
+        return self._barycentric_coordinates
 
     @barycentric_coordinates.setter
     def barycentric_coordinates(self, value: numpy.ndarray) -> None:
-        value = numpy.asarray(value, dtype=numpy.float64)
-        if value.ndim <= 1:
-            raise ValueError("Barycentric coordinates must have at least 2 dimension.")
-        if value.shape[-1] != 2:
-            raise ValueError("Barycentric coordinates must have shape (..., 2).")
-        self._barycentric_coordinates = value
+        self._barycentric_coordinates = numpy.asarray(value, dtype=numpy.float64)
+        self.__internal_check_barycentric_coordinates()
 
     @property
     def uv(self) -> numpy.ndarray:
@@ -101,42 +199,40 @@ class IntersectPoints:
         self.barycentric_coordinates = value
 
     @property
-    def element_indices(self) -> numpy.ndarray:
+    def triangle_indices(self) -> numpy.ndarray:
         """
-        Gets the element indices of the intersections.
+        Gets the triangle indices of the intersections.
 
         .. note::
 
-            An alias for the element indices is ``id``.
+            An alias for the triangle indices is ``id``.
 
         Returns
         -------
         numpy.ndarray
-            A 1D array representing the element indices of the intersections.
+            A 1D array representing the triangle indices of the intersections.
         """
-        element_indices = numpy.asarray(self._element_indices, dtype=int)
-        if element_indices.ndim < 1:
-            raise ValueError("[INTERNAL CLASS ERROR]: Element indices must have at least 1 dimension.")
-        return element_indices
+        return self._triangle_indices
 
-    @element_indices.setter
-    def element_indices(self, value: numpy.ndarray) -> None:
-        value = numpy.asarray(value, dtype=int)
-        if value.ndim < 1:
-            raise ValueError("Element indices must have at least 1 dimension.")
-        self._element_indices = value
+    @triangle_indices.setter
+    def triangle_indices(self, value: numpy.ndarray) -> None:
+        self._triangle_indices = numpy.asarray(value, dtype=numpy.int64)
+        self.__internal_check_triangle_indices()
 
     @property
     def id(self) -> numpy.ndarray:
         """
-        Alias for the element indices.
+        Alias for the triangle indices.
         """
-        return self.element_indices
+        return self.triangle_indices
     
     @id.setter
     def id(self, value: numpy.ndarray) -> None:
-        self.element_indices = value
+        self.triangle_indices = value
 
+    # =======================================================================
+    # Public Methods
+    # =======================================================================
     def valid_mask(self) -> numpy.ndarray:
         """
         Returns a boolean mask indicating the validity of the barycentric coordinates.
@@ -149,49 +245,11 @@ class IntersectPoints:
         numpy.ndarray
             A boolean array of shape (...,) indicating the validity of the barycentric coordinates.
         """
-        # Vérification si les barycentriques sont finis (pas NaN ni infini)
         return numpy.logical_not(numpy.isnan(self.barycentric_coordinates).any(axis=-1))
-
-    def validate(self) -> None:
-        """
-        Validates the input data to ensure the barycentric coordinates and element indices
-        arrays have the correct shapes and values.
-
-        Raises
-        ------
-        ValueError
-            If the barycentric coordinates array does not have shape (..., 2),
-            if element indices are not positive integers,
-            or if barycentric coordinates do not meet the conditions.
-        """
-        # Check the shape of barycentric coordinates and element indices
-        if self.barycentric_coordinates.ndim <= 1:
-            raise ValueError("Barycentric coordinates must have at least 2 dimension.")
-        if self.barycentric_coordinates.shape[-1] != 2:
-            raise ValueError("Barycentric coordinates must have shape (..., 2).")
-        if self.element_indices.ndim < 1:
-            raise ValueError("Element indices must have at least 1 dimension.")
-        if self.barycentric_coordinates.shape[:-1] != self.element_indices.shape:
-            raise ValueError("The shapes of barycentric coordinates and element indices must match in the first dimensions.")
-
-        valid_mask = self.valid_mask()
-
-        # Check the barycentric coordinates (u, v): 0 <= u, v <= 1 and u + v <= 1
-        u, v = self.uv[..., 0], self.uv[..., 1]
-        if not numpy.all((u[valid_mask] >= 0) & (v[valid_mask] >= 0) & (u[valid_mask] + v[valid_mask] <= 1)):
-            raise ValueError("Barycentric coordinates must satisfy 0 <= u, v <= 1 and u + v <= 1.")
-        if not numpy.all((numpy.isnan(u[~valid_mask]) & (numpy.isnan(v[valid_mask])))):
-            raise ValueError("Barycentric coordinates must be setted to NaN if no intersection occurs.")
-
-        # Check the element indices: must be positive integers
-        if not numpy.all(self.element_indices[valid_mask] >= 0):
-            raise ValueError("Element indices must be positive integers.")
-        if not numpy.all(self.element_indices[~valid_mask] == -1):
-            raise ValueError("Element indices must be setted to -1 if no intersection occurs.")
 
     def filter_valid(self) -> IntersectPoints:
         """
-        Filters out invalid intersections (where the element index is -1 or barycentric coordinates are NaN).
+        Filters out invalid intersections (where the triangle index is -1 or barycentric coordinates are NaN).
 
         This method modifies the shape of the arrays, changing them from the original
         (..., 2) and (...,) to (L', 2), where L' is the number of valid intersections.
@@ -203,8 +261,8 @@ class IntersectPoints:
         """
         valid_mask = self.valid_mask()
         valid_barycentric_coords = self.barycentric_coordinates[valid_mask].reshape(-1, 2)
-        valid_element_indices = self.element_indices[valid_mask].reshape(-1)
+        valid_triangle_indices = self.triangle_indices[valid_mask].reshape(-1)
 
         # Reshaping to (L', 3) where L' is the number of valid intersections
-        return IntersectPoints(valid_barycentric_coords, valid_element_indices)
+        return IntersectPoints(valid_barycentric_coords, valid_triangle_indices)
 

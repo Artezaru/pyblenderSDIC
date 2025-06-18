@@ -8,7 +8,7 @@ from .trianglemesh3d import TriangleMesh3D
 
 
 def create_axisymmetric_mesh(
-    profile_curve: Callable[[float], float] = lambda z: 1.0,
+    profile_curve: Callable[[float], float] = lambda _: 1.0,
     frame: Frame = Frame(),
     height_bounds: tuple[float, float] = (0.0, 1.0),
     theta_bounds: tuple[float, float] = (0.0, 2.0 * numpy.pi),
