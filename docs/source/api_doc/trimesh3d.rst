@@ -1,6 +1,6 @@
 .. currentmodule:: pyblenderSDIC.meshes
 
-pyblenderSDIC.meshes.TriangleMesh3D
+TriangleMesh3D
 ====================================
 
 .. autoclass:: TriangleMesh3D

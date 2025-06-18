@@ -1,6 +1,9 @@
 Installation
 ============
 
+Default Installation
+---------------------
+
 To install ``pyblenderSDIC``, you can use the following command:
 
 .. code-block:: bash
@@ -20,6 +23,8 @@ Then, go to the directory and run the following command:
     pip install -e .
 
 Use ``-e .[dev]`` to install it with the development dependencies.
+
+
 
 Installing Blender
 ------------------

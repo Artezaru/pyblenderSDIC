@@ -43,7 +43,7 @@ class Camera(object):
     Other parameters of the camera can be stored in the camera object:
 
     - resolution: The resolution of the camera in numbers of pixels. A 2-element array representing the resolution of the camera in numbers of pixels along the x and y axes.
-    - pixel_size: The pixel size of the camera in the millimeters. A 2-element array representing the pixel size of the camera in millimeters along the x and y axes.
+    - pixel_size: The pixel size of the camera in millimeters (distance unit). A 2-element array representing the pixel size of the camera in millimeters along the x and y axes.
     - clip_distance: The distances in millimeters to the near and far clipping planes. A 2-element array representing the distances of the near and far clipping planes of the camera in millimeters. Only points between the near and far clipping planes are visible in the camera view.
 
     Parameters
@@ -55,29 +55,26 @@ class Camera(object):
         The intrinsic matrix of the camera. (3x3 matrix), by default None.
         The intrinsic matrix is a 3x3 matrix representing the intrinsic parameters of the camera.
 
-    resolution : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional
+    resolution : Optional[Union[Sequence[Integral], numpy.ndarray]], optional
         The resolution of the camera in numbers of pixels, by default None.
-        If a single value is provided, it is used for both x and y axes.
-        If two values are provided, they are used for x and y axes respectively.
+        The two values are used for x and y axes respectively.
 
-    pixel_size : Optional[Union[Number, Sequence[Number], numpy.ndarray]], optional
+    pixel_size : Optional[Union[Sequence[Number], numpy.ndarray]], optional
         The pixel size of the camera in the millimeters of the camera, by default None.
-        If a single value is provided, it is used for both x and y axes.
-        If two values are provided, they are used for x and y axes respectively.
+        The two values are used for x and y axes respectively.
         The pixel size is the size of a single pixel in the millimeters of the camera.
     
-    clip_distance : Optional[Union[Number, Sequence[Number], numpy.ndarray]], optional
+    clip_distance : Optional[Union[NSequence[Number], numpy.ndarray]], optional
         The distance of the near and far clipping planes of the camera, by default None.
-        If a single value is provided, it is used for both near clipping plane.
-        If two values are provided, they are used for near and far clipping planes respectively.
+        The two values are used for near and far clipping planes respectively.
     """
     def __init__(
             self,
             frame: Frame = Frame(),
             intrinsic_matrix: Optional[numpy.ndarray] = None,
-            resolution: Optional[Union[Integral, Sequence[Integral], numpy.ndarray]] = None,
-            pixel_size: Optional[Union[Number, Sequence[Number], numpy.ndarray]] = None,
-            clip_distance: Optional[Union[Number, Sequence[Number], numpy.ndarray]] = None,
+            resolution: Optional[Union[Sequence[Integral], numpy.ndarray]] = None,
+            pixel_size: Optional[Union[Sequence[Number], numpy.ndarray]] = None,
+            clip_distance: Optional[Union[Sequence[Number], numpy.ndarray]] = None,
         ) -> None:
 
         # Default values
@@ -85,8 +82,8 @@ class Camera(object):
         self._fy = None # focal length in pixels in y direction
         self._cx = None # principal point in pixels in x direction
         self._cy = None # principal point in pixels in y direction
-        self._px = None # pixel size in metric in x direction
-        self._py = None # pixel size in metric in y direction
+        self._px = None # pixel size in millimeters in x direction
+        self._py = None # pixel size in millimeters in y direction
         self._rx = None # resolution in number of pixels in x direction
         self._ry = None # resolution in number of pixels in y direction
         self._clnear = None # near clipping plane in millimeters
@@ -1258,7 +1255,7 @@ class Camera(object):
     # =============================================
     # Save and load methods
     # =============================================
-    def save_to_dict(self, description: str = "") -> Dict:
+    def to_dict(self, description: Optional[str] = None) -> Dict:
         r"""
         Export the Camera's data to a dictionary.
 
@@ -1290,8 +1287,9 @@ class Camera(object):
 
         Parameters
         ----------
-        description : str, optional
-            A description of the camera, by default "".
+        description : Optional[str]
+            A description of the camera, by default None. 
+            This message will be included in the dictionary under the key "description" if provided. 
 
         Returns
         -------
@@ -1302,14 +1300,10 @@ class Camera(object):
         ------
         ValueError
             If the description is not a string.
-        """
-        # Check the description
-        if not isinstance(description, str):
-            raise ValueError("Description must be a string.")
-        
+        """        
         # Create the dictionary
         data = {
-            "type": "Camera [pysdic]",
+            "type": "Camera [pyblenderSDIC]",
             "frame": self.frame.save_to_dict(),
             "fx": self.fx,
             "fy": self.fy,
@@ -1324,13 +1318,15 @@ class Camera(object):
         }
 
         # Add the description
-        if len(description) > 0:
+        if description is not None:
+            if not isinstance(description, str):
+                raise ValueError("Description must be a string.")
             data["description"] = description
         
         return data
 
     @classmethod
-    def load_from_dict(cls, data: Dict) -> Camera:
+    def from_dict(cls, data: Dict) -> Camera:
         r"""
         Create a Camera instance from a dictionary.
 
@@ -1378,42 +1374,43 @@ class Camera(object):
         return camera
     
 
-    def save_to_json(self, filepath: str, description: str = "") -> None:
+    def to_json(self, filename: str, description: Optional[str] = None) -> None:
         r"""
         Export the Camera's data to a JSON file.
 
-        The structure of the JSON file follows the :meth:`pysdic.camera.Camera.save_to_dict` method.
+        The structure of the JSON file follows the :meth:`pysdic.camera.Camera.to_dict` method.
 
         Parameters
         ----------
-        filepath : str
+        filename : str
             The path to the JSON file.
         
-        description : str, optional
-            A description of the camera, by default "".
+        description : Optional[str]
+            A description of the camera, by default None. 
+            This message will be included in the JSON file under the key "description" if provided.
 
         Raises
         ------
         FileNotFoundError
-            If the filepath is not a valid path.
+            If the filename is not a valid path.
         """
         # Create the dictionary
-        data = self.save_to_dict(description=description)
+        data = self.to_dict(description=description)
 
         # Save the dictionary to a JSON file
-        with open(filepath, "w") as file:
+        with open(filename, "w") as file:
             json.dump(data, file, indent=4)
 
     @classmethod
-    def load_from_json(cls, filepath: str) -> Camera:
+    def from_json(cls, filename: str) -> Camera:
         r"""
         Create a Camera instance from a JSON file.
 
-        The structure of the JSON file follows the :meth:`pysdic.camera.Camera.save_to_dict` method.
+        The structure of the JSON file follows the :meth:`pysdic.camera.Camera.to_dict` method.
 
         Parameters
         ----------
-        filepath : str
+        filename : str
             The path to the JSON file.
         
         Returns
@@ -1424,11 +1421,11 @@ class Camera(object):
         Raises
         ------
         FileNotFoundError
-            If the filepath is not a valid path.
+            If the filename is not a valid path.
         """
         # Load the dictionary from the JSON file
-        with open(filepath, "r") as file:
+        with open(filename, "r") as file:
             data = json.load(file)
         
         # Create the Frame instance
-        return cls.load_from_dict(data)
+        return cls.from_dict(data)

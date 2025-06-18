@@ -186,6 +186,8 @@ class TriangleMesh3D():
 
     .. code-block:: python
 
+        mesh.visualize()
+
     """
     def __init__(self, 
                  vertices: numpy.ndarray, 
@@ -1185,6 +1187,9 @@ class TriangleMesh3D():
             }
             mesh = TriangleMesh3D.from_dict(data)
 
+        If a key is not present in the dictionary, the corresponding attribute will be set to None.
+        All other keys are ignored.    
+
         .. note::
 
             The values of the dictionary should be convertible to NumPy arrays.
@@ -1225,7 +1230,7 @@ class TriangleMesh3D():
         return mesh_instance
     
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self, description: Optional[str] = None) -> Dict[str, Any]:
         r"""
         Convert the TriangleMesh3D instance to a dictionary.
 
@@ -1246,15 +1251,26 @@ class TriangleMesh3D():
 
             The values of the dictionary are lists of lists or scalars, so they can be easily serialized to JSON or similar formats.
 
+        Parameters
+        ----------
+        description : Optional[str]
+            A description of the mesh, by default None. 
+            This message will be included in the dictionary under the key "description" if provided.   
+
         Returns
         -------
         Dict[str, Any]
             A dictionary containing the mesh data.
         """
         data = {
+            "type": "TriangleMesh3D [pyblenderSDIC]",
             "vertices": self.vertices.tolist(),
             "triangles": self.triangles.tolist(),
         }
+        if description is not None:
+            if not isinstance(description, str):
+                raise TypeError(f"Expected a string for description, got {type(description)}.")
+            data["description"] = description
         if self.uvmap is not None:
             data["uvmap"] = self.uvmap.tolist()
         if self.vertex_normals is not None:
@@ -1305,7 +1321,7 @@ class TriangleMesh3D():
         return cls.from_dict(data)
     
 
-    def to_json(self, filename: str) -> None:
+    def to_json(self, filename: str, description: Optional[str] = None) -> None:
         r"""
         Save the TriangleMesh3D instance to a JSON file.
 
@@ -1324,8 +1340,12 @@ class TriangleMesh3D():
         ----------
         filename : str
             The path to the JSON file where the mesh will be saved.
+
+        description : Optional[str]
+            A description of the mesh, by default None. 
+            This message will be included in the dictionary under the key "description" if provided.
         """
-        data = self.to_dict()
+        data = self.to_dict(description=description)
         with open(filename, 'w') as f:
             json.dump(data, f, indent=4)
 

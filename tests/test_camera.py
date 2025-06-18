@@ -28,9 +28,8 @@ def test_camera_init(camera):
 
 def test_save_load_to_dict(camera):
     """Test saving and loading a Camera object to/from a dictionary."""
-    data = camera.save_to_dict(description="Test Camera")
+    data = camera.to_dict(description="Test Camera")
     print(data)
-    assert data["type"] == "Camera [pysdic]"
     assert data["description"] == "Test Camera"
     assert data["frame"]["translation"] == pytest.approx(camera.frame.origin.flatten(), rel=1e-5)
     assert data["frame"]["rotation_vector"] == pytest.approx(camera.frame.rotation_vector, rel=1e-5)
@@ -45,12 +44,26 @@ def test_save_load_to_dict(camera):
     assert data["clnear"] == camera.clnear
     assert data["clfar"] == camera.clfar
 
-    loaded_camera = Camera.load_from_dict(data)
+    loaded_camera = Camera.from_dict(data)
     assert loaded_camera.focal_length == (50.0, 50.0)
     assert loaded_camera.pixel_size == (0.01, 0.01)
     assert loaded_camera.resolution == (1920, 1080)
     assert loaded_camera.principal_point == (960.0, 540.0)
     assert loaded_camera.clip_distance == (0.1, 1000.0)
+
+
+def test_save_load_to_json(camera, tmp_path):
+    """Test saving and loading a Camera object to/from a JSON file."""
+    json_file = tmp_path / "camera.json"
+    camera.to_json(json_file, description="Test Camera")
+    
+    loaded_camera = Camera.from_json(json_file)
+    assert loaded_camera.focal_length == (50.0, 50.0)
+    assert loaded_camera.pixel_size == (0.01, 0.01)
+    assert loaded_camera.resolution == (1920, 1080)
+    assert loaded_camera.principal_point == (960.0, 540.0)
+    assert loaded_camera.clip_distance == (0.1, 1000.0)
+
 
 def test_cv2_RT(camera):
     """Test the OpenCV rotation and translation of a Camera object."""

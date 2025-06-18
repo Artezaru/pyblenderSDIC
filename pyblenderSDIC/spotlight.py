@@ -280,7 +280,7 @@ class SpotLight(object):
     # ==============================================
     # Load and save methods
     # ==============================================
-    def save_to_dict(self, description: str = "") -> Dict:
+    def to_dict(self, description: Optional[str] = None) -> Dict:
         """
         Export the SpotLight's data to a dictionary.
 
@@ -305,8 +305,9 @@ class SpotLight(object):
 
         Parameters
         ----------
-        description : str, optional
-            A description of the spot light, by default "".
+        description : Optional[str], optional
+            A description of the spot light, by default None.
+            If provided, it will be included in the dictionary under the key "description".
 
         Returns
         -------
@@ -318,10 +319,6 @@ class SpotLight(object):
         ValueError
             If the description is not a string.
         """
-        # Check the description
-        if not isinstance(description, str):
-            raise ValueError("Description must be a string.")
-        
         # Create the dictionary
         data = {
             "type": "SpotLight [pyblenderSDIC]",
@@ -332,7 +329,9 @@ class SpotLight(object):
         }
 
         # Add the description
-        if len(description) > 0:
+        if description is not None:
+            if not isinstance(description, str):
+                raise ValueError("Description must be a string.")
             data["description"] = description
         
         return data
@@ -340,11 +339,11 @@ class SpotLight(object):
 
 
     @classmethod
-    def load_from_dict(cls, data: Dict) -> SpotLight:
+    def from_dict(cls, data: Dict) -> SpotLight:
         """
         Create a SpotLight instance from a dictionary.
 
-        The structure of the dictionary should be as provided by the :meth:`pyblenderSDIC.SpotLight.save_to_dict` method.
+        The structure of the dictionary should be as provided by the :meth:`pyblenderSDIC.SpotLight.to_dict` method.
 
         Parameters
         ----------
@@ -375,19 +374,20 @@ class SpotLight(object):
 
 
 
-    def save_to_json(self, filepath: str, description: str = "") -> None:
+    def to_json(self, filepath: str, description: Optional[str] = None) -> None:
         """
         Export the SpotLight's data to a JSON file.
 
-        The structure of the JSON file follows the :meth:`pyblenderSDIC.SpotLight.save_to_dict` method.
+        The structure of the JSON file follows the :meth:`pyblenderSDIC.SpotLight.to_dict` method.
 
         Parameters
         ----------
         filepath : str
             The path to the JSON file.
         
-        description : str, optional
-            A description of the spot light, by default "".
+        description : Optional[str], optional
+            A description of the spot light, by default None.
+            If provided, it will be included in the JSON file under the key "description".
 
         Raises
         ------
@@ -395,7 +395,7 @@ class SpotLight(object):
             If the filepath is not a valid path.
         """
         # Create the dictionary
-        data = self.save_to_dict(description=description)
+        data = self.to_dict(description=description)
 
         # Save the dictionary to a JSON file
         with open(filepath, "w") as file:
@@ -404,11 +404,11 @@ class SpotLight(object):
 
     
     @classmethod
-    def load_from_json(cls, filepath: str) -> SpotLight:
+    def from_json(cls, filepath: str) -> SpotLight:
         """
         Create a SpotLight instance from a JSON file.
 
-        The structure of the JSON file follows the :meth:`pyblenderSDIC.SpotLight.save_to_dict` method.
+        The structure of the JSON file follows the :meth:`pyblenderSDIC.SpotLight.to_dict` method.
 
         Parameters
         ----------
@@ -430,36 +430,6 @@ class SpotLight(object):
             data = json.load(file)
         
         # Create the Frame instance
-        return cls.load_from_dict(data)
-    
+        return cls.from_dict(data)
 
     
-    # ==============================================
-    # Blender methods
-    # ==============================================
-    def get_RT_blender(self) -> Tuple[Rotation, numpy.ndarray]:
-        """
-        Get the rotation and translation of the light in the Blender format.
-
-        The axis of the light frame for Blender are different from the SpotLight frame:
-        - x-axis: The same as the SpotLight frame : right direction of the light (left to right).
-        - y-axis: The opposite of the SpotLight frame : up direction of the light (down to up).
-        - z-axis: The opposite of the SpotLight frame : (from the scene to the light).
-
-        Furthermore, the convention for Blender is :math:`X_{world} = R X_{cam} + T`, convention=0 for py3dframe.
-
-        Returns
-        -------
-        Rotation
-            The rotation of the light.
-        
-        numpy.ndarray
-            The translation of the light with shape (3, 1).
-        """
-        rotation = self.frame.get_global_rotation(convention=0)
-        x_axis = rotation.as_matrix()[:, 0].reshape((3, 1))
-        y_axis = - rotation.as_matrix()[:, 1].reshape((3, 1))
-        z_axis = - rotation.as_matrix()[:, 2].reshape((3, 1))
-        rotation = Rotation.from_matrix(numpy.column_stack((x_axis, y_axis, z_axis)))
-        translation = self.frame.get_global_translation(convention=0)
-        return rotation, translation

@@ -43,6 +43,7 @@ extensions = [
 napoleon_google_docstring = False
 napoleon_numpy_docstring = True
 
+autosummary_generate = True
 add_module_names = False
 
 # 3. Options for Latex output

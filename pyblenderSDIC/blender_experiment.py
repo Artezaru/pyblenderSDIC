@@ -103,6 +103,9 @@ class BlenderExperiment:
         bpy.context.scene.cursor.location = (0.0, 0.0, 0.0)  # Reset 3D cursor
         bpy.context.scene.frame_start = 1  # Start frame
         bpy.context.scene.frame_end = self._end_frame + 1 # End frame 
+        bpy.context.scene.render.engine = 'CYCLES'
+        bpy.context.scene.cycles.device = 'GPU'
+
 
 
     # =======================================================
