@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyblenderSDIC.camera &#8212; pyblenderSDIC 2.0.1 documentation</title>
+    <title>pyblenderSDIC.camera &#8212; pyblenderSDIC 2.0.2 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=f5cff4aa"></script>
+    <script src="../../_static/documentation_options.js?v=c2377ec0"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyblenderSDIC/camera';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 2.0.1 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 2.0.2 documentation</p>
   
 </a></div>
     
@@ -371,7 +371,7 @@
 <span class="sd">    Other parameters of the camera can be stored in the camera object:</span>
 
 <span class="sd">    - resolution: The resolution of the camera in numbers of pixels. A 2-element array representing the resolution of the camera in numbers of pixels along the x and y axes.</span>
-<span class="sd">    - pixel_size: The pixel size of the camera in the millimeters. A 2-element array representing the pixel size of the camera in millimeters along the x and y axes.</span>
+<span class="sd">    - pixel_size: The pixel size of the camera in millimeters (distance unit). A 2-element array representing the pixel size of the camera in millimeters along the x and y axes.</span>
 <span class="sd">    - clip_distance: The distances in millimeters to the near and far clipping planes. A 2-element array representing the distances of the near and far clipping planes of the camera in millimeters. Only points between the near and far clipping planes are visible in the camera view.</span>
 
 <span class="sd">    Parameters</span>
@@ -383,29 +383,26 @@
 <span class="sd">        The intrinsic matrix of the camera. (3x3 matrix), by default None.</span>
 <span class="sd">        The intrinsic matrix is a 3x3 matrix representing the intrinsic parameters of the camera.</span>
 
-<span class="sd">    resolution : Optional[Union[Integral, Sequence[Integral], numpy.ndarray]], optional</span>
+<span class="sd">    resolution : Optional[Union[Sequence[Integral], numpy.ndarray]], optional</span>
 <span class="sd">        The resolution of the camera in numbers of pixels, by default None.</span>
-<span class="sd">        If a single value is provided, it is used for both x and y axes.</span>
-<span class="sd">        If two values are provided, they are used for x and y axes respectively.</span>
+<span class="sd">        The two values are used for x and y axes respectively.</span>
 
-<span class="sd">    pixel_size : Optional[Union[Number, Sequence[Number], numpy.ndarray]], optional</span>
+<span class="sd">    pixel_size : Optional[Union[Sequence[Number], numpy.ndarray]], optional</span>
 <span class="sd">        The pixel size of the camera in the millimeters of the camera, by default None.</span>
-<span class="sd">        If a single value is provided, it is used for both x and y axes.</span>
-<span class="sd">        If two values are provided, they are used for x and y axes respectively.</span>
+<span class="sd">        The two values are used for x and y axes respectively.</span>
 <span class="sd">        The pixel size is the size of a single pixel in the millimeters of the camera.</span>
 <span class="sd">    </span>
-<span class="sd">    clip_distance : Optional[Union[Number, Sequence[Number], numpy.ndarray]], optional</span>
+<span class="sd">    clip_distance : Optional[Union[NSequence[Number], numpy.ndarray]], optional</span>
 <span class="sd">        The distance of the near and far clipping planes of the camera, by default None.</span>
-<span class="sd">        If a single value is provided, it is used for both near clipping plane.</span>
-<span class="sd">        If two values are provided, they are used for near and far clipping planes respectively.</span>
+<span class="sd">        The two values are used for near and far clipping planes respectively.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">frame</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(),</span>
             <span class="n">intrinsic_matrix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">resolution</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Integral</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">pixel_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Number</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">clip_distance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Number</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">resolution</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Integral</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">pixel_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Number</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">clip_distance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Number</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
         <span class="c1"># Default values</span>
@@ -413,8 +410,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_fy</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># focal length in pixels in y direction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cx</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># principal point in pixels in x direction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cy</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># principal point in pixels in y direction</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_px</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># pixel size in metric in x direction</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_py</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># pixel size in metric in y direction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_px</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># pixel size in millimeters in x direction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_py</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># pixel size in millimeters in y direction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rx</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># resolution in number of pixels in x direction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ry</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># resolution in number of pixels in y direction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clnear</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># near clipping plane in millimeters</span>
@@ -1601,9 +1598,9 @@
     <span class="c1"># =============================================</span>
     <span class="c1"># Save and load methods</span>
     <span class="c1"># =============================================</span>
-<div class="viewcode-block" id="Camera.save_to_dict">
-<a class="viewcode-back" href="../../api_doc/camera.html#pyblenderSDIC.Camera.save_to_dict">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">save_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<div class="viewcode-block" id="Camera.to_dict">
+<a class="viewcode-back" href="../../api_doc/camera.html#pyblenderSDIC.Camera.to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Export the Camera&#39;s data to a dictionary.</span>
 
@@ -1635,8 +1632,9 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        description : str, optional</span>
-<span class="sd">            A description of the camera, by default &quot;&quot;.</span>
+<span class="sd">        description : Optional[str]</span>
+<span class="sd">            A description of the camera, by default None. </span>
+<span class="sd">            This message will be included in the dictionary under the key &quot;description&quot; if provided. </span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -1647,14 +1645,10 @@
 <span class="sd">        ------</span>
 <span class="sd">        ValueError</span>
 <span class="sd">            If the description is not a string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Check the description</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Description must be a string.&quot;</span><span class="p">)</span>
-        
+<span class="sd">        &quot;&quot;&quot;</span>        
         <span class="c1"># Create the dictionary</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Camera [pysdic]&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Camera [pyblenderSDIC]&quot;</span><span class="p">,</span>
             <span class="s2">&quot;frame&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">save_to_dict</span><span class="p">(),</span>
             <span class="s2">&quot;fx&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">fx</span><span class="p">,</span>
             <span class="s2">&quot;fy&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">fy</span><span class="p">,</span>
@@ -1669,16 +1663,18 @@
         <span class="p">}</span>
 
         <span class="c1"># Add the description</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Description must be a string.&quot;</span><span class="p">)</span>
             <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">description</span>
         
         <span class="k">return</span> <span class="n">data</span></div>
 
 
-<div class="viewcode-block" id="Camera.load_from_dict">
-<a class="viewcode-back" href="../../api_doc/camera.html#pyblenderSDIC.Camera.load_from_dict">[docs]</a>
+<div class="viewcode-block" id="Camera.from_dict">
+<a class="viewcode-back" href="../../api_doc/camera.html#pyblenderSDIC.Camera.from_dict">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">load_from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Camera</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Camera</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a Camera instance from a dictionary.</span>
 
@@ -1727,47 +1723,48 @@
 
     
 
-<div class="viewcode-block" id="Camera.save_to_json">
-<a class="viewcode-back" href="../../api_doc/camera.html#pyblenderSDIC.Camera.save_to_json">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">save_to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Camera.to_json">
+<a class="viewcode-back" href="../../api_doc/camera.html#pyblenderSDIC.Camera.to_json">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Export the Camera&#39;s data to a JSON file.</span>
 
-<span class="sd">        The structure of the JSON file follows the :meth:`pysdic.camera.Camera.save_to_dict` method.</span>
+<span class="sd">        The structure of the JSON file follows the :meth:`pysdic.camera.Camera.to_dict` method.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        filepath : str</span>
+<span class="sd">        filename : str</span>
 <span class="sd">            The path to the JSON file.</span>
 <span class="sd">        </span>
-<span class="sd">        description : str, optional</span>
-<span class="sd">            A description of the camera, by default &quot;&quot;.</span>
+<span class="sd">        description : Optional[str]</span>
+<span class="sd">            A description of the camera, by default None. </span>
+<span class="sd">            This message will be included in the JSON file under the key &quot;description&quot; if provided.</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
 <span class="sd">        FileNotFoundError</span>
-<span class="sd">            If the filepath is not a valid path.</span>
+<span class="sd">            If the filename is not a valid path.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Create the dictionary</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_to_dict</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
 
         <span class="c1"># Save the dictionary to a JSON file</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Camera.load_from_json">
-<a class="viewcode-back" href="../../api_doc/camera.html#pyblenderSDIC.Camera.load_from_json">[docs]</a>
+<div class="viewcode-block" id="Camera.from_json">
+<a class="viewcode-back" href="../../api_doc/camera.html#pyblenderSDIC.Camera.from_json">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">load_from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Camera</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Camera</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a Camera instance from a JSON file.</span>
 
-<span class="sd">        The structure of the JSON file follows the :meth:`pysdic.camera.Camera.save_to_dict` method.</span>
+<span class="sd">        The structure of the JSON file follows the :meth:`pysdic.camera.Camera.to_dict` method.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        filepath : str</span>
+<span class="sd">        filename : str</span>
 <span class="sd">            The path to the JSON file.</span>
 <span class="sd">        </span>
 <span class="sd">        Returns</span>
@@ -1778,14 +1775,14 @@
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
 <span class="sd">        FileNotFoundError</span>
-<span class="sd">            If the filepath is not a valid path.</span>
+<span class="sd">            If the filename is not a valid path.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Load the dictionary from the JSON file</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         
         <span class="c1"># Create the Frame instance</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">load_from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

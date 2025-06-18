@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyblenderSDIC.spotlight &#8212; pyblenderSDIC 2.0.1 documentation</title>
+    <title>pyblenderSDIC.spotlight &#8212; pyblenderSDIC 2.0.2 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=f5cff4aa"></script>
+    <script src="../../_static/documentation_options.js?v=c2377ec0"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyblenderSDIC/spotlight';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 2.0.1 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 2.0.2 documentation</p>
   
 </a></div>
     
@@ -620,9 +620,9 @@
     <span class="c1"># ==============================================</span>
     <span class="c1"># Load and save methods</span>
     <span class="c1"># ==============================================</span>
-<div class="viewcode-block" id="SpotLight.save_to_dict">
-<a class="viewcode-back" href="../../api_doc/spotlight.html#pyblenderSDIC.SpotLight.save_to_dict">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">save_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<div class="viewcode-block" id="SpotLight.to_dict">
+<a class="viewcode-back" href="../../api_doc/spotlight.html#pyblenderSDIC.SpotLight.to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Export the SpotLight&#39;s data to a dictionary.</span>
 
@@ -647,8 +647,9 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        description : str, optional</span>
-<span class="sd">            A description of the spot light, by default &quot;&quot;.</span>
+<span class="sd">        description : Optional[str], optional</span>
+<span class="sd">            A description of the spot light, by default None.</span>
+<span class="sd">            If provided, it will be included in the dictionary under the key &quot;description&quot;.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -660,10 +661,6 @@
 <span class="sd">        ValueError</span>
 <span class="sd">            If the description is not a string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Check the description</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Description must be a string.&quot;</span><span class="p">)</span>
-        
         <span class="c1"># Create the dictionary</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;SpotLight [pyblenderSDIC]&quot;</span><span class="p">,</span>
@@ -674,7 +671,9 @@
         <span class="p">}</span>
 
         <span class="c1"># Add the description</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Description must be a string.&quot;</span><span class="p">)</span>
             <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">description</span>
         
         <span class="k">return</span> <span class="n">data</span></div>
@@ -682,14 +681,14 @@
 
 
 
-<div class="viewcode-block" id="SpotLight.load_from_dict">
-<a class="viewcode-back" href="../../api_doc/spotlight.html#pyblenderSDIC.SpotLight.load_from_dict">[docs]</a>
+<div class="viewcode-block" id="SpotLight.from_dict">
+<a class="viewcode-back" href="../../api_doc/spotlight.html#pyblenderSDIC.SpotLight.from_dict">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">load_from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpotLight</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpotLight</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a SpotLight instance from a dictionary.</span>
 
-<span class="sd">        The structure of the dictionary should be as provided by the :meth:`pyblenderSDIC.SpotLight.save_to_dict` method.</span>
+<span class="sd">        The structure of the dictionary should be as provided by the :meth:`pyblenderSDIC.SpotLight.to_dict` method.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -721,21 +720,22 @@
 
 
 
-<div class="viewcode-block" id="SpotLight.save_to_json">
-<a class="viewcode-back" href="../../api_doc/spotlight.html#pyblenderSDIC.SpotLight.save_to_json">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">save_to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="SpotLight.to_json">
+<a class="viewcode-back" href="../../api_doc/spotlight.html#pyblenderSDIC.SpotLight.to_json">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Export the SpotLight&#39;s data to a JSON file.</span>
 
-<span class="sd">        The structure of the JSON file follows the :meth:`pyblenderSDIC.SpotLight.save_to_dict` method.</span>
+<span class="sd">        The structure of the JSON file follows the :meth:`pyblenderSDIC.SpotLight.to_dict` method.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        filepath : str</span>
 <span class="sd">            The path to the JSON file.</span>
 <span class="sd">        </span>
-<span class="sd">        description : str, optional</span>
-<span class="sd">            A description of the spot light, by default &quot;&quot;.</span>
+<span class="sd">        description : Optional[str], optional</span>
+<span class="sd">            A description of the spot light, by default None.</span>
+<span class="sd">            If provided, it will be included in the JSON file under the key &quot;description&quot;.</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
@@ -743,7 +743,7 @@
 <span class="sd">            If the filepath is not a valid path.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Create the dictionary</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_to_dict</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
 
         <span class="c1"># Save the dictionary to a JSON file</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
@@ -752,14 +752,14 @@
 
 
     
-<div class="viewcode-block" id="SpotLight.load_from_json">
-<a class="viewcode-back" href="../../api_doc/spotlight.html#pyblenderSDIC.SpotLight.load_from_json">[docs]</a>
+<div class="viewcode-block" id="SpotLight.from_json">
+<a class="viewcode-back" href="../../api_doc/spotlight.html#pyblenderSDIC.SpotLight.from_json">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">load_from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpotLight</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpotLight</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a SpotLight instance from a JSON file.</span>
 
-<span class="sd">        The structure of the JSON file follows the :meth:`pyblenderSDIC.SpotLight.save_to_dict` method.</span>
+<span class="sd">        The structure of the JSON file follows the :meth:`pyblenderSDIC.SpotLight.to_dict` method.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -781,44 +781,11 @@
             <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         
         <span class="c1"># Create the Frame instance</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">load_from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
-
-    
-
-    
-    <span class="c1"># ==============================================</span>
-    <span class="c1"># Blender methods</span>
-    <span class="c1"># ==============================================</span>
-<div class="viewcode-block" id="SpotLight.get_RT_blender">
-<a class="viewcode-back" href="../../api_doc/spotlight.html#pyblenderSDIC.SpotLight.get_RT_blender">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_RT_blender</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Rotation</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the rotation and translation of the light in the Blender format.</span>
-
-<span class="sd">        The axis of the light frame for Blender are different from the SpotLight frame:</span>
-<span class="sd">        - x-axis: The same as the SpotLight frame : right direction of the light (left to right).</span>
-<span class="sd">        - y-axis: The opposite of the SpotLight frame : up direction of the light (down to up).</span>
-<span class="sd">        - z-axis: The opposite of the SpotLight frame : (from the scene to the light).</span>
-
-<span class="sd">        Furthermore, the convention for Blender is :math:`X_{world} = R X_{cam} + T`, convention=0 for py3dframe.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        Rotation</span>
-<span class="sd">            The rotation of the light.</span>
-<span class="sd">        </span>
-<span class="sd">        numpy.ndarray</span>
-<span class="sd">            The translation of the light with shape (3, 1).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">rotation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">get_global_rotation</span><span class="p">(</span><span class="n">convention</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">x_axis</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="n">y_axis</span> <span class="o">=</span> <span class="o">-</span> <span class="n">rotation</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="n">z_axis</span> <span class="o">=</span> <span class="o">-</span> <span class="n">rotation</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()[:,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="n">rotation</span> <span class="o">=</span> <span class="n">Rotation</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">y_axis</span><span class="p">,</span> <span class="n">z_axis</span><span class="p">)))</span>
-        <span class="n">translation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">get_global_translation</span><span class="p">(</span><span class="n">convention</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">rotation</span><span class="p">,</span> <span class="n">translation</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 </div>
 
+
+    
 </pre></div>
 
                 </article>
