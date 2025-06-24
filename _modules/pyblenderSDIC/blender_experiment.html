@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyblenderSDIC.blender_experiment &#8212; pyblenderSDIC 2.0.2 documentation</title>
+    <title>pyblenderSDIC.blender_experiment &#8212; pyblenderSDIC 2.0.3 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=c2377ec0"></script>
+    <script src="../../_static/documentation_options.js?v=664ffad9"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyblenderSDIC/blender_experiment';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 2.0.2 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 2.0.3 documentation</p>
   
 </a></div>
     
@@ -2053,9 +2053,7 @@
 <a class="viewcode-back" href="../../api_doc/blender_experiment.html#pyblenderSDIC.BlenderExperiment.set_default_background">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_default_background</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; </span>
-<span class="sd">        </span>
 <span class="sd">        Set the default background for the experiment scene. </span>
-<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">world</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">world</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">worlds</span><span class="p">[</span><span class="s2">&quot;World&quot;</span><span class="p">]</span>
@@ -2171,7 +2169,7 @@
         <span class="n">camera_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_camera_frames</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_camera</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">camera_frames</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_frame</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Camera </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_camera</span><span class="si">}</span><span class="s2"> is not active for frame </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_frame</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-    
+
         <span class="c1"># Set the render settings</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">file_format</span> <span class="o">=</span> <span class="n">output_format</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">tiff_codec</span> <span class="o">=</span> <span class="s2">&quot;NONE&quot;</span>

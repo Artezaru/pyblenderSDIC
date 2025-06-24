@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyblenderSDIC.materials.MaterialBSDF &#8212; pyblenderSDIC 2.0.2 documentation</title>
+    <title>pyblenderSDIC.materials.MaterialBSDF &#8212; pyblenderSDIC 2.0.3 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=c2377ec0"></script>
+    <script src="../_static/documentation_options.js?v=664ffad9"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/material_bsdf';</script>
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 2.0.2 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 2.0.3 documentation</p>
   
 </a></div>
     
@@ -517,20 +517,10 @@ If the pattern and a base color are both set, the pattern will be multiplied by 
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.get_details">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_details</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/materials/material_bsdf.html#MaterialBSDF.get_details"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.get_details" title="Link to this definition">#</a></dt>
-<dd><p>Get detailed descriptions of each parameter in the MaterialBSDF class.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>str: A detailed description of all parameters and their roles in Blender materials.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.load_from_dict">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF" title="pyblenderSDIC.materials.material_bsdf.MaterialBSDF"><span class="pre">MaterialBSDF</span></a></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/materials/material_bsdf.html#MaterialBSDF.load_from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.load_from_dict" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF" title="pyblenderSDIC.materials.material_bsdf.MaterialBSDF"><span class="pre">MaterialBSDF</span></a></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/materials/material_bsdf.html#MaterialBSDF.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.from_dict" title="Link to this definition">#</a></dt>
 <dd><p>Create a MaterialBSDF instance from a dictionary.</p>
-<p>The structure of the dictionary should be as provided by the <code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.meshes.MaterialBSDF.save_to_dict()</span></code> method.
+<p>The structure of the dictionary should be as provided by the <code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.meshes.MaterialBSDF.to_dict()</span></code> method.
 The other fields of the dictionary are ignored.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyblenderSDIC.materials</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBSDF</span>
 
@@ -543,14 +533,14 @@ The other fields of the dictionary are ignored.</p>
 <span class="p">}</span>
 
 <span class="c1"># Create a MaterialBSDF instance from the dictionary</span>
-<span class="n">material</span> <span class="o">=</span> <span class="n">MaterialBSDF</span><span class="o">.</span><span class="n">load_from_dict</span><span class="p">(</span><span class="n">mat_dict</span><span class="p">)</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">MaterialBSDF</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">mat_dict</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.meshes.MaterialBSDF.save_to_dict()</span></code> for saving the mesh to a dictionary.</p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.meshes.MaterialBSDF.load_from_json()</span></code> for loading from a JSON file.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.meshes.MaterialBSDF.to_dict()</span></code> for saving the mesh to a dictionary.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.meshes.MaterialBSDF.from_json()</span></code> for loading from a JSON file.</p></li>
 </ul>
 </div>
 <dl class="field-list simple">
@@ -573,21 +563,21 @@ The other fields of the dictionary are ignored.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.load_from_json">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF" title="pyblenderSDIC.materials.material_bsdf.MaterialBSDF"><span class="pre">MaterialBSDF</span></a></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/materials/material_bsdf.html#MaterialBSDF.load_from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.load_from_json" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.from_json">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF" title="pyblenderSDIC.materials.material_bsdf.MaterialBSDF"><span class="pre">MaterialBSDF</span></a></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/materials/material_bsdf.html#MaterialBSDF.from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.from_json" title="Link to this definition">#</a></dt>
 <dd><p>Create a MaterialBSDF instance from a JSON file.</p>
-<p>The structure of the JSON file follows the <a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF.save_to_dict" title="pyblenderSDIC.materials.MaterialBSDF.save_to_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.materials.MaterialBSDF.save_to_dict()</span></code></a> method.</p>
+<p>The structure of the JSON file follows the <a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF.to_dict" title="pyblenderSDIC.materials.MaterialBSDF.to_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.materials.MaterialBSDF.to_dict()</span></code></a> method.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyblenderSDIC.materials</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBSDF</span>
 
 <span class="c1"># Load the mesh from a JSON file</span>
-<span class="n">material</span> <span class="o">=</span> <span class="n">MaterialBSDF</span><span class="o">.</span><span class="n">load_from_json</span><span class="p">(</span><span class="s2">&quot;path/to/mesh.json&quot;</span><span class="p">)</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">MaterialBSDF</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="s2">&quot;path/to/mesh.json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF.save_to_json" title="pyblenderSDIC.materials.MaterialBSDF.save_to_json"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.materials.MaterialBSDF.save_to_json()</span></code></a> for saving the material to a JSON file.</p></li>
-<li><p><a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF.load_from_dict" title="pyblenderSDIC.materials.MaterialBSDF.load_from_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.materials.MaterialBSDF.load_from_dict()</span></code></a> for loading from a dictionary.</p></li>
+<li><p><a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF.to_json" title="pyblenderSDIC.materials.MaterialBSDF.to_json"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.materials.MaterialBSDF.to_json()</span></code></a> for saving the material to a JSON file.</p></li>
+<li><p><a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF.from_dict" title="pyblenderSDIC.materials.MaterialBSDF.from_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.materials.MaterialBSDF.from_dict()</span></code></a> for loading from a dictionary.</p></li>
 </ul>
 </div>
 <dl class="field-list simple">
@@ -606,6 +596,16 @@ The other fields of the dictionary are ignored.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.get_details">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_details</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/materials/material_bsdf.html#MaterialBSDF.get_details"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.get_details" title="Link to this definition">#</a></dt>
+<dd><p>Get detailed descriptions of each parameter in the MaterialBSDF class.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: A detailed description of all parameters and their roles in Blender materials.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.metallic">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metallic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Number</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.metallic" title="Link to this definition">#</a></dt>
@@ -620,56 +620,6 @@ The other fields of the dictionary are ignored.</p>
 <dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.roughness">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">roughness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Number</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.roughness" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.save_to_dict">
-<span class="sig-name descname"><span class="pre">save_to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/materials/material_bsdf.html#MaterialBSDF.save_to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.save_to_dict" title="Link to this definition">#</a></dt>
-<dd><p>Export the MaterialBSDF’s data to a dictionary.</p>
-<p>The structure of the dictionary is as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MaterialBSDF [pyblenderSDIC]&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Description of the material&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;base_color&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-    <span class="s2">&quot;metallic&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="s2">&quot;roughness&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="s2">&quot;IOR&quot;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
-    <span class="s2">&quot;...&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>description</strong> (<em>str</em><em>, </em><em>optional</em>) – A description of the material, by default “”.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A dictionary containing the MaterialBSDF’s data.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If the description is not a string.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.save_to_json">
-<span class="sig-name descname"><span class="pre">save_to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/materials/material_bsdf.html#MaterialBSDF.save_to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.save_to_json" title="Link to this definition">#</a></dt>
-<dd><p>Export the MaterialBSDF’s data to a JSON file.</p>
-<p>The structure of the JSON file follows the <a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF.save_to_dict" title="pyblenderSDIC.materials.MaterialBSDF.save_to_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.materials.MaterialBSDF.save_to_dict()</span></code></a> method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>filepath</strong> (<em>str</em>) – The path to the JSON file.</p></li>
-<li><p><strong>description</strong> (<em>str</em><em>, </em><em>optional</em>) – A description of the material, by default “”.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the filepath is not a valid path.</p>
-</dd>
-</dl>
-</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.sheen_roughness">
@@ -735,6 +685,56 @@ The other fields of the dictionary are ignored.</p>
 <dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.thin_film_thickness">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">thin_film_thickness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Number</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.thin_film_thickness" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/materials/material_bsdf.html#MaterialBSDF.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Export the MaterialBSDF’s data to a dictionary.</p>
+<p>The structure of the dictionary is as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MaterialBSDF [pyblenderSDIC]&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Description of the material&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;base_color&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+    <span class="s2">&quot;metallic&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;roughness&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;IOR&quot;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
+    <span class="s2">&quot;...&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>description</strong> (<em>str</em><em>, </em><em>optional</em>) – A description of the material, by default “”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the MaterialBSDF’s data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the description is not a string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/materials/material_bsdf.html#MaterialBSDF.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.materials.MaterialBSDF.to_json" title="Link to this definition">#</a></dt>
+<dd><p>Export the MaterialBSDF’s data to a JSON file.</p>
+<p>The structure of the JSON file follows the <a class="reference internal" href="#pyblenderSDIC.materials.MaterialBSDF.to_dict" title="pyblenderSDIC.materials.MaterialBSDF.to_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyblenderSDIC.materials.MaterialBSDF.to_dict()</span></code></a> method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – The path to the JSON file.</p></li>
+<li><p><strong>description</strong> (<em>str</em><em>, </em><em>optional</em>) – A description of the material, by default “”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the filepath is not a valid path.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pyblenderSDIC.materials.MaterialBSDF.transmission_weight">
@@ -810,14 +810,12 @@ The other fields of the dictionary are ignored.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.coat_weight"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.coat_weight</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.emission_color"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.emission_color</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.emission_strength"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.emission_strength</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.from_dict"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.from_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.from_json"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.from_json()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.get_details"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.get_details()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.load_from_dict"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.load_from_dict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.load_from_json"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.load_from_json()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.metallic"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.metallic</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.normal"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.normal</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.roughness"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.roughness</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.save_to_dict"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.save_to_dict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.save_to_json"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.save_to_json()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.sheen_roughness"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.sheen_roughness</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.sheen_tint"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.sheen_tint</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.sheen_weight"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.sheen_weight</span></code></a></li>
@@ -831,6 +829,8 @@ The other fields of the dictionary are ignored.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.tangent"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.tangent</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.thin_film_IOR"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.thin_film_IOR</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.thin_film_thickness"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.thin_film_thickness</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.to_dict"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.to_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.to_json"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.to_json()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.transmission_weight"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.transmission_weight</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.materials.MaterialBSDF.weight"><code class="docutils literal notranslate"><span class="pre">MaterialBSDF.weight</span></code></a></li>
 </ul>
