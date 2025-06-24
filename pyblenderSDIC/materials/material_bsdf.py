@@ -553,7 +553,7 @@ class MaterialBSDF:
 
 
     # Save and load methods
-    def save_to_dict(self, description: str = "") -> Dict:
+    def to_dict(self, description: str = "") -> Dict:
         r"""
         Export the MaterialBSDF's data to a dictionary.
 
@@ -662,11 +662,11 @@ class MaterialBSDF:
         return return_dict
     
 
-    def save_to_json(self, filepath: str, description: str = "") -> None:
+    def to_json(self, filepath: str, description: str = "") -> None:
         r"""
         Export the MaterialBSDF's data to a JSON file.
 
-        The structure of the JSON file follows the :meth:`pyblenderSDIC.materials.MaterialBSDF.save_to_dict` method.
+        The structure of the JSON file follows the :meth:`pyblenderSDIC.materials.MaterialBSDF.to_dict` method.
 
         Parameters
         ----------
@@ -682,7 +682,7 @@ class MaterialBSDF:
             If the filepath is not a valid path.
         """
         # Create the dictionary
-        data = self.save_to_dict(description=description)
+        data = self.to_dict(description=description)
 
         # Save the dictionary to a JSON file
         with open(filepath, "w") as file:
@@ -691,11 +691,11 @@ class MaterialBSDF:
 
     
     @classmethod
-    def load_from_dict(cls, data: Dict) -> MaterialBSDF:
+    def from_dict(cls, data: Dict) -> MaterialBSDF:
         r"""
         Create a MaterialBSDF instance from a dictionary.
 
-        The structure of the dictionary should be as provided by the :meth:`pyblenderSDIC.meshes.MaterialBSDF.save_to_dict` method.
+        The structure of the dictionary should be as provided by the :meth:`pyblenderSDIC.meshes.MaterialBSDF.to_dict` method.
         The other fields of the dictionary are ignored.
 
         .. code-block:: python
@@ -711,12 +711,12 @@ class MaterialBSDF:
             }
 
             # Create a MaterialBSDF instance from the dictionary
-            material = MaterialBSDF.load_from_dict(mat_dict)
+            material = MaterialBSDF.from_dict(mat_dict)
 
         .. seealso::
 
-            - :meth:`pyblenderSDIC.meshes.MaterialBSDF.save_to_dict` for saving the mesh to a dictionary.
-            - :meth:`pyblenderSDIC.meshes.MaterialBSDF.load_from_json` for loading from a JSON file.
+            - :meth:`pyblenderSDIC.meshes.MaterialBSDF.to_dict` for saving the mesh to a dictionary.
+            - :meth:`pyblenderSDIC.meshes.MaterialBSDF.from_json` for loading from a JSON file.
 
         Parameters
         ----------
@@ -808,23 +808,23 @@ class MaterialBSDF:
     
 
     @classmethod
-    def load_from_json(cls, filepath: str) -> MaterialBSDF:
+    def from_json(cls, filepath: str) -> MaterialBSDF:
         r"""
         Create a MaterialBSDF instance from a JSON file.
 
-        The structure of the JSON file follows the :meth:`pyblenderSDIC.materials.MaterialBSDF.save_to_dict` method.
+        The structure of the JSON file follows the :meth:`pyblenderSDIC.materials.MaterialBSDF.to_dict` method.
 
         .. code-block:: python
 
             from pyblenderSDIC.materials import MaterialBSDF
 
             # Load the mesh from a JSON file
-            material = MaterialBSDF.load_from_json("path/to/mesh.json")
+            material = MaterialBSDF.from_json("path/to/mesh.json")
 
         .. seealso::
 
-            - :meth:`pyblenderSDIC.materials.MaterialBSDF.save_to_json` for saving the material to a JSON file.
-            - :meth:`pyblenderSDIC.materials.MaterialBSDF.load_from_dict` for loading from a dictionary.
+            - :meth:`pyblenderSDIC.materials.MaterialBSDF.to_json` for saving the material to a JSON file.
+            - :meth:`pyblenderSDIC.materials.MaterialBSDF.from_dict` for loading from a dictionary.
 
         Parameters
         ----------
@@ -846,7 +846,7 @@ class MaterialBSDF:
             data = json.load(file)
         
         # Create the Frame instance
-        return cls.load_from_dict(data)
+        return cls.from_dict(data)
 
 
 

@@ -151,8 +151,11 @@ experiment.add_spotlight("Light", light)
 # ==========================
 
 # Selecting the frame and the camera for rendering
+print("TAG 1")
 experiment.set_active_camera("Camera")
+print("TAG 2")
 experiment.set_active_frame(1)
+print("TAG 3")
 
 if not STOP_BEFORE_RENDER:
     # Rendering the scene

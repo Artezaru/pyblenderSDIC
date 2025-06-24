@@ -1645,9 +1645,7 @@ class BlenderExperiment:
     # =======================================================
     def set_default_background(self) -> None:
         r""" 
-        
         Set the default background for the experiment scene. 
-        
         """
         bpy.ops.world.new()
         bpy.context.scene.world = bpy.data.worlds["World"]
@@ -1754,7 +1752,7 @@ class BlenderExperiment:
         camera_frames = self.get_camera_frames(self._active_camera)
         if camera_frames[self._active_frame - 1] is False:
             raise ValueError(f"Camera {self._active_camera} is not active for frame {self._active_frame}.")
-    
+
         # Set the render settings
         bpy.context.scene.render.image_settings.file_format = output_format
         bpy.context.scene.render.image_settings.tiff_codec = "NONE"
