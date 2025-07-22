@@ -135,6 +135,7 @@ def create_axisymmetric_mesh(
     | 7               | (Nheight-1, Ntheta-1)   | (Nheight-1, 0)          | (0, Ntheta-1)            | (0, 0)                   |
     +-----------------+-------------------------+-------------------------+--------------------------+--------------------------+
 
+    Notice that for a closed mesh, the ``N - 1`` becames ``N`` in the table above, since the a 'virtal' last vertex is the same as the first one.
     The table above gives for the 4 corners of a image the corresponding vertex in the mesh.
 
     .. seealso:: 
@@ -259,7 +260,7 @@ def create_axisymmetric_mesh(
         uv_mapping = [upper_right, lower_right, upper_left, lower_left]
 
     # Generate the vertices
-    uvmap = numpy.zeros((Nheight*Ntheta, 2))
+    # uvmap = numpy.zeros((Nheight*Ntheta, 2))
     vertices = numpy.zeros((Nheight*Ntheta, 3))
 
     for it in range(Ntheta):
@@ -277,7 +278,7 @@ def create_axisymmetric_mesh(
             vertices[index(ih, it), :] = transform.transform(point=local_point).flatten()
 
             # Compute the uvmap
-            uvmap[index(ih, it), :] = uv_mapping[0] + ih/(Nheight-1)*(uv_mapping[2] - uv_mapping[0]) + it/(Ntheta-1)*(uv_mapping[1] - uv_mapping[0])
+            # uvmap[index(ih, it), :] = uv_mapping[0] + ih/(Nheight-1)*(uv_mapping[2] - uv_mapping[0]) + it/(Ntheta-1)*(uv_mapping[1] - uv_mapping[0])
 
 
     # Generate the mesh
@@ -321,11 +322,46 @@ def create_axisymmetric_mesh(
 
     triangles = numpy.array(triangles)
 
+    # Generate the UV map
+    uvmap = numpy.zeros((triangles.shape[0], 6), dtype=numpy.float64) # [u1, v1, u2, v2, u3, v3]
+
+    for itri, triangle in enumerate(triangles):
+        # Get the vertices of the triangle
+        v1 = vertices[triangle[0], :]
+        v2 = vertices[triangle[1], :]
+        v3 = vertices[triangle[2], :]
+
+        # Get the index of the height and theta of the vertices
+        it1, ih1 = triangle[0] // Nheight, triangle[0] % Nheight
+        it2, ih2 = triangle[1] // Nheight, triangle[1] % Nheight
+        it3, ih3 = triangle[2] // Nheight, triangle[2] % Nheight
+
+        if not closed:
+            Nheight_up = Nheight - 1
+            Ntheta_up = Ntheta - 1
+
+        else:
+            Nheight_up = Nheight
+            Ntheta_up = Ntheta
+
+        # Compute the UV coordinates for each vertex (depending on the uv_layout and if we are in the last column)
+        if (0 in [it1, it2, it3] and (Ntheta - 1) in [it1, it2, it3]): 
+            if it1 == 0:
+                it1 = Ntheta # Switch to the last column
+            if it2 == 0:
+                it2 = Ntheta
+            if it3 == 0:
+                it3 = Ntheta
+
+        uvmap[itri, 0:2] = uv_mapping[0] + ih1/Nheight_up*(uv_mapping[2] - uv_mapping[0]) + it1/Ntheta_up*(uv_mapping[1] - uv_mapping[0])
+        uvmap[itri, 2:4] = uv_mapping[0] + ih2/Nheight_up*(uv_mapping[2] - uv_mapping[0]) + it2/Ntheta_up*(uv_mapping[1] - uv_mapping[0])
+        uvmap[itri, 4:6] = uv_mapping[0] + ih3/Nheight_up*(uv_mapping[2] - uv_mapping[0]) + it3/Ntheta_up*(uv_mapping[1] - uv_mapping[0])
+
     # Prepare the triangles for the mesh
     mesh = TriangleMesh3D(
         vertices=vertices,
         triangles=triangles,
+        uvmap=uvmap,
     )
-    # Set the UV map
-    mesh.set_vertices_uvmap(uvmap)
+
     return mesh
