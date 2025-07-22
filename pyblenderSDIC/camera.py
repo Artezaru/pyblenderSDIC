@@ -1064,13 +1064,15 @@ class Camera(object):
 
         .. math::
 
-            sx = \frac{c_x - (r_x - 1) / 2}{vf}
+            sx = - \frac{c_x - (r_x - 1) / 2}{vf}
 
         where :math:`c_x` is the principal point in pixels in x direction, :math:`r_x` is the resolution in number of pixels in x direction and :math:`vf` is the view factor of the camera.
 
         .. warning::
 
             This shift x is only for Blender. No reel physical meaning.
+
+            "-" added to fix the shift direction in Blender.
 
         Returns
         -------
@@ -1083,7 +1085,7 @@ class Camera(object):
             return None
         if self._rx is None or self._ry is None:
             return None
-        return (self._cx - (self._rx - 1) / 2) / self.view_factor
+        return - (self._cx - (self._rx - 1) / 2) / self.view_factor
     
 
     @property
