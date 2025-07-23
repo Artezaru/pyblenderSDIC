@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyblenderSDIC.blender_experiment &#8212; pyblenderSDIC 2.0.5 documentation</title>
+    <title>pyblenderSDIC.blender_experiment &#8212; pyblenderSDIC 2.0.6 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=09beee0d"></script>
+    <script src="../../_static/documentation_options.js?v=3e466467"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyblenderSDIC/blender_experiment';</script>
@@ -107,7 +107,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 2.0.5 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 2.0.6 documentation</p>
   
 </a></div>
     
@@ -367,12 +367,18 @@
 <span class="sd">    ----------</span>
 <span class="sd">    Nb_frames : int, optional</span>
 <span class="sd">        The number of frames for the experiment (default is 1).</span>
+
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        If True, prints additional information during the experiment setup (default is False).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Nb_frames</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Nb_frames</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Nb_frames</span><span class="p">,</span> <span class="n">Integral</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Nb_frames must be an integer&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Nb_frames</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Nb_frames must be greater than or equal to 1&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;verbose must be a boolean&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_end_frame</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Nb_frames</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_camera_objects</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># {&quot;name&quot; : List[Camera, List[bool]]}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_spotlight_objects</span> <span class="o">=</span> <span class="p">{}</span>
@@ -380,6 +386,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_active_camera</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_active_frame</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reset_blender</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_default_rendering_settings</span><span class="p">()</span>
 
         
     <span class="c1"># =======================================================</span>
@@ -432,9 +439,36 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_scene</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">scenes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;experiment_scene&quot;</span><span class="p">)</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>  <span class="c1"># Reset 3D cursor</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">frame_start</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Start frame</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">frame_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end_frame</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># End frame </span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">frame_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end_frame</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># End frame</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Blender environment reset and new experiment scene initialized.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BlenderExperiment._set_default_rendering_settings">
+<a class="viewcode-back" href="../../api_doc/blender_experiment.html#pyblenderSDIC.BlenderExperiment._set_default_rendering_settings">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_default_rendering_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the default rendering settings for the experiment scene.</span>
+
+<span class="sd">        - Sets the render engine to Cycles.</span>
+<span class="sd">        - Sets the device to GPU.</span>
+<span class="sd">        - Disables denoising.</span>
+<span class="sd">        - Sets the view transform to Filmic.</span>
+<span class="sd">        - Sets the image compression to 0 (no compression).</span>
+<span class="sd">        - Sets the TIFF codec to NONE.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="s1">&#39;CYCLES&#39;</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;GPU&#39;</span></div>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;GPU&#39;</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">use_denoising</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">view_settings</span><span class="o">.</span><span class="n">view_transform</span> <span class="o">=</span> <span class="s1">&#39;Filmic&#39;</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">compression</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">tiff_codec</span> <span class="o">=</span> <span class="s2">&quot;NONE&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Blender experiment initialized with default rendering settings.&quot;</span><span class="p">)</span></div>
+
+
+
 
 
 
@@ -525,7 +559,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_camera_frames</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">frames</span><span class="p">)</span>
 
         <span class="c1"># Update the camera properties in the Blender scene</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_camera</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_camera</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Camera &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; added to the experiment.&quot;</span><span class="p">)</span></div>
 
 
 
@@ -575,8 +612,10 @@
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_scene</span>
 
         <span class="c1"># Set the frames for which the camera will be active</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_camera_objects</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">frames</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_camera_objects</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">frames</span>
 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Camera &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; frames set.&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BlenderExperiment.get_camera_frames">
@@ -707,7 +746,10 @@
 
         <span class="c1"># Set active camera to None if it was removed</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_camera</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_camera</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_active_camera</span> <span class="o">=</span> <span class="kc">None</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_active_camera</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Camera &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; removed from the experiment.&quot;</span><span class="p">)</span></div>
 
 
 
@@ -786,7 +828,10 @@
 
         <span class="c1"># Update the active camera if it is the current one</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_camera</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_camera</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">set_active_camera</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_active_camera</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Camera &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; updated in the experiment.&quot;</span><span class="p">)</span></div>
 
 
 
@@ -838,7 +883,10 @@
         <span class="n">render</span><span class="o">.</span><span class="n">pixel_aspect_y</span> <span class="o">=</span> <span class="n">camera</span><span class="o">.</span><span class="n">pixel_aspect_y</span>
 
         <span class="c1"># Set the active camera</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_active_camera</span> <span class="o">=</span> <span class="n">name</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_active_camera</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Camera &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; set as active in the experiment.&quot;</span><span class="p">)</span></div>
 
 
 
@@ -1049,7 +1097,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_scene</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">blender_mesh</span><span class="p">)</span>
 
         <span class="c1"># Set the frames for which the mesh will be active</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_mesh_frames</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">frames</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_mesh_frames</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">frames</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Mesh &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; added to the experiment.&quot;</span><span class="p">)</span></div>
 
 
 
@@ -1175,7 +1226,10 @@
         <span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">tex_image_node</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;Color&#39;</span><span class="p">],</span> <span class="n">mix_node</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;Color2&#39;</span><span class="p">])</span>
 
         <span class="c1"># Update the mesh</span>
-        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Pattern &#39;</span><span class="si">{</span><span class="n">pattern_path</span><span class="si">}</span><span class="s2">&#39; added to mesh &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; in the experiment.&quot;</span><span class="p">)</span></div>
 
 
 
@@ -1325,7 +1379,10 @@
             <span class="n">principled</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Thin Film IOR&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">thin_film_IOR</span>
 
         <span class="c1"># Update the mesh</span>
-        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Material added to mesh &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; in the experiment.&quot;</span><span class="p">)</span></div>
 
 
 
@@ -1386,7 +1443,97 @@
         <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
         <span class="c1"># Set the frames for which the mesh will be active</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mesh_objects</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">frames</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mesh_objects</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">frames</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Mesh &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; frames set in the experiment.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="BlenderExperiment.activate_smooth_shading">
+<a class="viewcode-back" href="../../api_doc/blender_experiment.html#pyblenderSDIC.BlenderExperiment.activate_smooth_shading">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">activate_smooth_shading</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Activate smooth shading for the mesh.</span>
+
+<span class="sd">        Smooth shading is a rendering technique that gives the appearance of a smooth surface by interpolating vertex normals across the surface of the mesh.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            The name of the mesh to activate smooth shading for.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        -------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If name is not a string.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If a mesh with the same name does not exist in the experiment or in Blender data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;name must be a string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mesh_objects</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mesh with name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No object with name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> in Blender data.&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Ensure the experiment scene is active</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_scene</span>
+
+        <span class="c1"># Get the mesh object</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">blender_mesh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="c1"># Set smooth shading</span>
+        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">polygons</span><span class="o">.</span><span class="n">foreach_set</span><span class="p">(</span><span class="s2">&quot;use_smooth&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">polygons</span><span class="p">))</span>
+
+        <span class="c1"># Update the mesh</span>
+        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Smooth shading activated for mesh &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BlenderExperiment.deactivate_smooth_shading">
+<a class="viewcode-back" href="../../api_doc/blender_experiment.html#pyblenderSDIC.BlenderExperiment.deactivate_smooth_shading">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deactivate_smooth_shading</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deactivate smooth shading for the mesh.</span>
+<span class="sd">        </span>
+<span class="sd">        Smooth shading is a rendering technique that gives the appearance of a smooth surface by interpolating vertex normals across the surface of the mesh.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            The name of the mesh to deactivate smooth shading for.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        -------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If name is not a string.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If a mesh with the same name does not exist in the experiment or in Blender data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;name must be a string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mesh_objects</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mesh with name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No object with name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> in Blender data.&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Ensure the experiment scene is active</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_scene</span>
+
+        <span class="c1"># Get the mesh object</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">blender_mesh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="c1"># Set flat shading</span>
+        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">polygons</span><span class="o">.</span><span class="n">foreach_set</span><span class="p">(</span><span class="s2">&quot;use_smooth&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">polygons</span><span class="p">))</span>
+
+        <span class="c1"># Update the mesh</span>
+        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Smooth shading deactivated for mesh &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span></div>
 
 
     
@@ -1559,10 +1706,12 @@
 
         <span class="c1"># Remove the mesh from the scene</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">blender_mesh</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mesh_objects</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mesh_objects</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Mesh &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; removed from the experiment.&quot;</span><span class="p">)</span></div>
 
 
-    
 <div class="viewcode-block" id="BlenderExperiment.update_mesh">
 <a class="viewcode-back" href="../../api_doc/blender_experiment.html#pyblenderSDIC.BlenderExperiment.update_mesh">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">update_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1639,7 +1788,10 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mesh </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> does not have a UVMAP defined but the uv_layer exists.&quot;</span><span class="p">)</span>
 
         <span class="c1"># Update the mesh</span>
-        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Mesh &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; updated in the experiment.&quot;</span><span class="p">)</span></div>
 
 
 
@@ -1726,7 +1878,10 @@
         <span class="n">tex_image_node</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>  <span class="c1"># Reload the image to apply the changes</span>
 
         <span class="c1"># Update the mesh</span>
-        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+        <span class="n">blender_mesh</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Pattern changed to &#39;</span><span class="si">{</span><span class="n">pattern_path</span><span class="si">}</span><span class="s2">&#39; for mesh &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; in the experiment.&quot;</span><span class="p">)</span></div>
 
    
     
@@ -1810,7 +1965,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_scene</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">blender_spotlight</span><span class="p">)</span>
 
         <span class="c1"># Set the spotlight properties</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_spotlight</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_spotlight</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Spotlight &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; added to the experiment.&quot;</span><span class="p">)</span></div>
 
 
     
@@ -1868,10 +2026,13 @@
             <span class="n">blender_spotlight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keyframe_insert</span><span class="p">(</span><span class="n">data_path</span><span class="o">=</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">frame</span><span class="p">)</span>
 
         <span class="c1"># Set the frames for which the mesh will be active</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_spotlight_objects</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">frames</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spotlight_objects</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">frames</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Spotlight &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; frames set in the experiment.&quot;</span><span class="p">)</span></div>
 
 
-    
+
 <div class="viewcode-block" id="BlenderExperiment.get_spotlight_frames">
 <a class="viewcode-back" href="../../api_doc/blender_experiment.html#pyblenderSDIC.BlenderExperiment.get_spotlight_frames">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_spotlight_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
@@ -1981,7 +2142,10 @@
         <span class="c1"># Remove the spotlight from the scene</span>
         <span class="n">spotlight</span><span class="p">,</span> <span class="n">blender_spotlight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_spotlight</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">blender_spotlight</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_spotlight_objects</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spotlight_objects</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Spotlight &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; removed from the experiment.&quot;</span><span class="p">)</span></div>
 
 
     
@@ -2041,7 +2205,10 @@
         <span class="n">blender_spotlight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">spot_blend</span> <span class="o">=</span> <span class="n">spotlight</span><span class="o">.</span><span class="n">spot_blend</span>
 
         <span class="c1"># Reset the frames for which the spotlight will be active (in order to have energy = 0 for the frames where the spotlight is not active)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_spotlight_frames</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_spotlight_frames</span><span class="p">(</span><span class="n">name</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_spotlight_frames</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_spotlight_frames</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Spotlight &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; updated in the experiment.&quot;</span><span class="p">)</span></div>
 
 
 
@@ -2059,7 +2226,10 @@
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">world</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">worlds</span><span class="p">[</span><span class="s2">&quot;World&quot;</span><span class="p">]</span>
         <span class="n">world_light</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">worlds</span><span class="p">[</span><span class="s2">&quot;World&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="s2">&quot;Background&quot;</span><span class="p">]</span>
         <span class="n">world_light</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">world_light</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">1.0</span></div>
+        <span class="n">world_light</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Default background set for the experiment scene.&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BlenderExperiment.update_scene">
@@ -2068,6 +2238,10 @@
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the Blender scene.</span>
 <span class="sd">        This method must be called after adding or modifying any objects in the scene.</span>
+
+<span class="sd">        - Free bake all</span>
+<span class="sd">        - Bake all</span>
+<span class="sd">        - Update the view layer and depsgraph</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Ensure the experiment scene is active</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_scene</span>
@@ -2076,7 +2250,10 @@
         <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">ptcache</span><span class="o">.</span><span class="n">free_bake_all</span><span class="p">()</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">ptcache</span><span class="o">.</span><span class="n">bake_all</span><span class="p">()</span>       
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">view_layer</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">view_layer</span><span class="o">.</span><span class="n">depsgraph</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">view_layer</span><span class="o">.</span><span class="n">depsgraph</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Blender scene updated.&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BlenderExperiment.set_active_frame">
@@ -2107,7 +2284,10 @@
 
         <span class="c1"># Set the current frame</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">frame_set</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">frame</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_active_frame</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_active_frame</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Active frame set to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_frame</span><span class="si">}</span><span class="s2"> in the experiment scene.&quot;</span><span class="p">)</span></div>
 
 
 
@@ -2172,14 +2352,9 @@
 
         <span class="c1"># Set the render settings</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">file_format</span> <span class="o">=</span> <span class="n">output_format</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">tiff_codec</span> <span class="o">=</span> <span class="s2">&quot;NONE&quot;</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">color_mode</span> <span class="o">=</span> <span class="n">color_mode</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">color_depth</span> <span class="o">=</span> <span class="n">color_depth</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">compression</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="s1">&#39;CYCLES&#39;</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;GPU&#39;</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">N_samples</span>
-        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">use_denoising</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">output_path</span>
 
         <span class="c1"># Perform the rendering</span>

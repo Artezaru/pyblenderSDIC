@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pyblenderSDIC.BlenderExperiment &#8212; pyblenderSDIC 2.0.5 documentation</title>
+    <title>pyblenderSDIC.BlenderExperiment &#8212; pyblenderSDIC 2.0.6 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=09beee0d"></script>
+    <script src="../_static/documentation_options.js?v=3e466467"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_doc/blender_experiment';</script>
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">pyblenderSDIC 2.0.5 documentation</p>
+    <p class="title logo__title">pyblenderSDIC 2.0.6 documentation</p>
   
 </a></div>
     
@@ -406,7 +406,7 @@
 <h1>pyblenderSDIC.BlenderExperiment<a class="headerlink" href="#pyblendersdic-blenderexperiment" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BlenderExperiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Nb_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BlenderExperiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Nb_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents a Blender experiment with a defined scene and objects.</p>
 <p>The BlenderExperiment class provides methods to add and configure cameras, spot lights, and objects (mesh + material) in a Blender scene.
@@ -422,7 +422,10 @@ This parameters can not be updated after the experiment is created.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Nb_frames</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of frames for the experiment (default is 1).</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Nb_frames</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of frames for the experiment (default is 1).</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, prints additional information during the experiment setup (default is False).</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py method">
@@ -436,6 +439,38 @@ This parameters can not be updated after the experiment is created.</p>
 <li><p>Resets the 3D cursor to the origin.</p></li>
 <li><p>Sets the start and end frames to 1.</p></li>
 </ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment._set_default_rendering_settings">
+<span class="sig-name descname"><span class="pre">_set_default_rendering_settings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment._set_default_rendering_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment._set_default_rendering_settings" title="Link to this definition">#</a></dt>
+<dd><p>Sets the default rendering settings for the experiment scene.</p>
+<ul class="simple">
+<li><p>Sets the render engine to Cycles.</p></li>
+<li><p>Sets the device to GPU.</p></li>
+<li><p>Disables denoising.</p></li>
+<li><p>Sets the view transform to Filmic.</p></li>
+<li><p>Sets the image compression to 0 (no compression).</p></li>
+<li><p>Sets the TIFF codec to NONE.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.activate_smooth_shading">
+<span class="sig-name descname"><span class="pre">activate_smooth_shading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.activate_smooth_shading"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.activate_smooth_shading" title="Link to this definition">#</a></dt>
+<dd><p>Activate smooth shading for the mesh.</p>
+<p>Smooth shading is a rendering technique that gives the appearance of a smooth surface by interpolating vertex normals across the surface of the mesh.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the mesh to activate smooth shading for.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If a mesh with the same name does not exist in the experiment or in Blender data.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -730,6 +765,24 @@ The pattern will be applied to the mesh material as a texture.</p>
 <li><p><strong>TypeError</strong> – If name is not a string or pattern_path is not a string.</p></li>
 <li><p><strong>ValueError</strong> – If a mesh with the same name does not exist in the experiment or in Blender data.
     If the pattern path is not valid or the image format is not supported.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyblenderSDIC.BlenderExperiment.deactivate_smooth_shading">
+<span class="sig-name descname"><span class="pre">deactivate_smooth_shading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.deactivate_smooth_shading"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.deactivate_smooth_shading" title="Link to this definition">#</a></dt>
+<dd><p>Deactivate smooth shading for the mesh.</p>
+<p>Smooth shading is a rendering technique that gives the appearance of a smooth surface by interpolating vertex normals across the surface of the mesh.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the mesh to deactivate smooth shading for.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If name is not a string.</p></li>
+<li><p><strong>ValueError</strong> – If a mesh with the same name does not exist in the experiment or in Blender data.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1159,6 +1212,11 @@ This method must be called after updating the mesh properties in the TriangleMes
 <span class="sig-name descname"><span class="pre">update_scene</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyblenderSDIC/blender_experiment.html#BlenderExperiment.update_scene"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyblenderSDIC.BlenderExperiment.update_scene" title="Link to this definition">#</a></dt>
 <dd><p>Update the Blender scene.
 This method must be called after adding or modifying any objects in the scene.</p>
+<ul class="simple">
+<li><p>Free bake all</p></li>
+<li><p>Bake all</p></li>
+<li><p>Update the view layer and depsgraph</p></li>
+</ul>
 </dd></dl>
 
 <dl class="py method">
@@ -1243,12 +1301,15 @@ The number of nodes mustnot be changed.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment._reset_blender"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment._reset_blender()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment._set_default_rendering_settings"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment._set_default_rendering_settings()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.activate_smooth_shading"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.activate_smooth_shading()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.add_camera"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.add_camera()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.add_mesh"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.add_mesh()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.add_mesh_material"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.add_mesh_material()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.add_mesh_pattern"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.add_mesh_pattern()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.add_spotlight"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.add_spotlight()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.change_mesh_pattern"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.change_mesh_pattern()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.deactivate_smooth_shading"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.deactivate_smooth_shading()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_active_camera"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_active_camera()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_camera"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_camera()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyblenderSDIC.BlenderExperiment.get_camera_frames"><code class="docutils literal notranslate"><span class="pre">BlenderExperiment.get_camera_frames()</span></code></a></li>
