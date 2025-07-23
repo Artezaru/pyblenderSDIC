@@ -39,12 +39,18 @@ class BlenderExperiment:
     ----------
     Nb_frames : int, optional
         The number of frames for the experiment (default is 1).
+
+    verbose : bool, optional
+        If True, prints additional information during the experiment setup (default is False).
     """
-    def __init__(self, Nb_frames: int = 1) -> None:
+    def __init__(self, Nb_frames: int = 1, verbose: bool = False) -> None:
         if not isinstance(Nb_frames, Integral):
             raise TypeError("Nb_frames must be an integer")
         if Nb_frames < 1:
             raise ValueError("Nb_frames must be greater than or equal to 1")
+        if not isinstance(verbose, bool):
+            raise TypeError("verbose must be a boolean")
+        self._verbose = verbose
         self._end_frame = int(Nb_frames)
         self._camera_objects = {} # {"name" : List[Camera, List[bool]]}
         self._spotlight_objects = {}
@@ -52,6 +58,7 @@ class BlenderExperiment:
         self._active_camera = None
         self._active_frame = 1
         self._reset_blender()
+        self._set_default_rendering_settings()
 
         
     # =======================================================
@@ -102,9 +109,33 @@ class BlenderExperiment:
         self._experiment_scene = bpy.data.scenes.new(name="experiment_scene")
         bpy.context.scene.cursor.location = (0.0, 0.0, 0.0)  # Reset 3D cursor
         bpy.context.scene.frame_start = 1  # Start frame
-        bpy.context.scene.frame_end = self._end_frame + 1 # End frame 
+        bpy.context.scene.frame_end = self._end_frame + 1 # End frame
+        if self._verbose:
+            print("[INFO] Blender environment reset and new experiment scene initialized.")
+
+    def _set_default_rendering_settings(self) -> None:
+        """
+        Sets the default rendering settings for the experiment scene.
+
+        - Sets the render engine to Cycles.
+        - Sets the device to GPU.
+        - Disables denoising.
+        - Sets the view transform to Filmic.
+        - Sets the image compression to 0 (no compression).
+        - Sets the TIFF codec to NONE.
+
+        """
         bpy.context.scene.render.engine = 'CYCLES'
         bpy.context.scene.cycles.device = 'GPU'
+        bpy.context.scene.cycles.use_denoising = False
+        bpy.context.scene.view_settings.view_transform = 'Filmic'
+        bpy.context.scene.render.image_settings.compression = 0
+        bpy.context.scene.render.image_settings.tiff_codec = "NONE"
+        if self._verbose:
+            print("[INFO] Blender experiment initialized with default rendering settings.")
+
+
+
 
 
 
@@ -194,6 +225,9 @@ class BlenderExperiment:
         # Update the camera properties in the Blender scene
         self.update_camera(name)
 
+        if self._verbose:
+            print(f"[INFO] Camera '{name}' added to the experiment.")
+
 
     def set_camera_frames(self, name: str, frames: Optional[List[bool]] = None) -> None:
         r"""
@@ -241,6 +275,8 @@ class BlenderExperiment:
         # Set the frames for which the camera will be active
         self._camera_objects[name][1] = frames
 
+        if self._verbose:
+            print(f"[INFO] Camera '{name}' frames set.")
 
     def get_camera_frames(self, name: str) -> List[bool]:
         r"""
@@ -361,6 +397,9 @@ class BlenderExperiment:
         if self._active_camera is not None and self._active_camera == name:
             self._active_camera = None
 
+        if self._verbose:
+            print(f"[INFO] Camera '{name}' removed from the experiment.")
+
 
     def update_camera(self, name: str) -> None:
         r"""
@@ -437,6 +476,9 @@ class BlenderExperiment:
         if self._active_camera is not None and self._active_camera == name:
             self.set_active_camera(name)
 
+        if self._verbose:
+            print(f"[INFO] Camera '{name}' updated in the experiment.")
+
 
     def set_active_camera(self, name: str) -> None:
         r"""
@@ -485,6 +527,9 @@ class BlenderExperiment:
 
         # Set the active camera
         self._active_camera = name
+
+        if self._verbose:
+            print(f"[INFO] Camera '{name}' set as active in the experiment.")
 
 
     def get_active_camera(self) -> str:
@@ -691,6 +736,9 @@ class BlenderExperiment:
         # Set the frames for which the mesh will be active
         self.set_mesh_frames(name, frames)
 
+        if self._verbose:
+            print(f"[INFO] Mesh '{name}' added to the experiment.")
+
 
     def add_mesh_pattern(self, name: str, pattern_path: str) -> None:
         r"""
@@ -813,6 +861,9 @@ class BlenderExperiment:
 
         # Update the mesh
         blender_mesh.data.update()
+
+        if self._verbose:
+            print(f"[INFO] Pattern '{pattern_path}' added to mesh '{name}' in the experiment.")
 
 
     def add_mesh_material(self, name: str, material: MaterialBSDF) -> None:
@@ -961,6 +1012,9 @@ class BlenderExperiment:
         # Update the mesh
         blender_mesh.data.update()
 
+        if self._verbose:
+            print(f"[INFO] Material added to mesh '{name}' in the experiment.")
+
 
     def set_mesh_frames(self, name: str, frames: Optional[List[bool]] = None) -> None:
         r"""
@@ -1018,6 +1072,90 @@ class BlenderExperiment:
 
         # Set the frames for which the mesh will be active
         self._mesh_objects[name][1] = frames
+
+        if self._verbose:
+            print(f"[INFO] Mesh '{name}' frames set in the experiment.")
+
+
+    def activate_smooth_shading(self, name: str) -> None:
+        r"""
+        Activate smooth shading for the mesh.
+
+        Smooth shading is a rendering technique that gives the appearance of a smooth surface by interpolating vertex normals across the surface of the mesh.
+
+        Parameters
+        ----------
+        name : str
+            The name of the mesh to activate smooth shading for.
+
+        Raises
+        -------
+        TypeError
+            If name is not a string.
+        ValueError
+            If a mesh with the same name does not exist in the experiment or in Blender data.
+        """
+        if not isinstance(name, str):
+            raise TypeError("name must be a string")
+        if name not in self._mesh_objects:
+            raise ValueError(f"Mesh with name {name} does not exist.")
+        if name not in bpy.data.objects:
+            raise ValueError(f"No object with name {name} in Blender data.")
+        
+        # Ensure the experiment scene is active
+        bpy.context.window.scene = self._experiment_scene
+
+        # Get the mesh object
+        _, blender_mesh = self.get_mesh(name)
+
+        # Set smooth shading
+        blender_mesh.data.polygons.foreach_set("use_smooth", [True] * len(blender_mesh.data.polygons))
+
+        # Update the mesh
+        blender_mesh.data.update()
+
+        if self._verbose:
+            print(f"[INFO] Smooth shading activated for mesh '{name}'.")
+
+    def deactivate_smooth_shading(self, name: str) -> None:
+        r"""
+        Deactivate smooth shading for the mesh.
+        
+        Smooth shading is a rendering technique that gives the appearance of a smooth surface by interpolating vertex normals across the surface of the mesh.
+
+        Parameters
+        ----------
+        name : str
+            The name of the mesh to deactivate smooth shading for.
+        
+        Raises
+        -------
+        TypeError
+            If name is not a string.
+        ValueError
+            If a mesh with the same name does not exist in the experiment or in Blender data.
+        """
+        if not isinstance(name, str):
+            raise TypeError("name must be a string")
+        if name not in self._mesh_objects:
+            raise ValueError(f"Mesh with name {name} does not exist.")
+        if name not in bpy.data.objects:
+            raise ValueError(f"No object with name {name} in Blender data.")
+        
+        # Ensure the experiment scene is active
+        bpy.context.window.scene = self._experiment_scene
+
+        # Get the mesh object
+        _, blender_mesh = self.get_mesh(name)
+
+        # Set flat shading
+        blender_mesh.data.polygons.foreach_set("use_smooth", [False] * len(blender_mesh.data.polygons))
+
+        # Update the mesh
+        blender_mesh.data.update()
+        
+        if self._verbose:
+            print(f"[INFO] Smooth shading deactivated for mesh '{name}'.")
 
     
     def get_mesh_frames(self, name: str) -> List[bool]:
@@ -1180,7 +1318,9 @@ class BlenderExperiment:
         bpy.data.objects.remove(blender_mesh)
         self._mesh_objects.pop(name)
 
-    
+        if self._verbose:
+            print(f"[INFO] Mesh '{name}' removed from the experiment.")
+
     def update_mesh(self, name: str) -> None:
         r"""
         Update the mesh properties in the Blender scene.
@@ -1256,6 +1396,9 @@ class BlenderExperiment:
 
         # Update the mesh
         blender_mesh.data.update()
+
+        if self._verbose:
+            print(f"[INFO] Mesh '{name}' updated in the experiment.")
 
 
     def change_mesh_pattern(self, name: str, pattern_path: str) -> None:
@@ -1340,6 +1483,9 @@ class BlenderExperiment:
 
         # Update the mesh
         blender_mesh.data.update()
+
+        if self._verbose:
+            print(f"[INFO] Pattern changed to '{pattern_path}' for mesh '{name}' in the experiment.")
    
     
 
@@ -1422,6 +1568,9 @@ class BlenderExperiment:
         # Set the spotlight properties
         self.update_spotlight(name)
 
+        if self._verbose:
+            print(f"[INFO] Spotlight '{name}' added to the experiment.")
+
     
     def set_spotlight_frames(self, name: str, frames: Optional[List[bool]] = None) -> None:
         r"""
@@ -1477,7 +1626,10 @@ class BlenderExperiment:
         # Set the frames for which the mesh will be active
         self._spotlight_objects[name][1] = frames
 
-    
+        if self._verbose:
+            print(f"[INFO] Spotlight '{name}' frames set in the experiment.")
+
+
     def get_spotlight_frames(self, name: str) -> List[bool]:
         r"""
         Get the frames for which the spotlight is active.
@@ -1581,6 +1733,9 @@ class BlenderExperiment:
         bpy.data.objects.remove(blender_spotlight)
         self._spotlight_objects.pop(name)
 
+        if self._verbose:
+            print(f"[INFO] Spotlight '{name}' removed from the experiment.")
+
     
     def update_spotlight(self, name: str) -> None:
         r"""
@@ -1638,6 +1793,9 @@ class BlenderExperiment:
         # Reset the frames for which the spotlight will be active (in order to have energy = 0 for the frames where the spotlight is not active)
         self.set_spotlight_frames(name, self.get_spotlight_frames(name))
 
+        if self._verbose:
+            print(f"[INFO] Spotlight '{name}' updated in the experiment.")
+
 
 
     # =======================================================
@@ -1653,10 +1811,17 @@ class BlenderExperiment:
         world_light.inputs[0].default_value = (0.5, 0.5, 0.5, 1)
         world_light.inputs[1].default_value = 1.0
 
+        if self._verbose:
+            print(f"[INFO] Default background set for the experiment scene.")
+
     def update_scene(self) -> None:
         r"""
         Update the Blender scene.
         This method must be called after adding or modifying any objects in the scene.
+
+        - Free bake all
+        - Bake all
+        - Update the view layer and depsgraph
         """
         # Ensure the experiment scene is active
         bpy.context.window.scene = self._experiment_scene
@@ -1666,6 +1831,9 @@ class BlenderExperiment:
         bpy.ops.ptcache.bake_all()       
         bpy.context.view_layer.update()
         bpy.context.view_layer.depsgraph.update()
+
+        if self._verbose:
+            print(f"[INFO] Blender scene updated.")
 
     def set_active_frame(self, frame: int) -> None:
         r"""
@@ -1694,6 +1862,9 @@ class BlenderExperiment:
         # Set the current frame
         bpy.context.scene.frame_set(int(frame))
         self._active_frame = int(frame)
+
+        if self._verbose:
+            print(f"[INFO] Active frame set to {self._active_frame} in the experiment scene.")
 
 
 
@@ -1755,14 +1926,9 @@ class BlenderExperiment:
 
         # Set the render settings
         bpy.context.scene.render.image_settings.file_format = output_format
-        bpy.context.scene.render.image_settings.tiff_codec = "NONE"
         bpy.context.scene.render.image_settings.color_mode = color_mode
         bpy.context.scene.render.image_settings.color_depth = color_depth
-        bpy.context.scene.render.image_settings.compression = 0
-        bpy.context.scene.render.engine = 'CYCLES'
-        bpy.context.scene.cycles.device = 'GPU'
         bpy.context.scene.cycles.samples = N_samples
-        bpy.context.scene.cycles.use_denoising = False
         bpy.context.scene.render.filepath = output_path
 
         # Perform the rendering
