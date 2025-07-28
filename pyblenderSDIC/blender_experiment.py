@@ -1878,6 +1878,7 @@ class BlenderExperiment:
         color_mode: str = "BW",
         color_depth: str = "8",
         N_samples: int = 200,
+        default: bool = True
         ) -> None:
         r"""
         Render the experiment scene.
@@ -1898,6 +1899,9 @@ class BlenderExperiment:
         
         N_samples : int, optional
             The number of samples for rendering (default is 200).
+
+        default : bool, optional
+            If True, the default render settings will be used (default is True).
 
         Raises
         -------
@@ -1931,6 +1935,11 @@ class BlenderExperiment:
         bpy.context.scene.cycles.samples = N_samples
         bpy.context.scene.render.filepath = output_path
 
+        # If default is True, set the default render settings
+        if default:
+            self._set_default_rendering_settings()
+            bpy.context.scene.render.engine = 'CYCLES'
+  
         # Perform the rendering
         bpy.ops.render.render(write_still=True)
         print(f"Rendered image saved to {output_path}")

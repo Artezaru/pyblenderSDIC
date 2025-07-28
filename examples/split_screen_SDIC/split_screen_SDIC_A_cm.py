@@ -8,7 +8,7 @@ from py3dframe import Frame
 
 from pyblenderSDIC import Camera, SpotLight, BlenderExperiment
 
-from pyblenderSDIC.meshes import TriMesh3D, create_axisymmetric_mesh, create_xy_heightmap_mesh
+from pyblenderSDIC.meshes import TriangleMesh3D, create_axisymmetric_mesh, create_xy_heightmap_mesh
 from pyblenderSDIC.materials import get_iron_material, get_mirror_material
 from pyblenderSDIC.patterns import create_speckle_BW_image
 """
@@ -120,30 +120,30 @@ cylinder_mesh_time_1 = create_axisymmetric_mesh(
 
 
 # Lets design the top and bottom faces of the cylinder
-def triangulate_cylinder_faces(nodes) -> TriMesh3D:
+def triangulate_cylinder_faces(vertices) -> TriangleMesh3D:
     """
-    Triangulate the circle defining by the given nodes.
+    Triangulate the circle defining by the given vertices.
     Using fan triangulation.
 
-    nodes: shape (N, 3) array
+    vertices: shape (N, 3) array
     """
     elements = []
-    for i in range(1, len(nodes) - 1):
+    for i in range(1, len(vertices) - 1):
         elements.append([0, i, i + 1])
     
-    cells = {'triangle': np.array(elements)}
-    return TriMesh3D(points=nodes, cells=cells)
+    elements = np.array(elements, dtype=int)
+    return TriangleMesh3D(vertices=vertices, triangles=elements)
     
 # Create the top and bottom faces of the cylinder (see the doc of the function create_axisymmetric_mesh)
-top_nodes_time_0 = cylinder_mesh_time_0.nodes[::cylinder_Nheight, :]
-bottom_nodes_time_0 = cylinder_mesh_time_0.nodes[cylinder_Nheight-1::cylinder_Nheight, :]
-top_nodes_time_1 = cylinder_mesh_time_1.nodes[::cylinder_Nheight, :]
-bottom_nodes_time_1 = cylinder_mesh_time_1.nodes[cylinder_Nheight-1::cylinder_Nheight, :]
+top_vertices_time_0 = cylinder_mesh_time_0.vertices[::cylinder_Nheight, :]
+bottom_vertices_time_0 = cylinder_mesh_time_0.vertices[cylinder_Nheight-1::cylinder_Nheight, :]
+top_vertices_time_1 = cylinder_mesh_time_1.vertices[::cylinder_Nheight, :]
+bottom_vertices_time_1 = cylinder_mesh_time_1.vertices[cylinder_Nheight-1::cylinder_Nheight, :]
 
-cylinder_top_face_time_0 = triangulate_cylinder_faces(top_nodes_time_0)
-cylinder_top_face_time_1 = triangulate_cylinder_faces(top_nodes_time_1)
-cylinder_bottom_face_time_0 = triangulate_cylinder_faces(bottom_nodes_time_0)
-cylinder_bottom_face_time_1 = triangulate_cylinder_faces(bottom_nodes_time_1)
+cylinder_top_face_time_0 = triangulate_cylinder_faces(top_vertices_time_0)
+cylinder_top_face_time_1 = triangulate_cylinder_faces(top_vertices_time_1)
+cylinder_bottom_face_time_0 = triangulate_cylinder_faces(bottom_vertices_time_0)
+cylinder_bottom_face_time_1 = triangulate_cylinder_faces(bottom_vertices_time_1)
 
 
 # ========================
