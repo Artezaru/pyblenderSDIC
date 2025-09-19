@@ -2129,7 +2129,7 @@ class TriangleMesh3D():
         if pattern_path is not None:
             material = open3d.visualization.rendering.MaterialRecord()
             material.shader = 'defaultUnlit'
-            material.albedo_img = open3d.io.read_image('pattern.png')
+            material.albedo_img = open3d.io.read_image(pattern_path)
 
         # Extracted the triangles to be colored
         if highlighted_triangles is None:

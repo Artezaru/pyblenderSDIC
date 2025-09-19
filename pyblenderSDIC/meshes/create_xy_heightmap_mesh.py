@@ -1,6 +1,6 @@
 import numpy
 
-from py3dframe import Frame, Transform
+from py3dframe import Frame, FrameTransform
 from typing import Callable
 from numbers import Integral
 
@@ -191,7 +191,7 @@ def create_xy_heightmap_mesh(
     uv_layout = int(uv_layout)
     
     # Generate the transform
-    transform = Transform(input_frame=frame, output_frame=Frame())
+    transform = FrameTransform(input_frame=frame, output_frame=Frame())
 
     # Extract the parameters
     x_min = x_bounds[0]

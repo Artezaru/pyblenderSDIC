@@ -70,7 +70,7 @@ class Camera(object):
     """
     def __init__(
             self,
-            frame: Frame = Frame(),
+            frame: Frame = None,
             intrinsic_matrix: Optional[numpy.ndarray] = None,
             resolution: Optional[Union[Sequence[Integral], numpy.ndarray]] = None,
             pixel_size: Optional[Union[Sequence[Number], numpy.ndarray]] = None,
@@ -90,6 +90,8 @@ class Camera(object):
         self._clfar = None # far clipping plane in millimeters
 
         # Set the values
+        if frame is None:
+            frame = Frame.canonical()
         self.frame = frame
         self.intrinsic_matrix = intrinsic_matrix
         self.resolution = resolution

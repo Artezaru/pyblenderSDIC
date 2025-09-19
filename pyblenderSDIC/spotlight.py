@@ -49,11 +49,13 @@ class SpotLight(object):
 
     def __init__(
         self,
-        frame: Frame = Frame(),
+        frame: Frame = None,
         energy: float = 1.0,
         spot_size: float = numpy.pi,
         spot_blend: float = 0.0,
     ) -> None:
+        if frame is None:
+            frame = Frame.canonical()
         self.frame = frame
         self.spot_size = spot_size
         self.spot_blend = spot_blend
